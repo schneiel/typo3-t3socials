@@ -65,7 +65,7 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler {
 		$message->setHeadline($title);
 		$message->setMessage($msg);
 		$account = tx_rnbase::makeInstance('tx_t3socials_models_Network', $SET['pushd']);
-		
+
 		try {
 	  	$conn = tx_rnbase::makeInstance('tx_t3socials_network_pushd_Connection');
 	  	$conn->setNetwork($account);
@@ -106,7 +106,7 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler {
 
 			$markerArr['###ACCOUNT_SEL###'] = $accMenu['menu'];
 			$markerArr['###ACCOUNT_EDITLINK###'] = $formTool->createEditLink('tx_t3socials_networks', $accMenu['value']);
-			$markerArr['###EVENT_SEL###'] = $eventMenu['menu'];
+			$markerArr['###EVENT_SEL###'] = $eventMenu === false ? '<strong>###LABEL_PUSHD_NOEVENTS###</strong>' : $eventMenu['menu'];
 			$markerArr['###INPUT_MESSAGE###'] = $formTool->createTextArea('data[msg]', $this->data['msg']);
 			$markerArr['###INPUT_TITLE###'] = $formTool->createTxtInput('data[title]', $this->data['title'], 50);
 			$markerArr['###BTN_SEND###'] = $formTool->createSubmit('sendpushd', '###LABEL_SUBMIT###');
@@ -114,9 +114,9 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler {
 
 		}
 //t3lib_div::debug($accMenu, 'class.tx_t3socials_mod_handler_Twitter.php'); // TODO: remove me
-		
+
 		//wenn die Liste leer ist, zeigen wir nur eine Meldung
-//		$out .= (empty($list['totalsize'])) ? "<br/><b>".$GLOBALS['LANG']->getLL('msg_empty_areas') : 
+//		$out .= (empty($list['totalsize'])) ? "<br/><b>".$GLOBALS['LANG']->getLL('msg_empty_areas') :
 //											'<br/>'.$list['totalsize'].' '.$GLOBALS['LANG']->getLL('msg_areas_found').$list['pager']."</b>\n".$list['table'];
 
 		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
@@ -155,9 +155,12 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler {
  			$entries[$event] = $account->getConfigData($confId.$event.'.label');
  			$entries[$event] = $entries[$event] ? $entries[$event] : $event;
  		}
+ 		if(empty($entries)) {
+ 			return false;
+ 		}
 		return $mod->getFormTool()->showMenu($mod->getPid(), 'event', $mod->getName(), $entries);
 	}
-	
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Pushd.php'])	{

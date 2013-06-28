@@ -25,6 +25,7 @@
 			<label index="label_event">Event</label>
 			<label index="label_submit">Submit</label>
 			<label index="label_message_sent">Message successfully sent!</label>
+			<label index="label_pushd_noevents">You must configure your events in account!</label>
 
 		</languageKey>
 		<languageKey index="de" type="array">
@@ -42,6 +43,7 @@
 			<label index="label_event">Ereignis</label>
 			<label index="label_submit">Absenden</label>
 			<label index="label_message_sent">Meldung erfolgreich erfolgreich abgesetzt!</label>
+			<label index="label_pushd_noevents">Die Events müssen im Account konfiguriert werden!</label>
 
 		</languageKey>
 	</data>
