@@ -1,0 +1,14 @@
+#includeLibs.FuncCompetitions = EXT:cfc_league/mod1/tx_cfcleague_modCompetitions.php
+
+##############################
+# Achtung: im BE können keine Referenzen verwendet werden. Die Werte also immmer kopieren!!				
+##############################
+
+
+mod {
+	t3socials {
+		communicator {
+			template = EXT:t3socials/mod/templates/module.html
+		}
+	}
+}

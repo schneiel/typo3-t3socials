@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for module &quot;txclubmemberM1&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="mlang_tabs_tab">T3socials</label>
+			<label index="mlang_labels_tabdescr">Connect your TYPO3 with social networks</label>
+			<label index="mlang_labels_tablabel">T3socials - Stay connected</label>
+
+			<label index="message">Message</label>
+			<label index="warning">Warning</label>
+			<label index="error">Error</label>
+			<label index="label_warnings">Warnings</label>
+			<label index="label_t3socials_modname">T3socials - Stay connected</label>
+			<label index="label_tab_twitter">Twitter</label>
+			<label index="label_tab_pushd">Pushd</label>
+
+			<label index="label_account">Account</label>
+			<label index="label_message">Message</label>
+			<label index="label_title">Title</label>
+			<label index="label_link">Link</label>
+			<label index="label_event">Event</label>
+			<label index="label_submit">Submit</label>
+			<label index="label_message_sent">Message successfully sent!</label>
+
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="mlang_tabs_tab">T3socials</label>
+			<label index="mlang_labels_tabdescr">Verbindet TYPO3 mit sozialen Netzwerken</label>
+			<label index="mlang_labels_tablabel">T3socials - Stay connected</label>
+
+			<label index="message">Hinweis</label>
+			<label index="warning">Warnung</label>
+			<label index="error">Fehler</label>
+			<label index="label_warnings">Warnungen</label>
+
+			<label index="label_title">Titel</label>
+			<label index="label_message">Meldung</label>
+			<label index="label_event">Ereignis</label>
+			<label index="label_submit">Absenden</label>
+			<label index="label_message_sent">Meldung erfolgreich erfolgreich abgesetzt!</label>
+
+		</languageKey>
+	</data>
+</T3locallang>
