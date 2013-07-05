@@ -29,7 +29,7 @@ tx_rnbase::load('tx_rnbase_util_DB');
 
 /**
  * Service for accessing network account information
- * 
+ *
  * @author Rene Nitzsche
  */
 class tx_t3socials_srv_Network extends t3lib_svbase {
@@ -41,14 +41,17 @@ class tx_t3socials_srv_Network extends t3lib_svbase {
 	 */
 	public function getConnection($account) {
 		$connectionClass = $account->getConfigData($account->getNetwork().'.connection');
-		if($connectionClass) 
+		if($connectionClass)
 			return tx_rnbase::makeInstance($connectionClass);
 		// Load defaults
 		switch ($account->getNetwork()) {
 			case 'twitter':
 				return tx_rnbase::makeInstance('tx_t3socials_network_twitter_Connection');
 			break;
-			
+			case 'pushd':
+				return tx_rnbase::makeInstance('tx_t3socials_network_pushd_Connection');
+			break;
+
 			default:
 				throw new Exception('Unknown network type: ' . $account->getNetwork());
 			break;
