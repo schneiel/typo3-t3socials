@@ -82,8 +82,10 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
 		$events = $account->getConfigurations()->getKeyNames($confId);
 		foreach($events As $event) {
 			$label = $account->getConfigData($confId.$event.'.label');
-			$entries[] = array('label' => $label ? $label : $event,
-					'event'=>$event);
+			$hidden = $account->getConfigData($confId.$event.'.hidden');
+			if(intval($hidden) != 1)
+				$entries[] = array('label' => $label ? $label : $event,
+						'event'=>$event);
 		}
 		return $entries;
 	}
