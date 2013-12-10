@@ -61,7 +61,12 @@ class tx_t3socials_network_twitter_Connection implements tx_t3socials_network_IC
 				tx_rnbase_util_Logger::warn('Tweet is empty!', 't3socials', array('message' => (array)$message, 'Builder Class' => get_class($builder)));
 		}
 		catch(Exception $e) {
-			tx_rnbase_util_Logger::fatal('Error sending Tweet!', 't3socials', array('message' => (array)$message, 'Builder Class' => get_class($builder), 'Exception'=> $e->getMessage()));
+			// Die Message anpassen
+			$data = $message->getData();
+			if(is_object($data) && isset($data->record))
+				$message->setData($data->record);
+			tx_rnbase_util_Logger::fatal('Error sending Tweet ('.$message->getMessageType().')!', 't3socials', array('Tweet'=>$twitterMessage, message => (array)$message, 'Builder Class' => get_class($builder), 'Exception'=> $e->getMessage()));
+			$message->setData($data);
 		}
 	}
 	protected function getBuilder($messageType) {

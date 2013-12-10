@@ -47,22 +47,12 @@ class tx_t3socials_srv_News extends t3lib_svbase {
 		if($srv->hasSent($news->getUid(), 'tt_news')) return;
 
 		$networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
-		$accounts = $networkSrv->findAccounts('news');
 
-		if(empty($accounts)) return;
 		// Die generische Message bauen
 		$message = $this->buildGenericMessage($news);
 
-		foreach($accounts As $account) {
-			// Für den Account die Connectionklasse laden
-			/**
-			 * @var tx_t3socials_network_IConnection
-			 */
-			$connection = $networkSrv->getConnection($account);
-			$connection->setNetwork($account);
-			$message->setUrl($this->buildUrl($news, $account));
-			$connection->sendMessage($message);
-		}
+		// Absender der Meldung an alle registrierten Accounts
+		$networkSrv->sendMessage($message, 'news', array('urlbuilder'=>array($this, 'cbBuildUrl')));
 		$srv->setSent($news->getUid(), 'tt_news');
 	}
 	protected function buildGenericMessage($news) {
@@ -79,11 +69,12 @@ class tx_t3socials_srv_News extends t3lib_svbase {
 	/**
 	 * URL auf News-Detailseite bauen
 	 *
-	 * @param tx_rnbase_model_base $news
+	 * @param tx_t3socials_model_Message $message
 	 * @param tx_t3socials_models_Network $account
 	 * @return string
 	 */
-	protected function buildUrl($news, $account) {
+	public function cbBuildUrl($message, $account) {
+		$news = $message->getData();
 		$config = $account->getConfigurations();
 		tx_rnbase::load('tx_rnbase_util_Misc');
 		tx_rnbase_util_Misc::prepareTSFE();

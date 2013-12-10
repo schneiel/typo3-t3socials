@@ -33,7 +33,39 @@ tx_rnbase::load('tx_rnbase_util_DB');
  * @author Rene Nitzsche
  */
 class tx_t3socials_srv_Network extends t3lib_svbase {
+	/**
+	 * Send a message to all accounts assigned to given trigger
+	 * 
+	 * @param tx_t3socials_models_IMessage $message
+	 * @param string $trigger single trigger value
+	 * param array[tx_t3socials_models_Network] $accounts
+	 */
+	public function sendMessage($message, $trigger, $options=array()) {
+		$accounts = $this->findAccounts($trigger);
+		if(empty($accounts)) return;
 
+		foreach($accounts As $account) {
+			// Für den Account die Connectionklasse laden
+			/* @var tx_t3socials_network_IConnection $connection */
+			$connection = $this->getConnection($account);
+			$connection->setNetwork($account);
+			if(isset($options['urlbuilder'])) {
+				// Eine Möglichkeit die URL extern zu setzen
+				$message->setUrl(call_user_func($options['urlbuilder'], $message, $account));
+			}
+			else
+				$message->setUrl($account->getConfigData($account->getNetwork().'.liveticker.message.url'));
+			try {
+				$connection->sendMessage($message);
+			}
+			catch(Exception $e) {
+				tx_rnbase_util_Logger::fatal('Error sending message! ('.$trigger.')', 't3socials', 
+					array('message' => (array)$message, 'account'=>$account->getName(), 'network'=>$account->getNetwork()));
+			}
+		}
+
+		return;
+	}
 	/**
 	 * Get the connection instance for this account
 	 *

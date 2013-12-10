@@ -75,8 +75,13 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
 		$context  = stream_context_create($options);
 		$result = file_get_contents($url, false, $context);
 		if($result === false) {
-			tx_rnbase_util_Logger::fatal('Error sending pushd-message!', 't3socials', array('message' => (array)$message, 'options'=>$options, 'url'=>$url));
-			throw new Exception('Message could not be send!');
+			$data = $message->getData();
+			if(is_object($data) && isset($data->record))
+				$message->setData($data->record);
+			tx_rnbase_util_Logger::fatal('Error sending pushd-message ('.$message->getMessageType().')!', 't3socials', 
+				array('message' => (array)$message, 'options'=>$options, 'url'=>$url));
+			$message->setData($data);
+//			throw new Exception('Message could not be send!');
 		}
 	}
 
