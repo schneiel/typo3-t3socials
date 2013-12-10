@@ -13,9 +13,9 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'T3socials',
 	'description' => 'Developer library to connect to social networks.',
-	'category' => 'misc',
+	'category' => 'service',
 	'shy' => 0,
-	'version' => '0.3.0',
+	'version' => '1.0.0',
 	'dependencies' => 'cms',
 	'conflicts' => '',
 	'priority' => '',
@@ -28,14 +28,16 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearcacheonload' => 0,
 	'lockType' => '',
 	'author' => 'Rene Nitzsche',
-	'author_email' => 'rene@system25.de',
-	'author_company' => 'System 25',
+	'author_email' => 'nitzsche@das-medienkombinat.de',
+	'author_company' => 'das MedienKombinat GmbH',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
 			'cms' => '',
 			'php' => '5.0.0-0.0.0',
+			'rn_base' => '0.13.2',
+			'typo3' => '4.4.0-6.1.99',
 		),
 		'conflicts' => array(
 		),
