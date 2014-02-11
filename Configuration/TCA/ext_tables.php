@@ -12,13 +12,12 @@ $TCA['tx_t3socials_networks'] = array (
 		'default_sortby' => 'ORDER BY name asc',
 		'delete' => 'deleted',
 		'enablecolumns' => array (
-			'disabled' => 'hidden',	
+			'disabled' => 'hidden',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'Configuration/TCA/Network.php',
-		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif',
+		'dynamicConfigFile' => t3lib_extMgm::extPath('t3socials').'Configuration/TCA/Network.php',
+		'iconfile'          => t3lib_extMgm::extRelPath('t3socials').'ext_icon.gif',
 	),
 	'feInterface' => array (
 		'fe_admin_fieldList' => 'name,username,password,config',
 	)
 );
- 
