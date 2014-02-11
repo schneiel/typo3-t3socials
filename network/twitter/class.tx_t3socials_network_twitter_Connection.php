@@ -30,7 +30,7 @@ tx_rnbase::load('tx_rnbase_util_Logger');
 
 
 /**
- * 
+ *
  */
 class tx_t3socials_network_twitter_Connection implements tx_t3socials_network_IConnection {
 	public function __construct() {
@@ -75,6 +75,30 @@ class tx_t3socials_network_twitter_Connection implements tx_t3socials_network_IC
 		 $builderClass = $builderClass ? $builderClass : 'tx_t3socials_network_twitter_MessageBuilder';
 		 return tx_rnbase::makeInstance($builderClass);
 	}
+
+	/**
+	 * Prüft das Result nach Fehlern.
+	 *
+	 * @param stdClass $result
+	 * @throws Exception
+	 */
+	protected function handleErrorsFromResult(stdClass $result) {
+		$errors = $result->errors ? $result->errors : array();
+		if (!empty($result->error)) {
+			$errors[] = $result->error;
+		}
+		if(!empty($errors)) {
+			$errMsg = array();
+			foreach($errors As $error) {
+				$errMsg[] = is_object($error)
+					? $error->message . ' (Code ' .$error->code.')'
+					: $error
+				;
+			}
+			throw new Exception(implode("\n", $errMsg));
+		}
+	}
+
 	/**
 	 * Post data on Twitter using Curl.
 	 *
@@ -84,14 +108,10 @@ class tx_t3socials_network_twitter_Connection implements tx_t3socials_network_IC
 	public function sendTweet($message) {
 		$connection = $this->getConnection();
 		$result = $connection->post('statuses/update', array('status' => $message));
-		if($result->errors) {
-			$errMsg = array();
-			foreach($result->errors As $error) {
-				$errMsg[] = $error->message . ' (Code ' .$error->code.')';
-			}
-			throw new Exception(implode("\n", $errMsg));
-		}
-		tx_rnbase_util_Logger::info('Tweet was posted to Twitter!', 't3socials', 
+
+		$this->handleErrorsFromResult($result);
+
+		tx_rnbase_util_Logger::info('Tweet was posted to Twitter!', 't3socials',
 				array('Tweet' => $message, 'Account'=> $this->getNetwork()->getName()));
 		return $result;
 	}
@@ -103,7 +123,7 @@ class tx_t3socials_network_twitter_Connection implements tx_t3socials_network_IC
 			throw new Exception($result->error);
 		return $result;
 	}
-	
+
 
 	public function verify() {
 		// TODO!
@@ -129,7 +149,7 @@ class tx_t3socials_network_twitter_Connection implements tx_t3socials_network_IC
 
 	private function getCredentials(tx_t3socials_models_Network $network) {
 		$data = $network->getConfigData('twitter.');
-		if(empty($data)) 
+		if(empty($data))
 			throw new Exception('No credentials for twitter found! UID: ' . $network->getUid());
 		return $data;
 	}
