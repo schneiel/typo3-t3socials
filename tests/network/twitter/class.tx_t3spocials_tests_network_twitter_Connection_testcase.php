@@ -22,12 +22,13 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
+require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_network_twitter_Connection');
 
 class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_phpunit_testcase {
 
 	public function test_simpleConnection() {
+		$this->markTestSkipped('Needs to be refactored!');
 		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts('twittertest');
 		if(empty($accounts)) return;
 		$account = $accounts[0];
@@ -39,6 +40,7 @@ class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_phpunit_
 	}
 
 	public function test_verifyConnection() {
+		$this->markTestSkipped('Needs to be refactored!');
 		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts('twittertest');
 		if(empty($accounts)) return;
 		$account = $accounts[0];
@@ -51,6 +53,7 @@ class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_phpunit_
 	}
 
 	public function test_getCredentialsFromModel() {
+		$this->markTestSkipped('Needs to be refactored!');
 		$cfg = 'twitter {
 		 CONSUMER_KEY = L66
 		 CONSUMER_SECRET = Lge9
