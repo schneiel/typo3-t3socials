@@ -20,9 +20,12 @@
 
 			<label index="label_account">Account</label>
 			<label index="label_message">Message</label>
+			<label index="label_headline">Headline</label>
+			<label index="label_intro">Intro</label>
 			<label index="label_title">Title</label>
 			<label index="label_link">Link</label>
 			<label index="label_event">Event</label>
+			<label index="label_send_message">Send Message</label>
 			<label index="label_submit">Submit</label>
 			<label index="label_message_sent">Message successfully sent!</label>
 			<label index="label_pushd_noevents">You must configure your events in account!</label>

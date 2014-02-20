@@ -14,9 +14,12 @@ $EM_CONF[$_EXTKEY] = array(
 	'title' => 'T3socials',
 	'description' => 'Developer library to connect to social networks.',
 	'category' => 'service',
+	'author' => 'Michael Wagner, Rene Nitzsche',
+	'author_email' => 'kontakt@das-medienkombinat.de',
+	'author_company' => 'das MedienKombinat GmbH',
 	'shy' => 0,
 	'version' => '1.0.0',
-	'dependencies' => 'cms',
+	'dependencies' => 'cms, rn_base',
 	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
@@ -27,9 +30,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearcacheonload' => 0,
 	'lockType' => '',
-	'author' => 'Rene Nitzsche',
-	'author_email' => 'nitzsche@das-medienkombinat.de',
-	'author_company' => 'das MedienKombinat GmbH',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
 	'constraints' => array(
@@ -48,5 +48,3 @@ $EM_CONF[$_EXTKEY] = array(
 	'suggests' => array(
 	),
 );
-
-?>

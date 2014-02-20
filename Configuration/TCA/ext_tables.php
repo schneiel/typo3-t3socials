@@ -3,7 +3,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 $TCA['tx_t3socials_networks'] = array (
 	'ctrl' => array (
-		'title' => 'LLL:EXT:t3socials/Ressources/Lang/locallang_db.xml:tx_t3socials_networks',
+		'title' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks',
 		'label' => 'name',
 		'tstamp'    => 'tstamp',
 		'crdate'    => 'crdate',
@@ -14,6 +14,7 @@ $TCA['tx_t3socials_networks'] = array (
 		'enablecolumns' => array (
 			'disabled' => 'hidden',
 		),
+		'requestUpdate' => 'network',
 		'dynamicConfigFile' => t3lib_extMgm::extPath('t3socials').'Configuration/TCA/Network.php',
 		'iconfile'          => t3lib_extMgm::extRelPath('t3socials').'ext_icon.gif',
 	),

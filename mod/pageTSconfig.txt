@@ -9,6 +9,7 @@ mod {
 	t3socials {
 		template = EXT:t3socials/mod/template.html
 		communicator {
+			hybridauth.template = EXT:t3socials/mod/templates/moduleHybridauthDefault.html
 			template = EXT:t3socials/mod/templates/module.html
 		}
 	}

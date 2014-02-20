@@ -9,6 +9,7 @@
 
 			<label index="tx_t3socials_networks">Social Network Account</label>
 			<label index="tx_t3socials_networks_network">Social network</label>
+			<label index="tx_t3socials_networks_description">Description</label>
 			<label index="tx_t3socials_networks_name">Title</label>
 			<label index="tx_t3socials_networks_username">Username</label>
 			<label index="tx_t3socials_networks_password">Password</label>
@@ -16,6 +17,7 @@
 			<label index="tx_t3socials_networks_config">Configurations</label>
 
 			<label index="tx_t3socials_twitter">Twitter</label>
+			<label index="tx_t3socials_xing">XING</label>
 			<label index="tx_t3socials_facebook">Facebook</label>
 			<label index="tx_t3socials_googleplus">Google+</label>
 			<label index="tx_t3socials_pushd">Pushd</label>

@@ -1,37 +1,40 @@
 <?php
 /***************************************************************
- *  Copyright notice
- *
- *  (c) 2013 Rene Nitzsche (rene@system25.de)
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
+*  Copyright notice
+*
+ * (c) 2014 DMK E-BUSINESS GmbH <kontakt@dmk-ebusiness.de>
+ * All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
+require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_network_IConnection');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
 
 /**
  *
+ * @package tx_t3socials
+ * @subpackage tx_t3socials_network
+ * @author Rene Nitzsche <rene@system25.de>
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_IConnection {
+class tx_t3socials_network_pushd_Connection
+	implements tx_t3socials_network_IConnection {
 	public function __construct() {
 	}
 
@@ -47,7 +50,7 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
 		return $this->network;
 	}
 
-	public function sendMessage(tx_t3socials_models_Message $message) {
+	public function sendMessage(tx_t3socials_models_IMessage $message) {
 
 		$builder = $this->getBuilder($message->getMessageType());
 		$data = $builder->build($message, $this->getNetwork(), 'pushd.'.$message->getMessageType().'.');
@@ -78,7 +81,7 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
 			$data = $message->getData();
 			if(is_object($data) && isset($data->record))
 				$message->setData($data->record);
-			tx_rnbase_util_Logger::fatal('Error sending pushd-message ('.$message->getMessageType().')!', 't3socials', 
+			tx_rnbase_util_Logger::fatal('Error sending pushd-message ('.$message->getMessageType().')!', 't3socials',
 				array('message' => (array)$message, 'options'=>$options, 'url'=>$url));
 			$message->setData($data);
 //			throw new Exception('Message could not be send!');
@@ -98,7 +101,8 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
 
 	/**
 	 * Liefert statistische Infos zu einem Event
-	 * Leider nur die Anzahl der Nachrichten..
+	 * Leider nur die Anzahl der Nachrichten.
+	 *
 	 * @param string $event
 	 */
 	public function getEventStatus($event) {
@@ -110,10 +114,33 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
 		}
 	}
 
+
+
+	/**
+	 * @param array $config
+	 *
+	 * @return tx_t3socials_models_NetworkConfig
+	 */
+	public function getNetworkConfig(array $config = array()) {
+		$ts = <<<CONF
+pushd {
+	url =
+}
+CONF;
+		$config = tx_rnbase::makeInstance(
+			'tx_t3socials_models_NetworkConfig',
+			array(
+				'provider_id' => 'pushd',
+				'connector' => 'tx_t3socials_network_pushd_Connection',
+				'comunicator' => 'tx_t3socials_mod_handler_Pushd',
+				'default_configuration' => $ts,
+			)
+		);
+		return $config;
+	}
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']);
 }
-
-?>

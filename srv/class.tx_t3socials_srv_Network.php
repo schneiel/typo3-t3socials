@@ -1,44 +1,57 @@
 <?php
 /***************************************************************
- *  Copyright notice
- *
- *  (c) 2012 Rene Nitzsche (rene@system25.de)
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-require_once(PATH_t3lib.'class.t3lib_svbase.php');
+*  Copyright notice
+*
+ * (c) 2014 DMK E-BUSINESS GmbH <kontakt@dmk-ebusiness.de>
+ * All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
+require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_sv1_Base');
 tx_rnbase::load('tx_rnbase_util_DB');
 
 
 /**
  * Service for accessing network account information
  *
- * @author Rene Nitzsche
+ * @package tx_t3socials
+ * @subpackage tx_t3socials_network
+ * @author Rene Nitzsche <rene@system25.de>
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_Network extends t3lib_svbase {
+class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base {
+
+
+	/**
+	 * Return name of search class
+	 *
+	 * @return string
+	 */
+	public function getSearchClass() {
+		return 'tx_t3socials_search_Network';
+	}
+
 	/**
 	 * Send a message to all accounts assigned to given trigger
-	 * 
+	 *
 	 * @param tx_t3socials_models_IMessage $message
 	 * @param string $trigger single trigger value
-	 * param array[tx_t3socials_models_Network] $accounts
+	 * @param array[tx_t3socials_models_Network] $accounts
 	 */
 	public function sendMessage($message, $trigger, $options=array()) {
 		$accounts = $this->findAccounts($trigger);
@@ -59,7 +72,7 @@ class tx_t3socials_srv_Network extends t3lib_svbase {
 				$connection->sendMessage($message);
 			}
 			catch(Exception $e) {
-				tx_rnbase_util_Logger::fatal('Error sending message! ('.$trigger.')', 't3socials', 
+				tx_rnbase_util_Logger::fatal('Error sending message! ('.$trigger.')', 't3socials',
 					array('message' => (array)$message, 'account'=>$account->getName(), 'network'=>$account->getNetwork()));
 			}
 		}
@@ -70,25 +83,13 @@ class tx_t3socials_srv_Network extends t3lib_svbase {
 	 * Get the connection instance for this account
 	 *
 	 * @param tx_t3socials_models_Network $account
+	 *
+	 * @deprecated tx_t3socials_network_Config::getNetworkConnection($account)
 	 */
 	public function getConnection($account) {
-		$connectionClass = $account->getConfigData($account->getNetwork().'.connection');
-		if($connectionClass)
-			return tx_rnbase::makeInstance($connectionClass);
-		// Load defaults
-		switch ($account->getNetwork()) {
-			case 'twitter':
-				return tx_rnbase::makeInstance('tx_t3socials_network_twitter_Connection');
-			break;
-			case 'pushd':
-				return tx_rnbase::makeInstance('tx_t3socials_network_pushd_Connection');
-			break;
-
-			default:
-				throw new Exception('Unknown network type: ' . $account->getNetwork());
-			break;
-		}
+		return tx_t3socials_network_Config::getNetworkConnection($account);
 	}
+
 	public function findAccounts($action) {
 		$fields['NETWORK.ACTIONS'][OP_LIKE] = $action; // FIXME: OP_INSET
 		$options = array();
@@ -106,6 +107,7 @@ class tx_t3socials_srv_Network extends t3lib_svbase {
 	 *
 	 * @param array $fields
 	 * @param array $options
+	 *
 	 * @return array of tx_t3socials_models_Network
 	 */
 	public function search($fields, $options) {
@@ -117,8 +119,11 @@ class tx_t3socials_srv_Network extends t3lib_svbase {
 	/**
 	 * Check if a record was send to networks before
 	 *
+	 * @TODO: auf count umstellen!?
+	 *
 	 * @param int $uid
 	 * @param string $tablname
+	 *
 	 * @return boolean
 	 */
 	public function hasSent($uid, $tablename) {
@@ -127,6 +132,7 @@ class tx_t3socials_srv_Network extends t3lib_svbase {
 		$rows = tx_rnbase_util_DB::doSelect('*', 'tx_t3socials_autosends', $options);
 		return !empty($rows);
 	}
+
 	public function setSent($uid, $tablename) {
 		if($this->hasSent($uid, $tablename)) return;
 		$values = array(

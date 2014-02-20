@@ -2,8 +2,8 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 Rene Nitzsche (rene@system25.de)
-*  All rights reserved
+ * (c) 2014 DMK E-BUSINESS GmbH <kontakt@dmk-ebusiness.de>
+ * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
 *  free software; you can redistribute it and/or modify
@@ -21,55 +21,88 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
-tx_rnbase::load('tx_rnbase_model_base');
+require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_t3socials_models_Base');
 
 
 /**
+ *
+ * @package tx_t3socials
+ * @subpackage tx_t3socials_models
+ * @author Rene Nitzsche <rene@system25.de>
+ * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
+ * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_models_Network extends tx_rnbase_model_base {
-	public function __construct($rowOrUid) {
-		parent::__construct($rowOrUid);
+class tx_t3socials_models_Network
+	extends tx_t3socials_models_Base {
+
+	/**
+	 * @var tx_rnbase_configurations
+	 */
+	private $configurations = NULL;
+
+	/**
+	 * Inits the model instance either with uid or a complete data record.
+	 * As the result the instance should be completly loaded.
+	 *
+	 * @param mixed $rowOrUid
+	 */
+	function init($rowOrUid) {
+		parent::init($rowOrUid);
 		$this->initConfig();
 	}
+
 	/**
 	 * Extract data from config
-	 *
 	 */
 	protected function initConfig() {
-		$ts = $this->record['config'];
+		$ts = $this->getProperty('config');
 		// This handles ts setup from flexform
+		/* @var $tsParser t3lib_TSparser */
 		$tsParser = t3lib_div::makeInstance('t3lib_TSparser');
 //		$tsParser->setup = $this->_dataStore->getArrayCopy();
 		$tsParser->parse($ts);
 		$configArr = $tsParser->setup;
 		tx_rnbase::load('tx_rnbase_configurations');
-		$this->config = new tx_rnbase_configurations();
-		$this->config->init($configArr, false, '', '');
+		$this->configurations = new tx_rnbase_configurations();
+		$this->configurations->init($configArr, false, '', '');
 
 	}
 	/**
 	 * Returns the network identifier
+	 *
 	 * @return string
 	 */
 	public function getNetwork() {
-		return $this->record['network'];
+		return $this->getProperty('network');
+	}
+	/**
+	 * @return string
+	 */
+	public function getName() {
+		return $this->getProperty('name');
+	}
+	/**
+	 * @return string
+	 */
+	public function getUsername() {
+		return $this->getProperty('username');
 	}
 	/**
 	 * Returns the network label
 	 * @return string
 	 */
-	public function getName() {
-		return $this->record['name'];
+	public function getPassword() {
+		return $this->getProperty('password');
 	}
+
 	/**
-   * Returns configured data
-   * @param string $confId
-   */
+    * Returns configured data
+    *
+    * @param string $confId
+    */
 	public function getConfigData($confId) {
-		return $this->config->get($confId);
+		return $this->configurations->get($confId);
 	}
 	/**
 	 * Returns the configuration for this account
@@ -77,9 +110,17 @@ class tx_t3socials_models_Network extends tx_rnbase_model_base {
 	 * @return tx_rnbase_configurations
 	 */
 	public function getConfigurations() {
-		return $this->config;
+		return $this->configurations;
 	}
-  function getTableName(){return 'tx_t3socials_networks';}
+
+	/**
+	 * Liefert den Namen der gemappten Tabelle
+	 *
+	 * @return string
+	 */
+	function getTableName(){
+		return 'tx_t3socials_networks';
+	}
 
 }
 

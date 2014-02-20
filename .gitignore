@@ -2,3 +2,4 @@ tmp/
 .project
 .buildpath
 .settings
+HybridAuth.LOG
