@@ -25,17 +25,25 @@ require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
 
 /**
- *
+ * Message Builder Testcase
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_tests_network_MessageBuilder_testcase
 	extends tx_t3socials_tests_BaseTestCase {
 
-
+	/**
+	 * Test build Method
+	 *
+	 * @group unit
+	 * @test
+	 *
+	 * @return void
+	 */
 	public function testBuild() {
 		$builder = $this->getMessageBuilder();
 		$message = tx_t3socials_tests_Mock::getMessageMock();
@@ -47,6 +55,8 @@ class tx_t3socials_tests_network_MessageBuilder_testcase
 	}
 
 	/**
+	 * Liefert den Basis Message Builder
+	 *
 	 * @return tx_t3socials_network_MessageBuilder
 	 */
 	protected function getMessageBuilder() {

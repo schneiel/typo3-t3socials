@@ -1,15 +1,5 @@
 <?php
 
-########################################################################
-# Extension Manager/Repository config file for ext "rn_base".
-#
-# Auto generated 14-01-2012 13:44
-#
-# Manual updates:
-# Only the data in the array - everything else is removed by next
-# writing. "version" and "dependencies" must not be touched!
-########################################################################
-
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'T3socials',
 	'description' => 'Developer library to connect to social networks.',

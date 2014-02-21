@@ -39,7 +39,8 @@ tx_rnbase::load('tx_rnbase_util_Logger');
  * @package tx_t3socials
  * @subpackage tx_t3socials_provider
  * @author Rene Nitzsche <rene@system25.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_provider_PushNotifications
 	extends tx_t3rest_provider_AbstractBase {

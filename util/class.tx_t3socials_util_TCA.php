@@ -28,7 +28,8 @@ require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
  * @package tx_t3socials
  * @subpackage tx_t3socials_util
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_util_TCA {
 

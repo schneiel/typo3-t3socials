@@ -31,16 +31,17 @@ tx_rnbase::load('tx_t3socials_models_IMessage');
  * @subpackage tx_t3socials_models
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_models_Message
 	extends tx_t3socials_models_Base
 		implements tx_t3socials_models_IMessage {
 
 	/**
+	 * Liefert eine Instanz des Objekts
 	 *
 	 * @param array|string $messageType
-	 *
 	 * @return tx_t3socials_models_Message
 	 */
 	public static function getInstance($messageType = 'manually') {
@@ -48,14 +49,19 @@ class tx_t3socials_models_Message
 	}
 
 	/**
+	 * Initialisieren
+	 *
 	 * @param string|array $rowOrUid message type or array with message data
 	 * 		array can contain (message_type, headline, intro, message, url, data)
+	 * @return void
 	 */
-	function init($rowOrUid) {
+	protected function init($rowOrUid) {
+		// wir haben einen kompletten record
 		if (is_array($rowOrUid)) {
 			$this->uid = $rowOrUid['message_type'];
 			$this->record = $rowOrUid;
 		}
+		// wir haben nur den Typ
 		elseif (is_string($rowOrUid)) {
 			$this->setMessageType($rowOrUid);
 		}
@@ -68,26 +74,36 @@ class tx_t3socials_models_Message
 
 
 	/**
+	 * Liefert den Typ.
+	 *
 	 * @return string
 	 */
 	public function getMessageType() {
 		return $this->getProperty('message_type');
 	}
 	/**
+	 * SetzSetzt den Typ.
+	 *
 	 * @param string $value
+	 * @return tx_t3socials_models_Message
 	 */
 	public function setMessageType($value) {
 		return $this->setProperty('message_type', $value);
 	}
 
 	/**
+	 * Liefert die Headline.
+	 *
 	 * @return string
 	 */
 	public function getHeadline() {
 		return $this->getProperty('headline');
 	}
 	/**
+	 * Setzt die Headline.
+	 *
 	 * @param string $value
+	 * @return tx_t3socials_models_Message
 	 */
 	public function setHeadline($value) {
 		return $this->setProperty('headline', $value);
@@ -95,6 +111,8 @@ class tx_t3socials_models_Message
 
 
 	/**
+	 * Liefert den Introtext.
+	 *
 	 * @return string
 	 */
 	public function getIntro() {
@@ -102,7 +120,10 @@ class tx_t3socials_models_Message
 	}
 
 	/**
+	 * Setzt den Introtext.
+	 *
 	 * @param string $value
+	 * @return tx_t3socials_models_Message
 	 */
 	public function setIntro($value) {
 		return $this->setProperty('intro', $value);
@@ -110,6 +131,8 @@ class tx_t3socials_models_Message
 
 
 	/**
+	 * Liefert den Nachrichtentext.
+	 *
 	 * @return string
 	 */
 	public function getMessage() {
@@ -117,7 +140,10 @@ class tx_t3socials_models_Message
 	}
 
 	/**
+	 * Setzt den Nachrichtentext.
+	 *
 	 * @param string $value
+	 * @return tx_t3socials_models_Message
 	 */
 	public function setMessage($value) {
 		return $this->setProperty('message', $value);
@@ -125,6 +151,8 @@ class tx_t3socials_models_Message
 
 
 	/**
+	 * Liefert die URL.
+	 *
 	 * @return string
 	 */
 	public function getUrl() {
@@ -132,7 +160,10 @@ class tx_t3socials_models_Message
 	}
 
 	/**
+	 * Setzt die URL.
+	 *
 	 * @param string $value
+	 * @return tx_t3socials_models_Message
 	 */
 	public function setUrl($value) {
 		return $this->setProperty('url', $value);
@@ -140,6 +171,8 @@ class tx_t3socials_models_Message
 
 
 	/**
+	 * Liefert die Ursprungsdaten.
+	 *
 	 * @return mixed
 	 */
 	public function getData() {
@@ -147,7 +180,10 @@ class tx_t3socials_models_Message
 	}
 
 	/**
+	 * Setzt die Ursprungsdaten.
+	 *
 	 * @param string $value
+	 * @return tx_t3socials_models_Message
 	 */
 	public function setData($value) {
 		return $this->setProperty('data', $value);

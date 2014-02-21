@@ -30,9 +30,11 @@ tx_rnbase::load('tx_t3socials_mod_handler_HybridAuth');
  * @package tx_t3socials
  * @subpackage tx_t3socials_mod
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth {
+class tx_t3socials_mod_handler_Xing
+	extends tx_t3socials_mod_handler_HybridAuth {
 
 	/**
 	 * liefert die network id. (twitter, xing, ...)
@@ -57,16 +59,15 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth 
 	 * um die Message anzupassen oder zu validieren.
 	 *
 	 * @param tx_t3socials_models_Message $message
-	 *
 	 * @return tx_t3socials_models_Message|string with error message
 	 */
 	protected function prepareMessage(tx_t3socials_models_Message $message) {
 		$message = parent::prepareMessage($message);
 		if ($message instanceof tx_t3socials_models_Message) {
 			$msg = $message->getMessage();
-			if(strlen($msg) > 420) {
+			if (strlen($msg) > 420) {
 				$info = 'Meldung zu lang. Sie dürfen maximal 420 Zeichen versenden.<br />';
-				$info .= ' Aktuell '.strlen($msg).' Zeichen.';
+				$info .= ' Aktuell ' . strlen($msg) . ' Zeichen.';
 				return $info;
 			}
 		}
@@ -75,6 +76,6 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth 
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php']);
 }

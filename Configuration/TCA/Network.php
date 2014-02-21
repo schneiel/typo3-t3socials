@@ -1,5 +1,7 @@
- <?php
-if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
+<?php
+if (!defined ('TYPO3_MODE')) {
+	die ('Access denied.');
+}
 
 $TCA['tx_t3socials_networks'] = array (
 	'ctrl' => $TCA['tx_t3socials_networks']['ctrl'],
@@ -67,7 +69,8 @@ $TCA['tx_t3socials_networks'] = array (
 		'config' => Array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_config',
-			'displayCond' => 'FIELD:network:REQ:TRUE', // Show only, if an Network was Set!
+			// Show only, if an Network was Set!
+			'displayCond' => 'FIELD:network:REQ:TRUE',
 			'config' => Array (
 				'type' => 'text',
 				'cols' => '30',
@@ -79,7 +82,7 @@ $TCA['tx_t3socials_networks'] = array (
 						'notNewRecords' => 1,
 						'userFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->insertNetworkDefaultConfig',
 						'params' => array(
-							'insertBetween' => array('>', "</textarea"),
+							'insertBetween' => array('>', '</textarea'),
 							'onMatchOnly' => '/^\s*$/',
 						),
 					),
@@ -89,7 +92,8 @@ $TCA['tx_t3socials_networks'] = array (
 		'description' => Array (
 			'exclude' => 0,
 			'label' => '',
-			'displayCond' => 'FIELD:network:REQ:TRUE', // Show only, if an Network was Set!
+			// Show only, if an Network was Set!
+			'displayCond' => 'FIELD:network:REQ:TRUE',
 			'config' => Array (
 				'type' => 'user',
 				'userFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->insertNetworkDescription',

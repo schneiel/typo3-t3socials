@@ -30,7 +30,8 @@ tx_rnbase::load('tx_t3socials_models_Base');
  * @package tx_t3socials
  * @subpackage tx_t3socials_models
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_models_NetworkConfig
 	extends tx_t3socials_models_Base {
@@ -40,12 +41,15 @@ class tx_t3socials_models_NetworkConfig
 	 * As the result the instance should be completly loaded.
 	 *
 	 * @param mixed $rowOrUid
+	 * @return void
 	 */
-	function init($rowOrUid) {
-		if(is_array($rowOrUid)) {
+	protected function init($rowOrUid) {
+		// wir haben bereits einen record
+		if (is_array($rowOrUid)) {
 			$this->uid = isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['provider_id'];
 			$this->record = $rowOrUid;
 		}
+		// wir haben nur eine uid
 		else {
 			$this->uid = $rowOrUid;
 			$this->record = array();
@@ -53,18 +57,26 @@ class tx_t3socials_models_NetworkConfig
 	}
 
 	/**
+	 * Liefert die Provider ID.
+	 *
 	 * @return string
 	 */
 	public function getProviderId() {
 		return $this->uid;
 	}
+
 	/**
+	 * Liefert den Übersetzten Tirel der Provider ID.
+	 *
 	 * @return string
 	 */
 	public function getProviderTitle() {
 		return tx_t3socials_network_Config::translateNetwork($this->getProviderId());
 	}
+
 	/**
+	 * Liefert die Provider-Name für HybridAuth.
+	 *
 	 * @return string
 	 */
 	public function getHybridAuthProviderName() {
@@ -72,24 +84,35 @@ class tx_t3socials_models_NetworkConfig
 	}
 
 	/**
+	 * Liefert die Beschreibung
+	 *
 	 * @return string
 	 */
 	public function getDescription() {
 		return $this->getProperty('description');
 	}
+
 	/**
+	 * Liefert die Default TS Konfiguration.
+	 *
 	 * @return string
 	 */
 	public function getDefaultConfiguration() {
 		return $this->getProperty('default_configuration');
 	}
+
 	/**
+	 * Liefert den Klassenname des Connectors.
+	 *
 	 * @return string
 	 */
 	public function getConnectorClass() {
 		return $this->getProperty('connector');
 	}
+
 	/**
+	 * Liefert den Klassenname des Cominicators.
+	 *
 	 * @return string
 	 */
 	public function getComunicatorClass() {

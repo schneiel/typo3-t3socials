@@ -24,19 +24,23 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 
 /**
+ * Netzwerk Config
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_Config {
 
 	private static $networks = array();
 
 	/**
+	 * Wir registrieren ein neues Netzwerk
 	 *
 	 * @param string $connectionClass
+	 * @return void
 	 */
 	public static function registerNetwork($connectionClass) {
 		$id = strtolower($id);
@@ -46,7 +50,10 @@ class tx_t3socials_network_Config {
 
 		$con = tx_rnbase::makeInstance($connectionClass);
 		if (!$con instanceof tx_t3socials_network_IConnection) {
-			throw new Exception('The connection "'.get_class($con).'" has to implement the interface "tx_t3socials_network_IConnection".');
+			throw new Exception(
+				'The connection "' . get_class($con) .
+				'" has to implement the interface "tx_t3socials_network_IConnection".'
+			);
 		}
 
 		$config = $con->getNetworkConfig();
@@ -56,6 +63,8 @@ class tx_t3socials_network_Config {
 	}
 
 	/**
+	 * Liefert alle Netzwerk ID's
+	 *
 	 * @return array
 	 */
 	public static function getNewtorkIds() {
@@ -63,11 +72,10 @@ class tx_t3socials_network_Config {
 	}
 
 	/**
+	 * Liefert eine Netzwerkkonfiguration eines bestimmten Netzwerks.
 	 *
-	 * @param unknown_type $network
-	 *
+	 * @param string|tx_t3socials_models_Network $network
 	 * @throws Exception
-	 *
 	 * @return tx_t3socials_models_NetworkConfig
 	 */
 	public static function getNetworkConfig($network) {
@@ -80,6 +88,8 @@ class tx_t3socials_network_Config {
 	}
 
 	/**
+	 * Liefert eine Liste mit allen Comunicatoren für das BE-Modul.
+	 *
 	 * @return array
 	 */
 	public static function getNewtorkComunicators() {
@@ -92,7 +102,10 @@ class tx_t3socials_network_Config {
 			}
 			$comunicator = tx_rnbase::makeInstance($class);
 			if (!$comunicator instanceof tx_rnbase_mod_IModHandler) {
-				throw new Exception('The $comunicator "'.get_class($comunicator).'" has to implement the interface "tx_rnbase_mod_IModHandler".');
+				throw new Exception(
+					'The $comunicator "' . get_class($comunicator) .
+					'" has to implement the interface "tx_rnbase_mod_IModHandler".'
+				);
 			}
 			$return[] = $comunicator;
 		}
@@ -100,20 +113,22 @@ class tx_t3socials_network_Config {
 	}
 
 	/**
+	 * Liefert ein Connector für ein Konfigurierter-Netzwerk.
 	 *
 	 * @param string|tx_t3socials_models_Network $network
-	 *
 	 * @throws Exception
-	 *
 	 * @return tx_t3socials_network_IConnection
 	 */
 	public static function getNetworkConnection($network) {
 		if ($network instanceof tx_t3socials_models_Network) {
-			$class = $network->getConfigData($network->getNetwork().'.connection');
+			$class = $network->getConfigData($network->getNetwork() . '.connection');
 			if ($class) {
 				$con = tx_rnbase::makeInstance($class);
 				if (!$con instanceof tx_t3socials_network_IConnection) {
-					throw new Exception('The connection "'.get_class($con).'" has to implement the interface "tx_t3socials_network_IConnection".');
+					throw new Exception(
+						'The connection "' . get_class($con) .
+						'" has to implement the interface "tx_t3socials_network_IConnection".'
+					);
 				}
 				return $con;
 			}
@@ -125,7 +140,10 @@ class tx_t3socials_network_Config {
 		}
 		$con = tx_rnbase::makeInstance($class);
 		if (!$con instanceof tx_t3socials_network_IConnection) {
-			throw new Exception('The connection "'.get_class($con).'" has to implement the interface "tx_t3socials_network_IConnection".');
+			throw new Exception(
+				'The connection "' . get_class($con) .
+				'" has to implement the interface "tx_t3socials_network_IConnection".'
+			);
 		}
 		if ($network instanceof tx_t3socials_models_Network) {
 			$con->setNetwork($network);
@@ -135,19 +153,20 @@ class tx_t3socials_network_Config {
 
 
 	/**
-	 * @param string|tx_t3socials_models_Network $network
+	 * Übersetzt eine NetzwerkID zu einem Titel.
 	 *
+	 * @param string|tx_t3socials_models_Network $network
 	 * @return string
 	 */
 	public static function translateNetwork($network) {
 		$id = $network instanceof tx_t3socials_models_Network
 			? $network->getNetwork() : $network;
 		tx_rnbase::load('tx_rnbase_util_Misc');
-		$title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_'.$id);
+		$title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_' . $id);
 		return empty($title) ? $id : $title;
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']);
 }

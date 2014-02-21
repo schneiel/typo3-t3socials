@@ -24,16 +24,19 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 
 /**
- *
+ * HybridAuth Interface für Connections
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 interface tx_t3socials_network_hybridauth_Interface {
 
 	/**
+	 * Liefert die Konfiguration für HybridAuth.
+	 *
 	 * @return array
 	 */
 	public function getHybridAuthConfig(); /*{
@@ -43,15 +46,14 @@ interface tx_t3socials_network_hybridauth_Interface {
 			'keys' => array(
 				'key' => $this->getNetwork()->getUsername(),
 				'secret' => $this->getNetwork()->getPassword(),
-// 				'access_token' => 'f7e26318fa155eafd135',
-// 				'access_token_secret' => '6330a31821856fc53665',
+ 				'access_token' => 'f7e26318fa155eafd135',
+ 				'access_token_secret' => '6330a31821856fc53665',
 			)
 		);
-	} */
-
-
+	}*/
 
 	/**
+	 * Liefert den HybridAuth Provider
 	 *
 	 * @return Hybrid_Provider_Adapter
 	 */
@@ -59,6 +61,6 @@ interface tx_t3socials_network_hybridauth_Interface {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Interface.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Interface.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Interface.php']);
 }

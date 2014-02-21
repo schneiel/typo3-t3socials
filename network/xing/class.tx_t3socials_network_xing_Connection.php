@@ -26,17 +26,20 @@ tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
 
 
 /**
+ * XING Connector
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_xing_Connection
 	extends tx_t3socials_network_hybridauth_Connection {
 
 	/**
 	 * Liefert den Klassennamen der Message Builder Klasse
+	 *
 	 * @return string
 	 */
 	protected function getBuilderClass() {
@@ -44,6 +47,8 @@ class tx_t3socials_network_xing_Connection
 	}
 
 	/**
+	 * Liefert die Provider ID für HybridAuth.
+	 *
 	 * @return string
 	 */
 	protected function getHybridAuthProviderId() {
@@ -51,9 +56,10 @@ class tx_t3socials_network_xing_Connection
 	}
 
 	/**
-	 * @param array $config
+	 * Liefert die Konfiguration für HybridAuth.
 	 *
-	 * @return tx_t3socials_models_NetworkConfig
+	 * @param array $config
+	 * @return array
 	 */
 	public function getNetworkConfig(array $config = array()) {
 		$config['provider_id'] = strtolower($this->getHybridAuthProviderId());
@@ -61,24 +67,24 @@ class tx_t3socials_network_xing_Connection
 		$config['connector'] = 'tx_t3socials_network_xing_Connection';
 		$config['comunicator'] = 'tx_t3socials_mod_handler_Xing';
 		$config['description']
-			= 'Please enter the customer key into the field "Username"'
-			. ' and the customer secret into the field "Password".' . CRLF
-			. '###MORE###' . CRLF
-			. ' To authenticate with a specific account, you has to '
-			. ' put the customer token in the fields "access_token" and'
-			. ' "access_token_secret" of the Configuration.' . CRLF
-			. ' You can go to the T3Socials User Tools to autehtificate.' . CRLF
-			. ' a customer end get the tokens from there.' . CRLF;
+			= 'Please enter the customer key into the field "Username"' .
+				' and the customer secret into the field "Password".' . CRLF .
+				'###MORE###' . CRLF .
+				' To authenticate with a specific account, you has to ' .
+				' put the customer token in the fields "access_token" and' .
+				' "access_token_secret" of the Configuration.' . CRLF .
+				' You can go to the T3Socials User Tools to autehtificate.' . CRLF .
+				' a customer end get the tokens from there.' . CRLF;
 		$config['default_configuration']
-			= 'xing {'. CRLF
-			. '	access_token =' . CRLF
-			. '	access_token_secret =' . CRLF
-			. '}' ;
+			= 'xing {' . CRLF .
+				'	access_token =' . CRLF .
+				'	access_token_secret =' . CRLF .
+			'}';
 		return parent::getNetworkConfig($config);
 	}
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']);
 }

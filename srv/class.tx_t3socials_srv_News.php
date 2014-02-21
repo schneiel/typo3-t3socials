@@ -32,19 +32,24 @@ tx_rnbase::load('tx_rnbase_util_DB');
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_News extends t3lib_svbase {
+class tx_t3socials_srv_News
+	extends t3lib_svbase {
 
 	/**
 	 * Verbreitung einer News an soziale Netzwerke
 	 *
 	 * @param tx_rnbase_model_base $news
+	 * @return void
 	 */
 	public function sendNews(tx_rnbase_model_base $news) {
 		// Prüfen, ob die News schon versendet wurde
 		$srv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
-		if($srv->hasSent($news->getUid(), 'tt_news')) return;
+		if ($srv->hasSent($news->getUid(), 'tt_news')) {
+			return;
+		}
 
 		$networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
 
@@ -54,31 +59,36 @@ class tx_t3socials_srv_News extends t3lib_svbase {
 		// Absender der Meldung an alle registrierten Accounts
 		try {
 			$networkSrv->sendMessage($message, 'news', array('urlbuilder' => array($this, 'cbBuildUrl')));
-		}
-		catch(Exception $e) {
+		} catch (Exception $e) {
 			// Die Message anpassen
 			$data = $message->getData();
-			if(is_object($data) && isset($data->record))
+			if (is_object($data) && isset($data->record)) {
 				$message->setData($data->record);
+			}
 			tx_rnbase_util_Logger::fatal(
-				'Error sending Status-Update ('.$message->getMessageType().')!',
+				'Error sending Status-Update (' . $message->getMessageType() . ')!',
 				't3socials',
 				array(
 					'Status-Update' => $twitterMessage,
 					'Message' => $message,
 					'Builder Class' => get_class($builder),
-					'Exception'=> $e->__toString(),
+					'Exception' => $e->__toString(),
 				)
 			);
 			$message->setData($data);
 		}
 		$srv->setSent($news->getUid(), 'tt_news');
 	}
+
+	/**
+	 * Erzeugt ein Message Model
+	 *
+	 * @param unknown_type $news
+	 * @return tx_t3socials_models_Message
+	 */
 	protected function buildGenericMessage($news) {
-		/**
-		 * @var tx_t3socials_models_Message
-		 */
-		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'news');
+		tx_rnbase::load(tx_t3socials_models_Message);
+		$message = tx_t3socials_models_Message::getInstance('news');
 		$message->setHeadline($news->getTitle());
 		$message->setIntro($news->getShort());
 		$message->setMessage($news->getBodytext());
@@ -90,7 +100,6 @@ class tx_t3socials_srv_News extends t3lib_svbase {
 	 *
 	 * @param tx_t3socials_model_Message $message
 	 * @param tx_t3socials_models_Network $account
-	 *
 	 * @return string
 	 */
 	public function cbBuildUrl($message, $account) {
@@ -99,9 +108,10 @@ class tx_t3socials_srv_News extends t3lib_svbase {
 		tx_rnbase::load('tx_rnbase_util_Misc');
 		tx_rnbase_util_Misc::prepareTSFE();
 		$link = $config->createLink();
-		$link->designatorString = 'tx_ttnews'; // tx_ttnews[tt_news]
-		$link->initByTS($config, $account->getNetwork().'.news.link.show.', array('tt_news'=>$news->getUid()));
-		$url = $link->makeUrl(false);
+		// tx_ttnews[tt_news]
+		$link->designatorString = 'tx_ttnews';
+		$link->initByTS($config, $account->getNetwork() . '.news.link.show.', array('tt_news' => $news->getUid()));
+		$url = $link->makeUrl(FALSE);
 		return $url;
 	}
 
@@ -109,14 +119,13 @@ class tx_t3socials_srv_News extends t3lib_svbase {
 	 * Load a news instance
 	 *
 	 * @param int $uid
-	 *
-	 * @return tx_rnbase_model_base or null
+	 * @return tx_rnbase_model_base|NULL
 	 */
 	public function makeInstance($uid) {
 		$options['wrapperclass'] = 'tx_rnbase_model_base';
-		$options['where'] = 'uid='.intval($uid);
+		$options['where'] = 'uid=' . (int) $uid;
 		$rows = tx_rnbase_util_DB::doSelect('*', 'tt_news', $options);
-		return !empty($rows) ? $rows[0] : null;
+		return !empty($rows) ? $rows[0] : NULL;
 	}
 }
 

@@ -26,19 +26,24 @@ tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
 tx_rnbase::load('tx_t3socials_network_Connection');
 
 /**
+ * Connection Testcase
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_tests_network_Connection_testcase
 	extends tx_t3socials_tests_BaseTestCase {
 
 	/**
+	 * Test getHybridAuthConfig Method
 	 *
 	 * @group unit
 	 * @test
+	 *
+	 * @return void
 	 */
 	public function testGetHybridAuthConfig() {
 		$connection = $this->getConnectionMock();
@@ -62,9 +67,12 @@ abstract class tx_t3socials_tests_network_Connection_testcase
 	}
 
 	/**
+	 * Test getProvider Method
 	 *
 	 * @group unit
 	 * @test
+	 *
+	 * @return void
 	 */
 	public function testGetProvider() {
 		if (headers_sent()) {
@@ -81,9 +89,12 @@ abstract class tx_t3socials_tests_network_Connection_testcase
 	}
 
 	/**
+	 * Test buildStatusMessage Method
 	 *
 	 * @group unit
 	 * @test
+	 *
+	 * @return void
 	 */
 	public function testBuildStatusMessage() {
 		$connection = $this->getConnectionMock();
@@ -126,15 +137,18 @@ abstract class tx_t3socials_tests_network_Connection_testcase
 	/**
 	 * returns object of network
 	 *
+	 * @throws Exception
 	 * @return tx_t3socials_models_Network
 	 */
 	protected function getNetworkMock() {
 		$network = $this->getNetwork();
+		// haben ein network model
 		if ($network instanceof tx_t3socials_models_Network) {
 			$network->uid = $network->record['uid'] = 1;
 			return $network;
 		}
-		elseif(is_array($network)) {
+		// wir erzeugen ein model
+		elseif (is_array($network)) {
 			$network['uid'] = 1;
 			return tx_rnbase::makeInstance(
 				'tx_t3socials_models_Network',
@@ -152,7 +166,7 @@ abstract class tx_t3socials_tests_network_Connection_testcase
 	 */
 	protected function getConnectionMock() {
 		$connection = $this->getConnection();
-		if(is_string($connection)) {
+		if (is_string($connection)) {
 			$connection = tx_rnbase::makeInstance($connection);
 		}
 		if (!$connection instanceof tx_t3socials_network_Connection) {

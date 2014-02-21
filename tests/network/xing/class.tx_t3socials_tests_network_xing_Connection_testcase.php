@@ -24,11 +24,13 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_tests_network_Connection_testcase');
 /**
+ * Xing Connection Test
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_tests_network_xing_Connection_testcase
 	extends tx_t3socials_tests_network_Connection_testcase {
@@ -71,17 +73,16 @@ class tx_t3socials_tests_network_xing_Connection_testcase
 	 * @return string|tx_t3socials_network_Connection
 	 */
 	protected function getBuiltMessage() {
-		return 'Überschrift' . CRLF . CRLF
-			. 'Intro.' . CRLF
-			. 'Enthält bevorzugten Text.' . CRLF
-			. 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. '
-			. 'Aenean commodo ligula eget dolor. Aenean massa. '
-			. 'Cum sociis natoque penatibus et magnis dis parturient montes, '
-			. 'nascetur ridiculus mus. Donec quam felis, ultricies nec, '
-			. 'pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. '
-			. 'Donec pede justo, fringilla vel, ...' . CRLF . CRLF
-			. 'http://www.dmk-ebusiness.de/'
-		;
+		return 'Überschrift' . CRLF . CRLF .
+			'Intro.' . CRLF .
+			'Enthält bevorzugten Text.' . CRLF .
+			'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' .
+			'Aenean commodo ligula eget dolor. Aenean massa. ' .
+			'Cum sociis natoque penatibus et magnis dis parturient montes, ' .
+			'nascetur ridiculus mus. Donec quam felis, ultricies nec, ' .
+			'pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. ' .
+			'Donec pede justo, fringilla vel, ...' . CRLF . CRLF .
+			'http://www.dmk-ebusiness.de/';
 	}
 
 }

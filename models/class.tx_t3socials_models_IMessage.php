@@ -30,65 +30,93 @@ require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
  * @subpackage tx_t3socials_models
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 interface tx_t3socials_models_IMessage {
 
 	/**
+	 * Liefert den Typ.
+	 *
 	 * @return string
 	 */
 	public function getMessageType();
 
 	/**
+	 * Liefert die Headline.
+	 *
 	 * @return string
 	 */
 	public function getHeadline();
 	/**
+	 * Setzt die Headline.
+	 *
 	 * @param string $value
+	 * @return void
 	 */
 	public function setHeadline($value);
 
 
 	/**
+	 * Liefert den Introtext.
+	 *
 	 * @return string
 	 */
 	public function getIntro();
 
 	/**
+	 * Setzt den Introtext.
+	 *
 	 * @param string $value
+	 * @return void
 	 */
 	public function setIntro($value);
 
 
 	/**
+	 * Liefert den Nachrichtentext.
+	 *
 	 * @return string
 	 */
 	public function getMessage();
 
 	/**
+	 * Setztden Nachrichtentext.
+	 *
 	 * @param string $value
+	 * @return void
 	 */
 	public function setMessage($value);
 
 
 	/**
+	 * Liefert die URL.
+	 *
 	 * @return string
 	 */
 	public function getUrl();
 
 	/**
+	 * Setzt die URL.
+	 *
 	 * @param string $value
+	 * @return void
 	 */
 	public function setUrl($value);
 
 
 	/**
+	 * Liefert die Ursprungsdaten.
+	 *
 	 * @return mixed
 	 */
 	public function getData();
 
 	/**
+	 * Setzt die Ursprungsdaten.
+	 *
 	 * @param string $value
+	 * @return void
 	 */
 	public function setData($value);
 

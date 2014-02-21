@@ -30,81 +30,98 @@ tx_rnbase::load('tx_rnbase_model_base');
  * @package tx_t3socials
  * @subpackage tx_t3socials_models
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_models_Base extends tx_rnbase_model_base {
+class tx_t3socials_models_Base
+	extends tx_rnbase_model_base {
 
 	/**
-	 * @param string $property
+	 * Setzt einen Wert oder ersetzt alle Werte
 	 *
-	 * @return string
+	 * @param string|array $property
+	 * @param mixed $value
+	 * @return tx_t3socials_models_Base
 	 */
-	protected function setProperty($property, $value = null) {
+	protected function setProperty($property, $value = NULL) {
+		// wir überschreiben den kompletten record
 		if (is_array($property)) {
 			$this->init($property);
 		}
+		// wir setzen einen bestimmten wert
 		else {
 			$this->record[$property] = $value;
 		}
+		return $this;
 	}
 	/**
-	 * @param string $property
+	 * Liefert einen bestimmten Wert oder alle.
 	 *
+	 * @param string $property
 	 * @return string
 	 */
-	protected function getProperty($property = null) {
+	protected function getProperty($property = NULL) {
 		if (is_null($property)) {
 			return $this->record;
 		}
 		return isset($this->record[$property])
 			? $this->record[$property]
-			: null;
+			: NULL;
 	}
 
-    /**
-     * Converts field names for setters and geters
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    protected function underscore($string) {
-    	return tx_rnbase_util_Misc::camelCaseToLowerCaseUnderscored($string);
-        #return strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $string));
-    }
+	/**
+	 * Converts field names for setters and geters
+	 *
+	 * @param string $string
+	 * @return string
+	 */
+	protected function underscore($string) {
+		return tx_rnbase_util_Misc::camelCaseToLowerCaseUnderscored($string);
+		// return strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $string));
+	}
 
 	/**
 	 * Set/Get attribute wrapper
 	 *
 	 * @param string $method
 	 * @param array $args
-	 *
+	 * @throws Exception
 	 * @return mixed
 	 */
-	public function __call($method, $args)
-	{
+	public function __call($method, $args) {
 		switch (substr($method, 0, 3)) {
-			case 'get' :
-				$key = $this->underscore(substr($method,3));
+			// getColumnValue
+			case 'get':
+				$key = $this->underscore(substr($method, 3));
 				return $this->getProperty($key);
-			case 'set' :
-				$key = $this->underscore(substr($method,3));
-				$result = $this->setProperty($key, isset($args[0]) ? $args[0] : null);
-			case 'uns' :
-				$key = $this->underscore(substr($method,3));
+			// setColumnValue
+			case 'set':
+				$key = $this->underscore(substr($method, 3));
+				$result = $this->setProperty($key, isset($args[0]) ? $args[0] : NULL);
+			// unsetColumnValue
+			case 'uns':
+				$key = $this->underscore(substr($method, 3));
 				unset($this->record[$key]);
 				return $result;
-			case 'has' :
-				$key = $this->underscore(substr($method,3));
+			// hasColumnValue
+			case 'has':
+				$key = $this->underscore(substr($method, 3));
 				return isset($this->record[$key]);
+			default:
 		}
-		throw new Exception('Sorry, Invalid method '.get_class($this).'::'.$method.'('.print_r($args,1).').', 1370258960);
+		throw new Exception(
+			'Sorry, Invalid method ' . get_class($this) . '::' . $method .
+				'(' . print_r($args, 1) . ').',
+			1370258960
+		);
 	}
 
 	/**
+	 * Wandelt das Model in einen String um
+	 *
 	 * @return string
 	 */
-	function __toString() {
+	public function __toString() {
 		$data = $this->getRecord();
 		$out  = get_class($this) . ' (' . CRLF;
 		foreach ($data as $key => $value) {
@@ -112,7 +129,7 @@ class tx_t3socials_models_Base extends tx_rnbase_model_base {
 			$value = is_object($value) ? (string) $value : $value;
 			$value = is_string($value) ? '"' . $value . '"' : $value;
 			$value = is_bool($value) ? (int) $value : $value;
-			$out .= TAB . $key . ' ('.$type.')';
+			$out .= TAB . $key . ' (' . $type . ')';
 			$out .= ': ' . $value . CRLF;
 		}
 		return $out . ');';

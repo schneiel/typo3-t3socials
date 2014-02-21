@@ -31,7 +31,8 @@ tx_rnbase::load('tx_t3socials_mod_handler_HybridAuth');
  * @subpackage tx_t3socials_mod
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_mod_handler_Twitter
 	extends tx_t3socials_mod_handler_HybridAuth {
@@ -59,7 +60,6 @@ class tx_t3socials_mod_handler_Twitter
 	 * um die Message anzupassen oder zu validieren.
 	 *
 	 * @param tx_t3socials_models_Message $message
-	 *
 	 * @return tx_t3socials_models_Message|string with error message
 	 */
 	protected function prepareMessage(tx_t3socials_models_Message $message) {
@@ -68,12 +68,16 @@ class tx_t3socials_mod_handler_Twitter
 			$msg = $message->getMessage();
 			$url = $message->getUrl();
 			$urlLen = strlen($url) ? 20 : 0;
-			if(strlen($msg) + $urlLen > 140) {
+			if (strlen($msg) + $urlLen > 140) {
 				$info = 'Meldung zu lang. Maximal 140 Zeichen versenden.<br />';
-				if($urlLen)
-					$info .= ' Aktuell '.(strlen($msg) + $urlLen).' Zeichen (inkl. URL).';
-				else
-					$info .= ' Aktuell '.strlen($msg).' Zeichen.';
+				// wir haben eine url
+				if ($urlLen) {
+					$info .= ' Aktuell ' . (strlen($msg) + $urlLen) . ' Zeichen (inkl. URL).';
+				}
+				// wir haben keine url
+				else {
+					$info .= ' Aktuell ' . strlen($msg) . ' Zeichen.';
+				}
 				return $info;
 			}
 		}
@@ -82,6 +86,6 @@ class tx_t3socials_mod_handler_Twitter
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Twitter.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Twitter.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Twitter.php']);
 }

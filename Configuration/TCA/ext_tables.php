@@ -1,5 +1,7 @@
 <?php
-if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
+if (!defined ('TYPO3_MODE')) {
+	die ('Access denied.');
+}
 
 $TCA['tx_t3socials_networks'] = array (
 	'ctrl' => array (
@@ -15,8 +17,8 @@ $TCA['tx_t3socials_networks'] = array (
 			'disabled' => 'hidden',
 		),
 		'requestUpdate' => 'network',
-		'dynamicConfigFile' => t3lib_extMgm::extPath('t3socials').'Configuration/TCA/Network.php',
-		'iconfile'          => t3lib_extMgm::extRelPath('t3socials').'ext_icon.gif',
+		'dynamicConfigFile' => t3lib_extMgm::extPath('t3socials', 'Configuration/TCA/Network.php'),
+		'iconfile'          => t3lib_extMgm::extRelPath('t3socials', 'ext_icon.gif'),
 	),
 	'feInterface' => array (
 		'fe_admin_fieldList' => 'name,username,password,config',

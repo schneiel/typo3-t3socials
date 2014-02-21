@@ -26,11 +26,13 @@ tx_rnbase::load('tx_t3socials_tests_Util');
 tx_rnbase::load('tx_t3socials_tests_Mock');
 
 /**
+ * Basis Testcase
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_tests_BaseTestCase
 	extends tx_phpunit_testcase {
@@ -41,7 +43,6 @@ abstract class tx_t3socials_tests_BaseTestCase
 	 *
 	 * @param object $object The object to be invoked
 	 * @param string $name the name of the method to call
-	 *
 	 * @return mixed
 	 */
 	protected function callInaccessibleMethod($object, $name) {
@@ -56,20 +57,19 @@ abstract class tx_t3socials_tests_BaseTestCase
 	}
 
 	/**
-	 * Creates a mock object which allows for calling protected methods and access of protected properties.
+	 * Creates a mock object which allows for calling protected methods
+	 * and access of protected properties.
 	 * This method is taken from TYPO3 BaseTestCase
 	 *
-	 * @param string $originalClassName name of class to create the mock object of, must not be empty
+	 * @param string $originalClassName name of class t
 	 * @param array<string> $methods name of the methods to mock
 	 * @param array $arguments arguments to pass to constructor
 	 * @param string $mockClassName the class name to use for the mock class
 	 * @param boolean $callOriginalConstructor whether to call the constructor
 	 * @param boolean $callOriginalClone whether to call the __clone method
 	 * @param boolean $callAutoload whether to call any autoload function
-	 *
 	 * @return \PHPUnit_Framework_MockObject_MockObject|AccessibleObjectInterface
 	 *         a mock of $originalClassName with access methods added
-	 *
 	 * @see \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase::getAccessibleMock
 	 */
 	protected function getAccessibleMock(
@@ -97,9 +97,7 @@ abstract class tx_t3socials_tests_BaseTestCase
 	 * This method is taken from TYPO3 BaseTestCase
 	 *
 	 * @param string $className Name of class to make available, must not be empty
-	 *
 	 * @return string Fully qualified name of the built class, will not be empty
-	 *
 	 * @see Tx_Extbase_Tests_Unit_BaseTestCase::buildAccessibleProxy
 	 */
 	protected function buildAccessibleProxy($className) {

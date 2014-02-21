@@ -24,16 +24,19 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 
 /**
- *
+ * Mock Util für Tests
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_tests_Mock {
 
 	/**
+	 * Liefert ein Message Model
+	 *
 	 * @return tx_t3socials_models_Message
 	 */
 	public static function getMessageMock() {
@@ -43,10 +46,10 @@ class tx_t3socials_tests_Mock {
 			array(
 				'message_type' => 'manually',
 				'headline' => 'Überschrift',
-				'intro' => 'Intro.' . CRLF
-						 . 'Enthält bevorzugten Text.' . CRLF . $lorem,
+				'intro' => 'Intro.' . CRLF .
+						'Enthält bevorzugten Text.' . CRLF . $lorem,
 				'message' => 'Message.' . CRLF .
-							 'Enthält Text, der genutzt wird wenn kein Into existiert.' . CRLF . $lorem,
+							'Enthält Text, der genutzt wird wenn kein Into existiert.' . CRLF . $lorem,
 				'url' => 'http://www.dmk-ebusiness.de/',
 				'data' => NULL,
 			)

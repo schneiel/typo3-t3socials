@@ -32,9 +32,11 @@ tx_rnbase::load('tx_rnbase_util_DB');
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base {
+class tx_t3socials_srv_Network
+	extends tx_rnbase_sv1_Base {
 
 
 	/**
@@ -51,53 +53,73 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base {
 	 *
 	 * @param tx_t3socials_models_IMessage $message
 	 * @param string $trigger single trigger value
-	 * @param array[tx_t3socials_models_Network] $accounts
+	 * @param array $options
+	 * @return void
 	 */
-	public function sendMessage($message, $trigger, $options=array()) {
+	public function sendMessage(tx_t3socials_models_IMessage $message, $trigger, array $options = array()) {
 		$accounts = $this->findAccounts($trigger);
-		if(empty($accounts)) return;
+		if (empty($accounts)) {
+			return;
+		}
 
-		foreach($accounts As $account) {
+		foreach ($accounts As $account) {
 			// Für den Account die Connectionklasse laden
 			/* @var tx_t3socials_network_IConnection $connection */
 			$connection = $this->getConnection($account);
 			$connection->setNetwork($account);
-			if(isset($options['urlbuilder'])) {
+			// wir haben einen url builder
+			if (isset($options['urlbuilder'])) {
 				// Eine Möglichkeit die URL extern zu setzen
 				$message->setUrl(call_user_func($options['urlbuilder'], $message, $account));
 			}
-			else
-				$message->setUrl($account->getConfigData($account->getNetwork().'.liveticker.message.url'));
+			// @TODO: liveticker.message??? wir haben doch news!?
+			else {
+				$message->setUrl($account->getConfigData($account->getNetwork() . '.liveticker.message.url'));
+			}
 			try {
 				$connection->sendMessage($message);
-			}
-			catch(Exception $e) {
-				tx_rnbase_util_Logger::fatal('Error sending message! ('.$trigger.')', 't3socials',
-					array('message' => (array)$message, 'account'=>$account->getName(), 'network'=>$account->getNetwork()));
+			} catch (Exception $e) {
+				tx_rnbase_util_Logger::fatal(
+					'Error sending message! (' . $trigger . ')', 't3socials',
+					array('message' => (string) $message, 'account' => $account->getName(), 'network' => $account->getNetwork())
+				);
 			}
 		}
 
-		return;
 	}
 	/**
 	 * Get the connection instance for this account
 	 *
 	 * @param tx_t3socials_models_Network $account
-	 *
 	 * @deprecated tx_t3socials_network_Config::getNetworkConnection($account)
+	 * @return tx_t3socials_network_IConnection
 	 */
 	public function getConnection($account) {
 		return tx_t3socials_network_Config::getNetworkConnection($account);
 	}
 
+	/**
+	 * liefert alle Netzwerke für einen trigger.
+	 *
+	 * @param string $action
+	 * @return array
+	 */
 	public function findAccounts($action) {
-		$fields['NETWORK.ACTIONS'][OP_LIKE] = $action; // FIXME: OP_INSET
+		// FIXME: OP_INSET
+		$fields['NETWORK.ACTIONS'][OP_LIKE] = $action;
 		$options = array();
 		return $this->search($fields, $options);
 	}
 
+	/**
+	 * Liefert alle Accounts eines Typs
+	 *
+	 * @param string $types
+	 * @return array
+	 */
 	public function findAccountsByType($types) {
-		$fields['NETWORK.NETWORK'][OP_LIKE] = $types; // FIXME: OP_INSET
+		// FIXME: OP_INSET
+		$fields['NETWORK.NETWORK'][OP_LIKE] = $types;
 		$options = array();
 		return $this->search($fields, $options);
 	}
@@ -107,7 +129,6 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base {
 	 *
 	 * @param array $fields
 	 * @param array $options
-	 *
 	 * @return array of tx_t3socials_models_Network
 	 */
 	public function search($fields, $options) {
@@ -119,22 +140,31 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base {
 	/**
 	 * Check if a record was send to networks before
 	 *
-	 * @TODO: auf count umstellen!?
-	 *
 	 * @param int $uid
-	 * @param string $tablname
-	 *
+	 * @param string $tablename
+	 * @TODO: auf count umstellen!?
 	 * @return boolean
 	 */
 	public function hasSent($uid, $tablename) {
 		$options['enablefieldsoff'] = 1;
-		$options['where'] = 'recid='.intval($uid) . ' AND tablename=\'' . $GLOBALS['TYPO3_DB']->quoteStr($tablename,'tx_t3socials_autosends') . '\'';
+		$options['where']
+			= 'recid=' . intval($uid) . ' AND tablename=\'' .
+				$GLOBALS['TYPO3_DB']->quoteStr($tablename, 'tx_t3socials_autosends') . '\'';
 		$rows = tx_rnbase_util_DB::doSelect('*', 'tx_t3socials_autosends', $options);
 		return !empty($rows);
 	}
 
+	/**
+	 * Markiert einen Datensatz als versendet.
+	 *
+	 * @param int $uid
+	 * @param string $tablename
+	 * @return int  UID of created record
+	 */
 	public function setSent($uid, $tablename) {
-		if($this->hasSent($uid, $tablename)) return;
+		if ($this->hasSent($uid, $tablename)) {
+			return 0;
+		}
 		$values = array(
 			'recid' => $uid,
 			'tablename' => $tablename,

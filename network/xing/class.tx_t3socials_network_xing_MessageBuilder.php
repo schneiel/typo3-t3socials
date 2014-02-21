@@ -25,11 +25,13 @@ require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_network_MessageBuilder');
 
 /**
+ * Message Builder für eine XING-Meldung
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_xing_MessageBuilder
 	extends tx_t3socials_network_MessageBuilder {
@@ -39,7 +41,6 @@ class tx_t3socials_network_xing_MessageBuilder
 	 * 0 = Unlimited
 	 *
 	 * @param tx_t3socials_models_IMessage $message
-	 *
 	 * @return integer
 	 */
 	protected function getMaxContentLength(tx_t3socials_models_IMessage $message) {
@@ -55,6 +56,6 @@ class tx_t3socials_network_xing_MessageBuilder
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_xing_MessageBuilder.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_xing_MessageBuilder.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_xing_MessageBuilder.php']);
 }

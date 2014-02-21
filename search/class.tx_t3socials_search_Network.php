@@ -31,39 +31,84 @@ tx_rnbase::load('tx_rnbase_util_SearchBase');
  * @package tx_t3socials
  * @subpackage tx_t3socials_search
  * @author Rene Nitzsche <rene@system25.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_search_Network
 	extends tx_rnbase_util_SearchBase {
 
+	/**
+	 * Kindklassen müssen ein Array bereitstellen, in denen die Aliases der
+	 * Tabellen zu den eigentlichen Tabellennamen gemappt werden.
+	 *
+	 * @return array(alias => tablename, ...)
+	 */
 	protected function getTableMappings() {
 		$tableMapping['NETWORK'] = 'tx_t3socials_networks';
 
 		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('t3socials','search_Network_getTableMapping_hook',
-				array('tableMapping' => &$tableMapping), $this);
+		tx_rnbase_util_Misc::callHook(
+			't3socials', 'search_Network_getTableMapping_hook',
+			array('tableMapping' => &$tableMapping), $this
+		);
 		return $tableMapping;
 	}
 
+	/**
+	 * Name der Basistabelle, in der gesucht wird
+	 *
+	 * @return string
+	 */
 	protected function getBaseTable() {
 		return 'tx_t3socials_networks';
 	}
+
+	/**
+	 * Name der Klasse, in die die Ergebnisse gemappt werden
+	 *
+	 * @return string
+	 */
 	public function getWrapperClass() {
 		return 'tx_t3socials_models_Network';
 	}
+
+	/**
+	 * Name des Alias' der Basistabelle, in der gesucht wird
+	 * Nicht abstract wg. Abwärts-Kompatibilität
+	 *
+	 * @return string
+	 */
 	protected function getBaseTableAlias() {
 		return 'NETWORK';
 	}
+
+	/**
+	 * As default the sql statement is build with tablenames.
+	 * If this method returns true, the aliases will
+	 * be used instead. But keep in mind,
+	 * to use aliases for Joins too and to overwrite getBaseTableAlias()!
+	 *
+	 * @return boolean
+	 */
 	protected function useAlias() {
-		return true;
+		return TRUE;
 	}
 
+	/**
+	 * Kindklassen liefern hier die notwendigen DB-Joins. Ist kein JOIN erforderlich
+	 * sollte ein leerer String geliefert werden.
+	 *
+	 * @param array $tableAliases
+	 * @return string
+	 */
 	protected function getJoins($tableAliases) {
 		$join = '';
 
 		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook('t3socials','search_Network_getJoins_hook',
-				array('join' => &$join, 'tableAliases' => $tableAliases), $this);
+		tx_rnbase_util_Misc::callHook(
+			't3socials', 'search_Network_getJoins_hook',
+			array('join' => &$join, 'tableAliases' => $tableAliases), $this
+		);
 		return $join;
 	}
 }

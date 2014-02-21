@@ -25,12 +25,14 @@ require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_tests_network_Connection_testcase');
 
 /**
+ * Twitter Connection Test
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_tests_network_twitter_Connection_testcase
 	extends tx_t3socials_tests_network_Connection_testcase {
@@ -73,9 +75,9 @@ class tx_t3socials_tests_network_twitter_Connection_testcase
 	 * @return string|tx_t3socials_network_Connection
 	 */
 	protected function getBuiltMessage() {
-		return 'Überschrift: Intro. Enthält bevorzugten Text. '
-			. 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. '
-			. 'Aenean ...: http://www.dmk-ebusiness.de/';
+		return 'Überschrift: Intro. Enthält bevorzugten Text. ' .
+			'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' .
+			'Aenean ...: http://www.dmk-ebusiness.de/';
 	}
 }
 

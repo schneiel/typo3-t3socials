@@ -23,12 +23,13 @@
 ***************************************************************/
 unset($MCONF);
 require_once 'conf.php';
-require_once $BACK_PATH.'init.php';
-require_once $BACK_PATH.'template.php';
+require_once $BACK_PATH . 'init.php';
+require_once $BACK_PATH . 'template.php';
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 
 $LANG->includeLLFile('EXT:t3socials/mod/locallang.xml');
-$BE_USER->modAccess($MCONF,1);	// This checks permissions and exits if the users has no permission for entry.
+// This checks permissions and exits if the users has no permission for entry.
+$BE_USER->modAccess($MCONF, 1);
 // DEFAULT initialization of a module [END]
 
 tx_rnbase::load('tx_rnbase_configurations');
@@ -40,9 +41,11 @@ tx_rnbase::load('tx_rnbase_mod_BaseModule');
  * @package tx_t3socials
  * @subpackage tx_t3socials_mod
  * @author Rene Nitzsche <rene@system25.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
-class  tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule {
+class  tx_t3socials_mod_Module
+	extends tx_rnbase_mod_BaseModule {
 
 	/**
 	 * Method to get the extension key
@@ -53,13 +56,11 @@ class  tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule {
 		return 't3socials';
 	}
 
-//	public function getBasePid() {
-//		return tx_rnbase_configurations::getExtensionCfgValue('t3socials', 'memberPID');
-//	}
-
 	/**
 	 * Method to set the tabs for the mainmenu
 	 * Umstellung von SelectBox auf Menu
+	 *
+	 * @return array
 	 */
 	protected function getFuncMenu() {
 		$mainmenu = $this->getFormTool()->showTabMenu($this->getPid(), 'function', $this->getName(), $this->MOD_MENU['function']);
@@ -67,7 +68,7 @@ class  tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']);
 }
 

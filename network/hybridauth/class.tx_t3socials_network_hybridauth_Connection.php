@@ -28,11 +28,13 @@ tx_rnbase::load('tx_rnbase_util_Logger');
 
 
 /**
+ * Basisklasse einer HybridAuth Verbindung
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_network_hybridauth_Connection
 	extends tx_t3socials_network_Connection
@@ -41,15 +43,17 @@ abstract class tx_t3socials_network_hybridauth_Connection
 	/**
 	 * @var Hybrid_Providers_Twitter
 	 */
-	private $provider = null;
+	private $provider = NULL;
 
 	/**
+	 * Liefert die Provider ID für HybridAuth.
+	 *
 	 * @return string
 	 */
 	abstract protected function getHybridAuthProviderId();
 
 	/**
-	 * Liefert die Konfiguration für HybridAuth
+	 * Liefert die Konfiguration für HybridAuth.
 	 *
 	 * @return array
 	 */
@@ -59,24 +63,25 @@ abstract class tx_t3socials_network_hybridauth_Connection
 			throw new Exception('Missing network. The network has to be inject into the connection!');
 		}
 		$config = array (
-			'enabled' => true,
+			'enabled' => TRUE,
 			'networkUid' => $network->getUid(),
 			'keys' => array(
 				'key' => $network->getUsername(),
 				'secret' => $network->getPassword(),
 			)
 		);
-		$access_token = $this->getConfigData('access_token');
-		$access_token_secret = $this->getConfigData('access_token_secret');
-		if ($access_token && $access_token_secret) {
-			$config['keys']['access_token'] = $access_token;
-			$config['keys']['access_token_secret'] = $access_token_secret;
+		$accessToken = $this->getConfigData('access_token');
+		$accessTokenSecret = $this->getConfigData('access_token_secret');
+		if ($accessToken && $accessTokenSecret) {
+			$config['keys']['access_token'] = $accessToken;
+			$config['keys']['access_token_secret'] = $accessTokenSecret;
 		}
 		return $config;
 	}
 
 
 	/**
+	 * Liefert den HybridAuth Provider
 	 *
 	 * @return Hybrid_Provider_Adapter
 	 */
@@ -95,7 +100,6 @@ abstract class tx_t3socials_network_hybridauth_Connection
 	 * Post data on Twitter using Curl.
 	 *
 	 * @param string $message
-	 *
 	 * @return void
 	 */
 	public function setUserStatus($message) {
@@ -106,47 +110,54 @@ abstract class tx_t3socials_network_hybridauth_Connection
 			// try to catch error from responce
 			$last = $provider->api()->last_response;
 			if ($last && $last->error) {
-				$e = new Exception('HybridAuth: ' . $last->error, null, $e);
+				$e = new Exception('HybridAuth: ' . $last->error, NULL, $e);
 			}
 			throw $e;
 		}
 
 		tx_rnbase_util_Logger::info(
-			'Status was posted to "'.$this->getHybridAuthProviderId().'"!',
+			'Status was posted to "' . $this->getHybridAuthProviderId() . '"!',
 			't3socials',
 			array(
 				'status' => $message,
-				'account' => $this->getNetwork()->getName() . '('.$this->getNetwork()->getUid().')'
+				'account' => $this->getNetwork()->getName() . '(' . $this->getNetwork()->getUid() . ')'
 			)
 		);
 	}
 
 	/**
-	 * @param array $config
+	 * Liefert die Netwerk konfiguration.
 	 *
+	 * @param array $config
 	 * @return tx_t3socials_models_NetworkConfig
 	 */
 	public function getNetworkConfig(array $config = array()) {
-		if (!isset($config['provider_id']))
+		if (!isset($config['provider_id'])) {
 			$config['provider_id'] = strtolower($this->getHybridAuthProviderId());
-		if (!isset($config['hybridauth_provider']))
+		}
+		if (!isset($config['hybridauth_provider'])) {
 			$config['hybridauth_provider'] = $this->getHybridAuthProviderId();
-		if (!isset($config['connector']))
+		}
+		if (!isset($config['connector'])) {
 			$config['connector'] = get_class($this);
-		if (!isset($config['comunicator']))
+		}
+		if (!isset($config['comunicator'])) {
 			$config['comunicator'] = NULL;
-		if (!isset($config['description']))
+		}
+		if (!isset($config['description'])) {
 			$config['description'] = '';
-		if (!isset($config['default_configuration']))
-			$config['default_configuration'] = $config['provider_id'] . ' {'
-					. '	access_token = ' . CRLF
-					. '	access_token_secret =' . CRLF
-				. '}' ;
+		}
+		if (!isset($config['default_configuration'])) {
+			$config['default_configuration'] = $config['provider_id'] . ' {' .
+				'	access_token = ' . CRLF .
+				'	access_token_secret =' . CRLF .
+			'}';
+		}
 		return parent::getNetworkConfig($config);
 	}
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Connection.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Connection.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Connection.php']);
 }

@@ -26,12 +26,14 @@ tx_rnbase::load('tx_t3socials_models_Base');
 
 
 /**
+ * Das Netzwerk Model
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_models
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html
+ *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_models_Network
 	extends tx_t3socials_models_Base {
@@ -46,27 +48,29 @@ class tx_t3socials_models_Network
 	 * As the result the instance should be completly loaded.
 	 *
 	 * @param mixed $rowOrUid
+	 * @return void
 	 */
-	function init($rowOrUid) {
+	protected function init($rowOrUid) {
 		parent::init($rowOrUid);
 		$this->initConfig();
 	}
 
 	/**
 	 * Extract data from config
+	 *
+	 * @return void
 	 */
 	protected function initConfig() {
 		$ts = $this->getProperty('config');
 		// This handles ts setup from flexform
 		/* @var $tsParser t3lib_TSparser */
 		$tsParser = t3lib_div::makeInstance('t3lib_TSparser');
-//		$tsParser->setup = $this->_dataStore->getArrayCopy();
+		// $tsParser->setup = $this->_dataStore->getArrayCopy();
 		$tsParser->parse($ts);
 		$configArr = $tsParser->setup;
 		tx_rnbase::load('tx_rnbase_configurations');
 		$this->configurations = new tx_rnbase_configurations();
-		$this->configurations->init($configArr, false, '', '');
-
+		$this->configurations->init($configArr, FALSE, '', '');
 	}
 	/**
 	 * Returns the network identifier
@@ -77,19 +81,24 @@ class tx_t3socials_models_Network
 		return $this->getProperty('network');
 	}
 	/**
+	 * Liefert den Name.
+	 *
 	 * @return string
 	 */
 	public function getName() {
 		return $this->getProperty('name');
 	}
 	/**
+	 * Liefert den username.
+	 *
 	 * @return string
 	 */
 	public function getUsername() {
 		return $this->getProperty('username');
 	}
 	/**
-	 * Returns the network label
+	 * Liefert das password.
+	 *
 	 * @return string
 	 */
 	public function getPassword() {
@@ -97,10 +106,11 @@ class tx_t3socials_models_Network
 	}
 
 	/**
-    * Returns configured data
-    *
-    * @param string $confId
-    */
+	 * Returns configured data
+	 *
+	 * @param string $confId
+	 * @return string|array
+	 */
 	public function getConfigData($confId) {
 		return $this->configurations->get($confId);
 	}
@@ -118,7 +128,7 @@ class tx_t3socials_models_Network
 	 *
 	 * @return string
 	 */
-	function getTableName(){
+	public function getTableName() {
 		return 'tx_t3socials_networks';
 	}
 
