@@ -50,7 +50,7 @@ class tx_t3socials_models_Network
 	 * @param mixed $rowOrUid
 	 * @return void
 	 */
-	protected function init($rowOrUid) {
+	public function init($rowOrUid) {
 		parent::init($rowOrUid);
 		$this->initConfig();
 	}

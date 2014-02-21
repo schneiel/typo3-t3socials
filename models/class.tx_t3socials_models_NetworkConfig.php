@@ -43,7 +43,7 @@ class tx_t3socials_models_NetworkConfig
 	 * @param mixed $rowOrUid
 	 * @return void
 	 */
-	protected function init($rowOrUid) {
+	public function init($rowOrUid) {
 		// wir haben bereits einen record
 		if (is_array($rowOrUid)) {
 			$this->uid = isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['provider_id'];

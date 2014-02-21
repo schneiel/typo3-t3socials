@@ -55,7 +55,7 @@ class tx_t3socials_models_Message
 	 * 		array can contain (message_type, headline, intro, message, url, data)
 	 * @return void
 	 */
-	protected function init($rowOrUid) {
+	public function init($rowOrUid) {
 		// wir haben einen kompletten record
 		if (is_array($rowOrUid)) {
 			$this->uid = $rowOrUid['message_type'];

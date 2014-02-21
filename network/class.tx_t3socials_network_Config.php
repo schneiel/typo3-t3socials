@@ -43,7 +43,6 @@ class tx_t3socials_network_Config {
 	 * @return void
 	 */
 	public static function registerNetwork($connectionClass) {
-		$id = strtolower($id);
 		if (!tx_rnbase::load($connectionClass)) {
 			throw new Exception('Could not load network connection: ' . $connectionClass);
 		}

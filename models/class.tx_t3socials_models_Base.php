@@ -43,7 +43,7 @@ class tx_t3socials_models_Base
 	 * @param mixed $value
 	 * @return tx_t3socials_models_Base
 	 */
-	protected function setProperty($property, $value = NULL) {
+	public function setProperty($property, $value = NULL) {
 		// wir überschreiben den kompletten record
 		if (is_array($property)) {
 			$this->init($property);
