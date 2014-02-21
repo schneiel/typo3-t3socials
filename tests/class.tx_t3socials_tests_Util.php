@@ -34,7 +34,6 @@ require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
  */
 class tx_t3socials_tests_Util {
 
-
 	/**
 	 * Liefert einen Lorem Ipsum text mit ca 2000 Zeichen.
 	 *

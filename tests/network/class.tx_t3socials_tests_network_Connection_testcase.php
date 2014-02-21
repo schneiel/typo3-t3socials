@@ -101,7 +101,7 @@ abstract class tx_t3socials_tests_network_Connection_testcase
 		if (!$connection instanceof tx_t3socials_network_Connection) {
 			$this->markTestSkipped('Not an basic connection.');
 		}
-		$message = tx_t3socials_tests_Util::getMessageMock();
+		$message = tx_t3socials_tests_Mock::getMessageMock();
 		$status = $this->callInaccessibleMethod(
 			$connection,
 			'buildStatusMessage',
