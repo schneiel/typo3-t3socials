@@ -62,17 +62,17 @@ class tx_t3socials_network_xing_Connection
 		$config['comunicator'] = 'tx_t3socials_mod_handler_Xing';
 		$config['description']
 			= 'Please enter the customer key into the field "Username"'
-			. ' and the customer secret into the field "Password".' . PHP_EOL
-			. '###MORE###' . PHP_EOL
+			. ' and the customer secret into the field "Password".' . CRLF
+			. '###MORE###' . CRLF
 			. ' To authenticate with a specific account, you has to '
 			. ' put the customer token in the fields "access_token" and'
-			. ' "access_token_secret" of the Configuration.' . PHP_EOL
-			. ' You can go to the T3Socials User Tools to autehtificate.' . PHP_EOL
-			. ' a customer end get the tokens from there.' . PHP_EOL;
+			. ' "access_token_secret" of the Configuration.' . CRLF
+			. ' You can go to the T3Socials User Tools to autehtificate.' . CRLF
+			. ' a customer end get the tokens from there.' . CRLF;
 		$config['default_configuration']
-			= 'xing {'. PHP_EOL
-			. '	access_token =' . PHP_EOL
-			. '	access_token_secret =' . PHP_EOL
+			= 'xing {'. CRLF
+			. '	access_token =' . CRLF
+			. '	access_token_secret =' . CRLF
 			. '}' ;
 		return parent::getNetworkConfig($config);
 	}

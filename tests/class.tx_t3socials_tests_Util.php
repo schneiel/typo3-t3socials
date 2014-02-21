@@ -43,8 +43,8 @@ class tx_t3socials_tests_Util {
 				array(
 						'message_type' => 'manually',
 						'headline' => 'Überschrift',
-						'intro' => 'Intro.' . PHP_EOL . 'Enthält bevorzugten Text.' . PHP_EOL . $lorem,
-						'message' => 'Message.' . PHP_EOL . 'Enthält Text, der genutzt wird wenn kein Into existiert.' . PHP_EOL . $lorem,
+						'intro' => 'Intro.' . CRLF . 'Enthält bevorzugten Text.' . CRLF . $lorem,
+						'message' => 'Message.' . CRLF . 'Enthält Text, der genutzt wird wenn kein Into existiert.' . CRLF . $lorem,
 						'url' => 'http://www.dmk-ebusiness.de/',
 						'data' => NULL,
 				)
@@ -64,7 +64,7 @@ class tx_t3socials_tests_Util {
 		. 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. '
 		. 'In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. '
 		. 'Nullam dictum felis eu pede mollis pretium. Integer tincidunt. '
-		. 'Cras dapibus.' . PHP_EOL . PHP_EOL
+		. 'Cras dapibus.' . CRLF . CRLF
 		. 'Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. '
 		. 'Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. '
 		. 'Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. '
@@ -73,7 +73,7 @@ class tx_t3socials_tests_Util {
 		. 'ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, '
 		. 'tellus eget condimentum rhoncus, sem quam semper libero, '
 		. 'sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, '
-		. 'luctus pulvinar, hendrerit id, lorem.' . PHP_EOL . PHP_EOL
+		. 'luctus pulvinar, hendrerit id, lorem.' . CRLF . CRLF
 		. 'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut '
 		. 'libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci '
 		. 'eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit '

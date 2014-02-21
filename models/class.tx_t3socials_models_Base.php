@@ -105,16 +105,15 @@ class tx_t3socials_models_Base extends tx_rnbase_model_base {
 	 * @return string
 	 */
 	function __toString() {
-		$tab = "\t";
 		$data = $this->getRecord();
-		$out  = get_class($this) . ' (' . PHP_EOL;
+		$out  = get_class($this) . ' (' . CRLF;
 		foreach ($data as $key => $value) {
 			$type = gettype($value);
 			$value = is_object($value) ? (string) $value : $value;
 			$value = is_string($value) ? '"' . $value . '"' : $value;
 			$value = is_bool($value) ? (int) $value : $value;
-			$out .= $tab . $key . ' ('.$type.')';
-			$out .= ': ' . $value . PHP_EOL;
+			$out .= TAB . $key . ' ('.$type.')';
+			$out .= ': ' . $value . CRLF;
 		}
 		return $out . ');';
 	}

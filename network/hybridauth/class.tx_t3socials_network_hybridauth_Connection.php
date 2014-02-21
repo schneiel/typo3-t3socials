@@ -139,8 +139,8 @@ abstract class tx_t3socials_network_hybridauth_Connection
 			$config['description'] = '';
 		if (!isset($config['default_configuration']))
 			$config['default_configuration'] = $config['provider_id'] . ' {'
-					. '	access_token = ' . PHP_EOL
-					. '	access_token_secret =' . PHP_EOL
+					. '	access_token = ' . CRLF
+					. '	access_token_secret =' . CRLF
 				. '}' ;
 		return parent::getNetworkConfig($config);
 	}

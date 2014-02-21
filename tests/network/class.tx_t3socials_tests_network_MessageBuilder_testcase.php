@@ -40,8 +40,8 @@ class tx_t3socials_tests_network_MessageBuilder_testcase
 		$builder = $this->getMessageBuilder();
 		$message = tx_t3socials_tests_Mock::getMessageMock();
 		$status = $builder->build($message);
-		$expected  = $message->getHeadline() . PHP_EOL . PHP_EOL;
-		$expected .= $message->getIntro() . PHP_EOL . PHP_EOL;
+		$expected  = $message->getHeadline() . CRLF . CRLF;
+		$expected .= $message->getIntro() . CRLF . CRLF;
 		$expected .= $message->getUrl();
 		$this->assertEquals($expected, $status);
 	}

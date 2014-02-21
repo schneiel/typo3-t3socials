@@ -41,7 +41,7 @@ class tx_t3socials_network_MessageBuilder {
 	 * @return integer
 	 */
 	protected function getContentDelimiter(tx_t3socials_models_IMessage $message) {
-		return PHP_EOL . PHP_EOL;
+		return CRLF . CRLF;
 	}
 
 	/**

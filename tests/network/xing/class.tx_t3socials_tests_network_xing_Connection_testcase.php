@@ -71,15 +71,15 @@ class tx_t3socials_tests_network_xing_Connection_testcase
 	 * @return string|tx_t3socials_network_Connection
 	 */
 	protected function getBuiltMessage() {
-		return 'Überschrift' . PHP_EOL . PHP_EOL
-			. 'Intro.' . PHP_EOL
-			. 'Enthält bevorzugten Text.' . PHP_EOL
+		return 'Überschrift' . CRLF . CRLF
+			. 'Intro.' . CRLF
+			. 'Enthält bevorzugten Text.' . CRLF
 			. 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. '
 			. 'Aenean commodo ligula eget dolor. Aenean massa. '
 			. 'Cum sociis natoque penatibus et magnis dis parturient montes, '
 			. 'nascetur ridiculus mus. Donec quam felis, ultricies nec, '
 			. 'pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. '
-			. 'Donec pede justo, fringilla vel, ...' . PHP_EOL . PHP_EOL
+			. 'Donec pede justo, fringilla vel, ...' . CRLF . CRLF
 			. 'http://www.dmk-ebusiness.de/'
 		;
 	}

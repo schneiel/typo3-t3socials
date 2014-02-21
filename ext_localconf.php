@@ -23,3 +23,9 @@ tx_t3socials_network_Config::registerNetwork(
 $GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['t3socials-hybridauth']
 	= t3lib_extMgm::extPath('t3socials') . 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php'
 		. ':tx_t3socials_network_hybridauth_OAuthCall->ajaxId';
+
+// define some system enviromends
+defined('TAB') || define('TAB', chr(9));
+defined('LF') || define('LF', chr(10));
+defined('CR') || define('CR', chr(13));
+defined('CRLF') || define('CRLF', CR . LF);

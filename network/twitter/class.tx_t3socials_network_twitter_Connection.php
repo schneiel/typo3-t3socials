@@ -112,15 +112,15 @@ class tx_t3socials_network_twitter_Connection
 		$config['connector'] = 'tx_t3socials_network_twitter_Connection';
 		$config['comunicator'] = 'tx_t3socials_mod_handler_Twitter';
 		$config['description']
-			= 'For a friction-free functionality these fields are required in the configuration: '. PHP_EOL
-			. 'CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_SECRET' . PHP_EOL
-			. 'The fields "Username" and "Password" can be ignored.' . PHP_EOL;
-			//. '###MORE###' . PHP_EOL,;
+			= 'For a friction-free functionality these fields are required in the configuration: '. CRLF
+			. 'CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_SECRET' . CRLF
+			. 'The fields "Username" and "Password" can be ignored.' . CRLF;
+			//. '###MORE###' . CRLF,;
 		$config['default_configuration']
-			= 'twitter {' . PHP_EOL
-				. '	useHybridAuthLib = 1' . PHP_EOL
-				. '	access_token = ' . PHP_EOL
-				. '	access_token_secret =' . PHP_EOL
+			= 'twitter {' . CRLF
+				. '	useHybridAuthLib = 1' . CRLF
+				. '	access_token = ' . CRLF
+				. '	access_token_secret =' . CRLF
 			. '}' ;
 		return parent::getNetworkConfig($config);
 	}

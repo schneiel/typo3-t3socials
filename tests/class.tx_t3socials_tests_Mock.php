@@ -43,10 +43,10 @@ class tx_t3socials_tests_Mock {
 			array(
 				'message_type' => 'manually',
 				'headline' => 'Überschrift',
-				'intro' => 'Intro.' . PHP_EOL
-						 . 'Enthält bevorzugten Text.' . PHP_EOL . $lorem,
-				'message' => 'Message.' . PHP_EOL .
-							 'Enthält Text, der genutzt wird wenn kein Into existiert.' . PHP_EOL . $lorem,
+				'intro' => 'Intro.' . CRLF
+						 . 'Enthält bevorzugten Text.' . CRLF . $lorem,
+				'message' => 'Message.' . CRLF .
+							 'Enthält Text, der genutzt wird wenn kein Into existiert.' . CRLF . $lorem,
 				'url' => 'http://www.dmk-ebusiness.de/',
 				'data' => NULL,
 			)
