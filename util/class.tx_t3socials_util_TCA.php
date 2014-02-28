@@ -24,6 +24,7 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 
 /**
+ * Util Klasse für die TCA
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_util
@@ -36,19 +37,17 @@ class tx_t3socials_util_TCA {
 	/**
 	 * Insert default TS configuration of the given indexer
 	 *
-	 * @param array $params
-	 *
+	 * @param array &$params
 	 * @return string
 	 */
 	public static function insertNetworkDescription(array &$params) {
 		if (empty($params['row']['network'])) {
-			return;
+			return '';
 		}
 
 		try {
 			$config = tx_t3socials_network_Config::getNetworkConfig($params['row']['network']);
-		}
-		catch (Exception $e) {
+		} catch (Exception $e) {
 			// No Config found
 			return '';
 		}
@@ -56,29 +55,26 @@ class tx_t3socials_util_TCA {
 		$desc = $GLOBALS['LANG']->sL($desc);
 		$desc = nl2br($desc);
 		return empty($desc) ? '' :
-			'<div class="t3-tceforms-fieldReadOnly" style="width:284px;white-space: normal;">'
-				. self::handleMoreLink($desc, $params['row']['uid'].'_'.$params['row']['network'])
-				//. '<span class="t3-icon t3-icon-status t3-icon-status-status t3-icon-status-readonly">&nbsp;</span>'
-			.'</div>';
+			'<div class="t3-tceforms-fieldReadOnly" style="width:284px;white-space: normal;">' .
+				self::handleMoreLink($desc, $params['row']['uid'] . '_' . $params['row']['network']) .
+			'</div>';
 	}
 
 
 	/**
 	 * Insert default TS configuration of the given indexer
 	 *
-	 * @param array $params
-	 *
+	 * @param array &$params
 	 * @return string
 	 */
 	public static function insertNetworkDefaultConfig(array &$params) {
 		if (empty($params['row']['network'])) {
-			return;
+			return '';
 		}
 
 		try {
 			$config = tx_t3socials_network_Config::getNetworkConfig($params['row']['network']);
-		}
-		catch (Exception $e) {
+		} catch (Exception $e) {
 			// No Config found
 			return '';
 		}
@@ -86,10 +82,10 @@ class tx_t3socials_util_TCA {
 	}
 
 	/**
+	 * Fügt Content zwischen HTML ein.
 	 *
-	 * @param string$content
-	 * @param array $params
-	 *
+	 * @param string $content
+	 * @param array &$params
 	 * @return void
 	 */
 	private static function insertBetween($content, array &$params) {
@@ -99,28 +95,36 @@ class tx_t3socials_util_TCA {
 				&& !empty($content)
 			)
 		) {
-			return '';
+			return;
 		}
 		$lpos = strpos($params['item'], $params['params']['insertBetween'][0]);
-		if ($lpos === false) return;
+		if ($lpos === FALSE) {
+			return;
+		}
 
 		$lpos += strlen($params['params']['insertBetween'][0]);
 		$rpos = strrpos($params['item'], $params['params']['insertBetween'][1]);
 
-		if ($rpos === false or $lpos > $rpos) return;
+		if ($rpos === FALSE || $lpos > $rpos) {
+			return;
+		}
 
-		$between = substr($params['item'], $lpos, $rpos-$lpos);
-		if (!isset($params['params']['onMatchOnly']) || preg_match($params['params']['onMatchOnly'], $between)) {
-			$params['item'] = substr($params['item'], 0, $lpos) . $content . substr($params['item'], $rpos, strlen($params['item'])-$rpos);
+		$between = substr($params['item'], $lpos, $rpos - $lpos);
+		if (
+			!isset($params['params']['onMatchOnly'])
+			|| preg_match($params['params']['onMatchOnly'], $between)
+		) {
+			$params['item'] = substr($params['item'], 0, $lpos) .
+				$content .
+				substr($params['item'], $rpos, strlen($params['item']) - $rpos);
 		}
 	}
 
 	/**
 	 * Get content types keys of the given indexer extension
 	 *
-	 * @param array $params
-	 *
-	 * @return array
+	 * @param array &$params
+	 * @return void
 	 */
 	public static function getNetworks(array &$params) {
 		$networks = tx_t3socials_network_Config::getNewtorkIds();
@@ -138,22 +142,21 @@ class tx_t3socials_util_TCA {
 	 *
 	 * @param string $content
 	 * @param string $htmlid
-	 *
 	 * @return string
 	 */
 	private static function handleMoreLink($content, $htmlid = 'more') {
-		if (strpos($content, '###MORE###')>0) {
+		if (strpos($content, '###MORE###') > 0) {
 			list($smal, $big) = explode('###MORE###', $content);
-			$htmlid = 't3socials_descmore_'.$htmlid;
-			$onclick = 'document.getElementById(\''.$htmlid.'\').style.display = \'block\'; this.style.display = \'none\';';
+			$htmlid = 't3socials_descmore_' . $htmlid;
+			$onclick = 'document.getElementById(\'' . $htmlid . '\').style.display = \'block\'; this.style.display = \'none\';';
 			$linkStyle  = 'background: url(\'../../typo3/sysext/t3skin/images/arrows/module-menu-right.png\') no-repeat scroll 0 4px;';
 			$linkStyle .= 'display: block; padding-left: 10px';
-			$moreLink =  '<a href="#" onclick="'.$onclick.'" style="'.$linkStyle.'">more</a>';
+			$moreLink =  '<a href="#" onclick="' . $onclick . '" style="' . $linkStyle . '">more</a>';
 			$content  = '<div>';
 			$content .= $smal;
 			$content .= $moreLink;
 			$content .= '</div>';
-			$content .= '<div id="'.$htmlid.'" style="display:none;">';
+			$content .= '<div id="' . $htmlid . '" style="display:none;">';
 			$content .= $big;
 			$content .= '</div>';
 		}
@@ -162,6 +165,6 @@ class tx_t3socials_util_TCA {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php']);
 }

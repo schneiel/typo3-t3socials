@@ -103,15 +103,21 @@ class tx_t3socials_srv_News
 	 * @return string
 	 */
 	public function cbBuildUrl($message, $account) {
+		tx_rnbase::load('tx_rnbase_util_Misc');
+		$tsfe = tx_rnbase_util_Misc::prepareTSFE();
+
 		$news = $message->getData();
 		$config = $account->getConfigurations();
-		tx_rnbase::load('tx_rnbase_util_Misc');
-		tx_rnbase_util_Misc::prepareTSFE();
 		$link = $config->createLink();
 		// tx_ttnews[tt_news]
-		$link->designatorString = 'tx_ttnews';
+		$link->designator('tx_ttnews');
 		$link->initByTS($config, $account->getNetwork() . '.news.link.show.', array('tt_news' => $news->getUid()));
-		$url = $link->makeUrl(FALSE);
+		// wenn nicht anders konfiguriert, immer eine absoplute url setzesetzen!
+		if (!$config->get($account->getNetwork() . '.news.link.show.absurl')) {
+			$link->setAbsUrl(true);
+		}
+		tx_rnbase::load('tx_t3socials_util_Link');
+		$url = tx_t3socials_util_Link::getRealUrlAbsUrlForLink($link);
 		return $url;
 	}
 

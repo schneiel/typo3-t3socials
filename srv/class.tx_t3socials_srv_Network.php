@@ -81,7 +81,12 @@ class tx_t3socials_srv_Network
 			} catch (Exception $e) {
 				tx_rnbase_util_Logger::fatal(
 					'Error sending message! (' . $trigger . ')', 't3socials',
-					array('message' => (string) $message, 'account' => $account->getName(), 'network' => $account->getNetwork())
+					array(
+						'exception' => (string) $e,
+						'account' => (string) $account->getName(),
+						'message' => (string) $message,
+						'network' => (string) $account->getNetwork(),
+					)
 				);
 			}
 		}
