@@ -52,15 +52,6 @@ class tx_t3socials_network_twitter_Connection
 	}
 
 	/**
-	 * Liefert die Provider ID für HybridAuth.
-	 *
-	 * @return string
-	 */
-	protected function getHybridAuthProviderId() {
-		return 'Twitter';
-	}
-
-	/**
 	 * Liefert die Konfiguration für HybridAuth.
 	 *
 	 * @return array
@@ -102,31 +93,6 @@ class tx_t3socials_network_twitter_Connection
 		else {
 			parent::setUserStatus($message);
 		}
-	}
-
-	/**
-	 * Liefert die Netwerk konfiguration.
-	 *
-	 * @param array $config
-	 * @return tx_t3socials_models_NetworkConfig
-	 */
-	public function getNetworkConfig(array $config = array()) {
-		$config['provider_id'] = strtolower($this->getHybridAuthProviderId());
-		$config['hybridauth_provider'] = $this->getHybridAuthProviderId();
-		$config['connector'] = 'tx_t3socials_network_twitter_Connection';
-		$config['comunicator'] = 'tx_t3socials_mod_handler_Twitter';
-		$config['description']
-			= 'For a friction-free functionality these fields are required in the configuration: ' . CRLF .
-			'CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_SECRET' . CRLF .
-			'The fields "Username" and "Password" can be ignored.' . CRLF;
-			// . '###MORE###' . CRLF,;
-		$config['default_configuration']
-			= 'twitter {' . CRLF .
-				'	useHybridAuthLib = 1' . CRLF .
-				'	access_token = ' . CRLF .
-				'	access_token_secret =' . CRLF .
-			'}';
-		return parent::getNetworkConfig($config);
 	}
 
 	/* *** ****************************** *** *

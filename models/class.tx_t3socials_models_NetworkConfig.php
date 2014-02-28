@@ -54,6 +54,38 @@ class tx_t3socials_models_NetworkConfig
 			$this->uid = $rowOrUid;
 			$this->record = array();
 		}
+		$this->initConfig();
+	}
+
+	/**
+	 * Initialisiert die Konfiguration für das Netzwerk.
+	 *
+	 * @return void
+	 */
+	protected function initConfig() {
+		if (!$this->hasProperty('provider_id')) {
+			$this->setProperty('provider_id', NULL);
+		}
+		if (!$this->hasProperty('hybridauth_provider')) {
+			$this->setProperty('hybridauth_provider', NULL);
+		}
+		if (!$this->hasProperty('connector')) {
+			$this->setProperty('connector', NULL);
+		}
+		if (!$this->hasProperty('comunicator')) {
+			$this->setProperty('comunicator', NULL);
+		}
+		if (!$this->hasProperty('description')) {
+			$this->setProperty('description', '');
+		}
+		if (!$this->hasProperty('default_configuration')) {
+			$this->setProperty('default_configuration',
+				$this->getProviderId() . ' {' .
+					'	access_token = ' . CRLF .
+					'	access_token_secret =' . CRLF .
+				'}'
+			);
+		}
 	}
 
 	/**

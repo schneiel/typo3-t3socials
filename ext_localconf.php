@@ -9,13 +9,13 @@ require_once t3lib_extMgm::extPath('t3socials', 'hooks/ext_localconf.php');
 tx_rnbase::load('tx_t3socials_network_Config');
 
 tx_t3socials_network_Config::registerNetwork(
-	'tx_t3socials_network_pushd_Connection'
+	'tx_t3socials_network_pushd_NetworkConfig'
 );
 tx_t3socials_network_Config::registerNetwork(
-	'tx_t3socials_network_twitter_Connection'
+	'tx_t3socials_network_twitter_NetworkConfig'
 );
 tx_t3socials_network_Config::registerNetwork(
-	'tx_t3socials_network_xing_Connection'
+	'tx_t3socials_network_xing_NetworkConfig'
 );
 
 // eid für die hybridauth im Frontend

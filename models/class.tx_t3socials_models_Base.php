@@ -64,9 +64,30 @@ class tx_t3socials_models_Base
 		if (is_null($property)) {
 			return $this->record;
 		}
-		return isset($this->record[$property])
+		return $this->hasProperty($property)
 			? $this->record[$property]
 			: NULL;
+	}
+
+	/**
+	 * Entfernt einen Wert.
+	 *
+	 * @param string $property
+	 * @return tx_t3socials_models_Base
+	 */
+	protected function unsProperty($property) {
+		unset($this->record[$property]);
+		return $this;
+	}
+
+	/**
+	 * Prüft ob eine Spalte gesetzt ist.
+	 *
+	 * @param string $property
+	 * @return string
+	 */
+	protected function hasProperty($property) {
+		return isset($this->record[$property]);
 	}
 
 	/**
@@ -101,12 +122,12 @@ class tx_t3socials_models_Base
 			// unsetColumnValue
 			case 'uns':
 				$key = $this->underscore(substr($method, 3));
-				unset($this->record[$key]);
+				$this->unsProperty($key);
 				return $result;
 			// hasColumnValue
 			case 'has':
 				$key = $this->underscore(substr($method, 3));
-				return isset($this->record[$key]);
+				return $this->hasProperty($key);
 			default:
 		}
 		throw new Exception(

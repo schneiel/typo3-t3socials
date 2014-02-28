@@ -42,22 +42,22 @@ class tx_t3socials_network_Config {
 	 * @param string $connectionClass
 	 * @return void
 	 */
-	public static function registerNetwork($connectionClass) {
-		if (!tx_rnbase::load($connectionClass)) {
-			throw new Exception('Could not load network connection: ' . $connectionClass);
+	public static function registerNetwork($config) {
+		if (!$config instanceof tx_t3socials_models_NetworkConfig) {
+			$config = (string) $config;
+			if (!tx_rnbase::load($config)) {
+				throw new Exception('Could not load network configuration: ' . $config);
+			}
+			$config = tx_rnbase::makeInstance($config, $config);
+			if (!$config instanceof tx_t3socials_models_NetworkConfig) {
+				throw new Exception(
+					'The connection "' . get_class($config) .
+					'" has to implement the interface "tx_t3socials_network_IConnection".'
+				);
+			}
 		}
 
-		$con = tx_rnbase::makeInstance($connectionClass);
-		if (!$con instanceof tx_t3socials_network_IConnection) {
-			throw new Exception(
-				'The connection "' . get_class($con) .
-				'" has to implement the interface "tx_t3socials_network_IConnection".'
-			);
-		}
-
-		$config = $con->getNetworkConfig();
 		$id = $config->getProviderId();
-
 		self::$networks[$id] = $config;
 	}
 

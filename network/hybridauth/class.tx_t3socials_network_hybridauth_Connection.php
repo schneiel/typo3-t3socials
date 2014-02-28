@@ -50,7 +50,9 @@ abstract class tx_t3socials_network_hybridauth_Connection
 	 *
 	 * @return string
 	 */
-	abstract protected function getHybridAuthProviderId();
+	protected function getHybridAuthProviderId() {
+		return $this->getNetworkConfig()->getHybridAuthProviderName();
+	}
 
 	/**
 	 * Liefert die Konfiguration für HybridAuth.
@@ -123,37 +125,6 @@ abstract class tx_t3socials_network_hybridauth_Connection
 				'account' => $this->getNetwork()->getName() . '(' . $this->getNetwork()->getUid() . ')'
 			)
 		);
-	}
-
-	/**
-	 * Liefert die Netwerk konfiguration.
-	 *
-	 * @param array $config
-	 * @return tx_t3socials_models_NetworkConfig
-	 */
-	public function getNetworkConfig(array $config = array()) {
-		if (!isset($config['provider_id'])) {
-			$config['provider_id'] = strtolower($this->getHybridAuthProviderId());
-		}
-		if (!isset($config['hybridauth_provider'])) {
-			$config['hybridauth_provider'] = $this->getHybridAuthProviderId();
-		}
-		if (!isset($config['connector'])) {
-			$config['connector'] = get_class($this);
-		}
-		if (!isset($config['comunicator'])) {
-			$config['comunicator'] = NULL;
-		}
-		if (!isset($config['description'])) {
-			$config['description'] = '';
-		}
-		if (!isset($config['default_configuration'])) {
-			$config['default_configuration'] = $config['provider_id'] . ' {' .
-				'	access_token = ' . CRLF .
-				'	access_token_secret =' . CRLF .
-			'}';
-		}
-		return parent::getNetworkConfig($config);
 	}
 
 }

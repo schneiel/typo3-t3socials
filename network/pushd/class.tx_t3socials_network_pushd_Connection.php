@@ -27,7 +27,7 @@ tx_rnbase::load('tx_rnbase_util_Logger');
 
 
 /**
- *
+ * Pushd Connection
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
@@ -36,12 +36,18 @@ tx_rnbase::load('tx_rnbase_util_Logger');
  */
 class tx_t3socials_network_pushd_Connection
 	implements tx_t3socials_network_IConnection {
-	public function __construct() {
-	}
 
+	/**
+	 * (non-PHPdoc)
+	 *
+	 * @see tx_t3socials_network_IConnection::setNetwork()
+	 *
+	 * @return void
+	 */
 	public function setNetwork(tx_t3socials_models_Network $network) {
 		$this->network = $network;
 	}
+
 	/**
 	 * Returns the network account
 	 *
@@ -51,22 +57,31 @@ class tx_t3socials_network_pushd_Connection
 		return $this->network;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 *
+	 * @param tx_t3socials_models_IMessage $message
+	 * @see tx_t3socials_network_IConnection::sendMessage()
+	 * @return void
+	 */
 	public function sendMessage(tx_t3socials_models_IMessage $message) {
 
 		$builder = $this->getBuilder($message->getMessageType());
-		$data = $builder->build($message, $this->getNetwork(), 'pushd.'.$message->getMessageType().'.');
-		if(!$data) // Der Builder entscheidet, ob etwas verschickt wird.
+		$data = $builder->build($message, $this->getNetwork(), 'pushd.' . $message->getMessageType() . '.');
+		// Der Builder entscheidet, ob etwas verschickt wird.
+		if (!$data) {
 			return;
+		}
 
 		// Der Builder kann einen anderen EventType festlegen
 		$event = $message->getMessageType();
-		if(isset($data['event']) && $data['event']) {
+		if (isset($data['event']) && $data['event']) {
 			$event = $data['event'];
 			unset($data['event']);
 		}
 		// Beim Push beachten wir nur Titel und Message
 		$url = $this->getNetwork()->getConfigData('pushd.url');
-		$url .= 'event/'.$event;
+		$url .= 'event/' . $event;
 
 		// use key 'http' even if you send the request to https://...
 		$options = array(
@@ -77,15 +92,14 @@ class tx_t3socials_network_pushd_Connection
 				),
 		);
 		$context  = stream_context_create($options);
-		$result = file_get_contents($url, false, $context);
-		if($result === false) {
+		$result = file_get_contents($url, FALSE, $context);
+		if ($result === FALSE) {
 			$data = $message->getData();
-			if(is_object($data) && isset($data->record))
+			if (is_object($data) && isset($data->record))
 				$message->setData($data->record);
-			tx_rnbase_util_Logger::fatal('Error sending pushd-message ('.$message->getMessageType().')!', 't3socials',
-				array('message' => (array)$message, 'options'=>$options, 'url'=>$url));
+			tx_rnbase_util_Logger::fatal('Error sending pushd-message (' . $message->getMessageType() . ')!', 't3socials',
+				array('message' => (array) $message, 'options' => $options, 'url' => $url));
 			$message->setData($data);
-//			throw new Exception('Message could not be send!');
 		}
 	}
 
@@ -115,33 +129,8 @@ class tx_t3socials_network_pushd_Connection
 		}
 	}
 
-
-
-	/**
-	 * @param array $config
-	 *
-	 * @return tx_t3socials_models_NetworkConfig
-	 */
-	public function getNetworkConfig(array $config = array()) {
-		$ts = <<<CONF
-pushd {
-	url =
-}
-CONF;
-		$config = tx_rnbase::makeInstance(
-			'tx_t3socials_models_NetworkConfig',
-			array(
-				'provider_id' => 'pushd',
-				'connector' => 'tx_t3socials_network_pushd_Connection',
-				'comunicator' => 'tx_t3socials_mod_handler_Pushd',
-				'default_configuration' => $ts,
-			)
-		);
-		return $config;
-	}
-
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']);
 }

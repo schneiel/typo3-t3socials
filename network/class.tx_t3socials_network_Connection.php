@@ -166,11 +166,12 @@ abstract class tx_t3socials_network_Connection
 	/**
 	 * Erzeugt eine Netzwerkkonfiguration.
 	 *
-	 * @param array $config
+	 * @TODO: inject config in tx_t3socials_network_Config::getNetworkConnection
+	 *
 	 * @return tx_t3socials_models_NetworkConfig
 	 */
-	public function getNetworkConfig(array $config = array()) {
-		return tx_rnbase::makeInstance('tx_t3socials_models_NetworkConfig', $config);
+	public function getNetworkConfig() {
+		return tx_t3socials_network_Config::getNetworkConfig($this->getNetwork());
 	}
 
 }

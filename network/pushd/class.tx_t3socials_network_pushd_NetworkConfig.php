@@ -22,45 +22,40 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_t3socials_models_NetworkConfig');
+
 
 /**
- * Interface für eine Connection
+ * XING Configuration
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
- * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-interface tx_t3socials_network_IConnection {
+class tx_t3socials_network_pushd_NetworkConfig
+	extends tx_t3socials_models_NetworkConfig {
 
 	/**
-	 * Setzt das zu verwendende Netzwerk-Model.
+	 * Initialisiert die Konfiguration für das Netzwerk.
 	 *
-	 * @param tx_t3socials_models_Network $network
-	 * @return tx_t3socials_network_Connection
+	 * @return void
 	 */
-	public function setNetwork(tx_t3socials_models_Network $network);
-
-	/**
-	 * Post data to network.
-	 *
-	 * @param tx_t3socials_models_Message $message
-	 * @return null or error message
-	 * @return null|string with error
-	 */
-	public function sendMessage(tx_t3socials_models_IMessage $message);
-
-	/**
-	 * Verify connection is valid
-	 *
-	 * @return boolean
-	 */
-	public function verify();
+	protected function initConfig() {
+		parent::initConfig();
+		$this->setProperty('provider_id', $this->uid = 'pushd');
+		$this->setProperty('connector', 'tx_t3socials_network_pushd_Connection');
+		$this->setProperty('comunicator', 'tx_t3socials_mod_handler_Pushd');
+		$this->setProperty('default_configuration',
+			'pushd {' . CRLF .
+				'	url =' . CRLF .
+			'}'
+		);
+	}
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']);
 }
