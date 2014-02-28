@@ -70,7 +70,7 @@ class tx_t3socials_tests_network_xing_Connection_testcase
 	/**
 	 * returns classname or object of connection
 	 *
-	 * @return string|tx_t3socials_network_Connection
+	 * @return string|array string with message or array with post data
 	 */
 	protected function getBuiltMessage() {
 		return 'Überschrift' . CRLF . CRLF .

@@ -71,7 +71,7 @@ class tx_t3socials_network_MessageBuilder {
 	 * Erzeugt anhand einers Message Models eine Statusmeldung.
 	 *
 	 * @param tx_t3socials_models_IMessage $message
-	 * @return string
+	 * @return string|array string with message or array with post data
 	 */
 	public function build(tx_t3socials_models_IMessage $message) {
 		$title = $this->html2plain($message->getHeadline());

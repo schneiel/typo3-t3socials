@@ -26,7 +26,7 @@ tx_rnbase::load('tx_t3socials_models_NetworkConfig');
 
 
 /**
- * XING Configuration
+ * Facebook Configuration
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
@@ -34,7 +34,7 @@ tx_rnbase::load('tx_t3socials_models_NetworkConfig');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_network_xing_NetworkConfig
+class tx_t3socials_network_facebook_NetworkConfig
 	extends tx_t3socials_models_NetworkConfig {
 
 	/**
@@ -44,14 +44,29 @@ class tx_t3socials_network_xing_NetworkConfig
 	 */
 	protected function initConfig() {
 		parent::initConfig();
-		$this->setProperty('provider_id', $this->uid = 'xing');
-		$this->setProperty('hybridauth_provider', 'XING');
-		$this->setProperty('connector', 'tx_t3socials_network_xing_Connection');
-		$this->setProperty('comunicator', 'tx_t3socials_mod_handler_Xing');
+		$this->setProperty('provider_id', $this->uid = 'facebook');
+		$this->setProperty('hybridauth_provider', 'Facebook');
+		$this->setProperty('connector', 'tx_t3socials_network_facebook_Connection');
+		$this->setProperty('comunicator', 'tx_t3socials_mod_handler_Facebook');
+		$this->setProperty('description',
+			'Please enter the customer key into the field "Username"' .
+			' and the customer secret into the field "Password".' . CRLF .
+			' ###MORE###' . CRLF .
+			' To authenticate with a specific account, you has to ' .
+			' put the customer token in the field "access_token"' .
+			' of the Configuration.' . CRLF .
+			' You can go to the T3Socials User Tools to autehtificate.' . CRLF .
+			' a customer end get the token from there.' . CRLF
+		);
+		$this->setProperty('default_configuration',
+			$this->getProviderId() . ' {' .
+			'	access_token = ' . CRLF .
+			'}'
+		);
 	}
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']);
 }

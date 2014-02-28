@@ -91,7 +91,7 @@ abstract class tx_t3socials_network_Connection
 	 * Erzeugt aus dem Message Model einen eine Text-Nachricht.
 	 *
 	 * @param tx_t3socials_models_IMessage $message
-	 * @return string
+	 * @return string|array string with message or array with post data
 	 */
 	protected function buildStatusMessage(tx_t3socials_models_IMessage $message) {
 		// Diese generische Nachricht muss nun in eine Meldung umgesetzt werden.

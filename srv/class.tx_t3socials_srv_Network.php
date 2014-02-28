@@ -72,7 +72,7 @@ class tx_t3socials_srv_Network
 				// Eine Möglichkeit die URL extern zu setzen
 				$message->setUrl(call_user_func($options['urlbuilder'], $message, $account));
 			}
-			// @TODO: liveticker.message??? wir haben doch news!?
+			// @TODO: liveticker.message??? wir haben doch news oder eine andere generische message!?
 			else {
 				$message->setUrl($account->getConfigData($account->getNetwork() . '.liveticker.message.url'));
 			}

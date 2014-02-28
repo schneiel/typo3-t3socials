@@ -76,7 +76,16 @@ class tx_t3socials_models_NetworkConfig
 			$this->setProperty('comunicator', NULL);
 		}
 		if (!$this->hasProperty('description')) {
-			$this->setProperty('description', '');
+			$this->setProperty('description',
+				'Please enter the customer key into the field "Username"' .
+				' and the customer secret into the field "Password".' . CRLF .
+				' ###MORE###' . CRLF .
+				' To authenticate with a specific account, you has to ' .
+				' put the customer token in the fields "access_token" and' .
+				' "access_token_secret" of the Configuration.' . CRLF .
+				' You can go to the T3Socials User Tools to autehtificate.' . CRLF .
+				' a customer end get the tokens from there.' . CRLF
+			);
 		}
 		if (!$this->hasProperty('default_configuration')) {
 			$this->setProperty('default_configuration',

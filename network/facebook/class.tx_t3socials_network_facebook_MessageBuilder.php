@@ -22,11 +22,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
-tx_rnbase::load('tx_t3socials_models_NetworkConfig');
-
+tx_rnbase::load('tx_t3socials_network_MessageBuilder');
 
 /**
- * XING Configuration
+ * Message Builder für eine Facebook-Meldung
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
@@ -34,24 +33,28 @@ tx_rnbase::load('tx_t3socials_models_NetworkConfig');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_network_xing_NetworkConfig
-	extends tx_t3socials_models_NetworkConfig {
+class tx_t3socials_network_facebook_MessageBuilder
+	extends tx_t3socials_network_MessageBuilder {
+
 
 	/**
-	 * Initialisiert die Konfiguration für das Netzwerk.
+	 * Erzeugt anhand einers Message Models eine Statusmeldung.
 	 *
-	 * @return void
+	 * @param tx_t3socials_models_IMessage $message
+	 * @return string|array string with message or array with post data
 	 */
-	protected function initConfig() {
-		parent::initConfig();
-		$this->setProperty('provider_id', $this->uid = 'xing');
-		$this->setProperty('hybridauth_provider', 'XING');
-		$this->setProperty('connector', 'tx_t3socials_network_xing_Connection');
-		$this->setProperty('comunicator', 'tx_t3socials_mod_handler_Xing');
+	public function build(tx_t3socials_models_IMessage $message) {
+		$parameters = array();
+		$parameters['message'] = parent::build($message);
+		$url = $message->getUrl();
+		if (!empty($url)) {
+			$parameters['link'] = $url;
+		}
+		return $parameters;
 	}
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']);
 }

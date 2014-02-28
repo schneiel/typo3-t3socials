@@ -75,8 +75,9 @@ abstract class tx_t3socials_tests_network_Connection_testcase
 	 * @return void
 	 */
 	public function testGetProvider() {
-		if (headers_sent()) {
-			$this->markTestSkipped('HybridAuth calls session_start() but headers already sent.');
+		$this->markTestIncomplete('Find a way to mock hybrid auth and its thirdparty libs!');
+		if (!class_exists('Hybrid_Storage') && headers_sent() && !session_id()) {
+			$this->markTestSkipped('HybridAuth calls session_start() but headers already sent and there are no session id.');
 		}
 		$connection = $this->getConnectionMock();
 		if (!$connection instanceof tx_t3socials_network_hybridauth_Interface) {

@@ -17,6 +17,9 @@ tx_t3socials_network_Config::registerNetwork(
 tx_t3socials_network_Config::registerNetwork(
 	'tx_t3socials_network_xing_NetworkConfig'
 );
+tx_t3socials_network_Config::registerNetwork(
+	'tx_t3socials_network_facebook_NetworkConfig'
+);
 
 // eid für die hybridauth im Frontend
 // $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['t3socials-hybridauth']
