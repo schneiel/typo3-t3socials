@@ -22,30 +22,34 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
-tx_rnbase::load('tx_rnbase_util_Misc');
+tx_rnbase::load('tx_t3socials_models_TriggerConfig');
 
 /**
- * Access a service instance
+ * Model einer trigger Konfiguration
  *
  * @package tx_t3socials
- * @subpackage tx_t3socials_network
- * @author Rene Nitzsche <rene@system25.de>
+ * @subpackage tx_t3socials_models
+ * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_ServiceRegistry {
+class tx_t3socials_trigger_news_TriggerConfig
+	extends tx_t3socials_models_TriggerConfig {
 
 	/**
-	 * Liefert den Network-Service
+	 * Initialisiert die Konfiguration für das Netzwerk.
 	 *
-	 * @return tx_t3socials_srv_Network
+	 * @return void
 	 */
-	public static function getNetworkService() {
-		return tx_rnbase_util_Misc::getService('t3socials', 'network');
+	protected function initConfig() {
+		parent::initConfig();
+		$this->setProperty('trigger_id', $this->uid = 'news');
+		$this->setProperty('table', 'tt_news');
+		$this->setProperty('message_builder', 'tx_t3socials_trigger_news_MessageBuilder');
 	}
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/news/class.tx_t3socials_trigger_news_TriggerConfig.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/news/class.tx_t3socials_trigger_news_TriggerConfig.php']);
 }

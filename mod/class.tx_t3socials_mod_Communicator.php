@@ -52,6 +52,10 @@ class tx_t3socials_mod_Communicator
 	 */
 	protected function getSubMenuItems() {
 		$menuItems = tx_t3socials_network_Config::getNewtorkComunicators();
+		array_unshift(
+			$menuItems,
+			tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger')
+		);
 		tx_rnbase_util_Misc::callHook(
 			't3socials', 'modCommunicator_tabItems',
 			array('tabItems' => &$menuItems), $this

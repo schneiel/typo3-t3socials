@@ -12,6 +12,7 @@ CREATE TABLE tx_t3socials_networks (
 
 	network varchar(50) DEFAULT '' NOT NULL,
 	actions varchar(250) DEFAULT '' NOT NULL,
+	autosend tinyint(4) DEFAULT '0' NOT NULL,
 	name varchar(150) DEFAULT '' NOT NULL,
 	username varchar(250) DEFAULT '' NOT NULL,
 	password varchar(250) DEFAULT '' NOT NULL,

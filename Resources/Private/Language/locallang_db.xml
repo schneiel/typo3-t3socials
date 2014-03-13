@@ -14,13 +14,16 @@
 			<label index="tx_t3socials_networks_username">Username</label>
 			<label index="tx_t3socials_networks_password">Password</label>
 			<label index="tx_t3socials_networks_actions">Triggers for network access</label>
+			<label index="tx_t3socials_networks_autosend">Autosend on save for triggers</label>
 			<label index="tx_t3socials_networks_config">Configurations</label>
 
-			<label index="tx_t3socials_twitter">Twitter</label>
-			<label index="tx_t3socials_xing">XING</label>
-			<label index="tx_t3socials_facebook">Facebook</label>
-			<label index="tx_t3socials_googleplus">Google+</label>
-			<label index="tx_t3socials_pushd">Pushd</label>
+			<label index="tx_t3socials_network_twitter">Twitter</label>
+			<label index="tx_t3socials_network_xing">XING</label>
+			<label index="tx_t3socials_network_facebook">Facebook</label>
+			<label index="tx_t3socials_network_googleplus">Google+</label>
+			<label index="tx_t3socials_network_pushd">Pushd</label>
+			
+			<label index="tx_t3socials_trigger_news">News</label>
 
 		</languageKey>
 		<languageKey index="de" type="array">

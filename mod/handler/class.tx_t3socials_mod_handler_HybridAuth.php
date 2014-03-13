@@ -24,6 +24,7 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_mod_IModHandler');
 tx_rnbase::load('tx_t3socials_models_Message');
+tx_rnbase::load('tx_t3socials_mod_util_Template');
 tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
@@ -122,18 +123,11 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 	}
 
 	/**
-	 * This method is called each time the method func is clicked,
-	 * to handle request data.
+	 * Liefert die generische Nachricht für den versand.
 	 *
-	 * @param tx_rnbase_mod_IModule $mod
-	 * @return string|null
+	 * @return tx_t3socials_models_Message
 	 */
-	public function handleRequest(tx_rnbase_mod_IModule $mod) {
-		$submitted = t3lib_div::_GP($this->getSubmitName());
-		if (!$submitted) {
-			return NULL;
-		}
-
+	protected function getMessage() {
 		$formData = $this->getFormData();
 		$headline = $formData->getHeadline();
 		$intro = $formData->getIntro();
@@ -146,12 +140,30 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 		$message->setMessage($content);
 		$message->setUrl($url);
 
+		return $message;
+	}
+
+	/**
+	 * This method is called each time the method func is clicked,
+	 * to handle request data.
+	 *
+	 * @param tx_rnbase_mod_IModule $mod
+	 * @return string|null
+	 */
+	public function handleRequest(tx_rnbase_mod_IModule $mod) {
+		$submitted = t3lib_div::_GP($this->getSubmitName());
+		if (!$submitted) {
+			return NULL;
+		}
+
+		$message = $this->getMessage();
+
 		$message = $this->prepareMessage($message);
 
 		// Wurde keine Message zurück gegeben
 		// ist die Validierung fehlgeschlagen!
 		if (!$message instanceof tx_t3socials_models_Message) {
-			$mod->addMessage($message, 'Hinweis', 1);
+			$mod->addMessage($message, '###LABEL_MESSAGE###', 1);
 			return NULL;
 		}
 
@@ -166,14 +178,14 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 			$error = $connection->sendMessage($message);
 			// fehler beim senden?
 			if ($error) {
-				$mod->addMessage($error, 'Fehler', 1);
+				$mod->addMessage($error, '###LABEL_ERROR###', 1);
 			}
 			// erfolgreich versendet
 			else {
-				$mod->addMessage('###LABEL_MESSAGE_SENT###', 'Hinweis', 0);
+				$mod->addMessage('###LABEL_MESSAGE_SENT###', '###LABEL_MESSAGE###', 0);
 			}
 		} catch (Exception $e) {
-			$mod->addMessage($e->getMessage(), 'Fehler', 2);
+			$mod->addMessage($e->getMessage(), '###LABEL_ERROR###', 2);
 		}
 		return NULL;
 	}
@@ -188,14 +200,13 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 	 */
 	public function showScreen($template, tx_rnbase_mod_IModule $mod, $options) {
 		if (empty($template)) {
-			$template = $this->getDefaultTemplate($mod, $options);
+			$template = tx_t3socials_mod_util_Template::getDefaultMessageTemplate($mod, $options);
 			if (empty($template)) {
 				return '';
 			}
 		}
 
 		$formTool = $mod->getFormTool();
-		$options = array();
 
 		$markerArr = array();
 		$subpartArr = array();
@@ -207,7 +218,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccountsByType($this->getNetworkId());
 		// wir haben keine Accounts, an die wir versenden könnten
 		if (empty($accounts)) {
-			$mod->addMessage('Es wurde kein Account für "' . $this->getNetworkConfig()->getProviderTitle() . '" gefunden.', 'Hinweis', 0);
+			$mod->addMessage('Es wurde kein Account für "' . $this->getNetworkConfig()->getProviderTitle() . '" gefunden.', '###LABEL_MESSAGE###', 0);
 			$subpartArr['###SEND_FORM###'] = '';
 		}
 		// wir haben accounts, die wir nun auflisten
@@ -215,76 +226,19 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 			$accMenu = $this->getAccountSelector($mod, $accounts);
 			$markerArr['###ACCOUNT_SEL###'] = $accMenu['menu'];
 			$markerArr['###ACCOUNT_EDITLINK###'] = $formTool->createEditLink('tx_t3socials_networks', $accMenu['value']);
-			$markerArr['###AUTH_STATE###'] = $this->getAuthentificationState((int) $accMenu['value']);
+			$markerArr['###AUTH_STATE###'] = tx_t3socials_mod_util_Template::getAuthentificationState((int) $accMenu['value']);
 
-			$formFields = array_flip($this->getVisibleFormFields());
-			$formData = $this->getFormData();
-			if (isset($formFields['headline'])) {
-				$markerArr['###INPUT_HEADLINE###'] = $formTool->createTxtInput('data[headline]', $formData->getHeadline(), 30);
-				$wrappedSubpartArr['###SEND_FORM_HEADLINE###'] = '';
-			} else {
-				$subpartArr['###SEND_FORM_HEADLINE###'] = '';
-			}
-			if (isset($formFields['intro'])) {
-				$markerArr['###INPUT_INTRO###'] = $formTool->createTextArea('data[intro]', $formData->getIntro(), 30, 3);
-				$wrappedSubpartArr['###SEND_FORM_INTRO###'] = '';
-			} else {
-				$subpartArr['###SEND_FORM_INTRO###'] = '';
-			}
-			if (isset($formFields['message'])) {
-				$markerArr['###INPUT_MESSAGE###'] = $formTool->createTextArea('data[message]', $formData->getMessage(), 30, 5);
-				$wrappedSubpartArr['###SEND_FORM_MESSAGE###'] = '';
-			} else {
-				$subpartArr['###SEND_FORM_MESSAGE###'] = '';
-			}
-			if (isset($formFields['url'])) {
-				$markerArr['###INPUT_URL###'] = $formTool->createTxtInput('data[url]', $formData->getUrl(), 30);
-				$wrappedSubpartArr['###SEND_FORM_URL###'] = '';
-			} else {
-				$subpartArr['###SEND_FORM_URL###'] = '';
-			}
-			$markerArr['###BTN_SEND###'] = $formTool->createSubmit($this->getSubmitName(), '###LABEL_SEND_MESSAGE###');
-			$wrappedSubpartArr['###SEND_FORM###'] = '';
+			$options['submitname'] = $this->getSubmitName();
+			$template = tx_t3socials_mod_util_Template::parseMessageFormFields(
+				$template, $mod,
+				$this->getFormData(), array_flip($this->getVisibleFormFields()),
+				$options
+			);
 		}
 
 		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
 
 		return $out;
-	}
-
-	/**
-	 * Erzeugt ein Default Template
-	 *
-	 * @param tx_rnbase_mod_IModule $mod
-	 * @param array $options
-	 * @return string
-	 */
-	protected function getDefaultTemplate(tx_rnbase_mod_IModule $mod, $options) {
-		$configurations = $mod->getConfigurations();
-
-		$file = $configurations->get('communicator.hybridauth.template');
-		$file = t3lib_div::getFileAbsFileName($file);
-		$templateCode = t3lib_div::getURL($file);
-
-		if (empty($templateCode)) {
-			$out  = '<br />Template ConfId: communicator.hybridauth.template';
-			$out .= '<br />Configured Template: ' . $configurations->get('communicator.hybridauth.template');
-			$mod->addMessage($out, 'Template not Found!', 2);
-			return '';
-		}
-
-		$template = tx_rnbase_util_Templates::getSubpart($templateCode, '###HYBRIDAUTH_DEFAULT###');
-
-		if (empty($template)) {
-			$out  = '<br />Template ConfId: communicator.hybridauth.template';
-			$out .= '<br />Configured Template: ' . $configurations->get('communicator.hybridauth.template');
-			$out .= '<br />Missing Subpart Template: ###HYBRIDAUTH_DEFAULT###';
-			$out .= '<br />Template: <pre>' . (htmlspecialchars($templateCode)) . '</pre>';
-			$mod->addMessage($out, 'Subpart not Found!', 2);
-			return '';
-		}
-
-		return $template;
 	}
 
 	/**
@@ -312,7 +266,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 		$adapter = $connection->getProvider()->adapter;
 		$connected = $adapter->isUserConnected();
 		$out  = '<div class="typo3-message ' . ($connected ? 'message-ok' : 'message-error') . '">';
-		$out .= 	'<div class="message-header">' . ($connected ? 'Connected' : 'Disconected') . '</div>';
+		$out .= 	'<div class="message-header">' . ($connected ? 'Connected' : 'Disconnected') . '</div>';
 		$out .= 	'<div class="message-body">';
 		$popup  = 'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', \'toolbar=no,scrollbars=yes,resizable=yes,width=800,height=600\');';
 		$popup .= ' fenster.focus(); return false;';

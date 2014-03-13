@@ -6,7 +6,7 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_t3socials_networks'] = array (
 	'ctrl' => $TCA['tx_t3socials_networks']['ctrl'],
 	'interface' => array (
-		'showRecordFieldList' => 'hidden,name1,name2'
+		'showRecordFieldList' => 'hidden,name,username,autosend'
 	),
 	'feInterface' => $TCA['tx_t3socials_networks']['feInterface'],
 	'columns' => array (
@@ -60,11 +60,19 @@ $TCA['tx_t3socials_networks'] = array (
 			'exclude' => 1,
 			'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_actions',
 			'config' => Array (
-				'type' => 'text',
-				'cols' => '30',
-				'rows' => '5',
-				'eval' => 'trim',
-			)
+				'type' => 'select',
+				'itemsProcFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->getTriggers',
+				'size' => '5',
+				'maxitems' => '999',
+			),
+		),
+		'autosend' => Array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_autosend',
+			'config'  => array (
+				'type'    => 'check',
+				'default' => '0'
+			),
 		),
 		'config' => Array (
 			'exclude' => 1,
@@ -101,7 +109,7 @@ $TCA['tx_t3socials_networks'] = array (
 		),
 	),
 	'types' => array (
-		'0' => array('showitem' => 'hidden;;1;;1-1-1,network;;network,name,username,password,actions,config')
+		'0' => array('showitem' => 'hidden;;1;;1-1-1,network;;network,name,username,password,actions,autosend,config')
 	),
 	'palettes' => array (
 		'1' => array('showitem' => ''),

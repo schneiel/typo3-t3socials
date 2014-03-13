@@ -136,6 +136,21 @@ class tx_t3socials_util_TCA {
 	}
 
 	/**
+	 * Get content types keys of the given indexer extension
+	 *
+	 * @param array &$params
+	 * @return void
+	 */
+	public static function getTriggers(array &$params) {
+		$networks = tx_t3socials_trigger_Config::getTriggerIds();
+		// wir sortieren vorher, damit bestehende items nicht mit sortiert werden!
+		sort($networks);
+		foreach ($networks as $k) {
+			$params['items'][] = array(tx_t3socials_trigger_Config::translateTrigger($k), $k);
+		}
+	}
+
+	/**
 	 * Erstelt aus dem content anhand eines enthaltenen ###MORE### markers.
 	 * Eine vorschau, einen Link und einen versteckten Text,
 	 * der erst bei klick auf Link ausgegeben wird.

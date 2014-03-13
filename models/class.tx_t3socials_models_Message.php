@@ -63,6 +63,7 @@ class tx_t3socials_models_Message
 		}
 		// wir haben nur den Typ
 		elseif (is_string($rowOrUid)) {
+			$this->uid = $rowOrUid;
 			$this->setMessageType($rowOrUid);
 		}
 

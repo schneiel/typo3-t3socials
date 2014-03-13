@@ -147,9 +147,10 @@ class tx_t3socials_models_Base
 		$out  = get_class($this) . ' (' . CRLF;
 		foreach ($data as $key => $value) {
 			$type = gettype($value);
-			$value = is_object($value) ? (string) $value : $value;
-			$value = is_string($value) ? '"' . $value . '"' : $value;
 			$value = is_bool($value) ? (int) $value : $value;
+			$value = is_string($value) ? '"' . $value . '"' : $value;
+			$value = is_object($value) ? implode(CRLF . TAB, explode(CRLF, (string) $value)) : $value;
+			$value = is_array($value) ? print_r($value, TRUE) : $value;
 			$out .= TAB . $key . ' (' . $type . ')';
 			$out .= ': ' . $value . CRLF;
 		}

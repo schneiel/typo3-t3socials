@@ -47,17 +47,31 @@ class tx_t3socials_hooks_TCEHook {
 	public function processDatamap_afterDatabaseOperations(
 		$status, $table, $id, $fieldArray, &$tcemain
 	) {
-		if ($table == 'tt_news' && ($status == 'new' || $status == 'update')) {
-			if ($status == 'new') {
-				$id = $tcemain->substNEWwithIDs[$id];
-			}
-			$srv = tx_t3socials_srv_ServiceRegistry::getNewsService();
-			$news = $srv->makeInstance($id);
-			if (!$news || !$news->isValid() || $news->getHidden() > 0) {
-				return;
-			}
-			$srv->sendNews($news);
+		if (
+			!(
+				$this->isTriggerable($table)
+				&& ($status == 'new' || $status == 'update')
+			)
+		) {
+			return;
 		}
+		if ($status == 'new') {
+			$id = $tcemain->substNEWwithIDs[$id];
+		}
+
+		$networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
+		$networkSrv->exeuteAutoSend($table, $id);
+	}
+
+	/**
+	 * Prüft, ob die übergebene Tabelle Trigger haben kann.
+	 *
+	 * @param string $table
+	 * @return string
+	 */
+	protected function isTriggerable($table) {
+		$triggerable = tx_t3socials_trigger_Config::getTriggerTableNames();
+		return in_array($table, $triggerable);
 	}
 
 }

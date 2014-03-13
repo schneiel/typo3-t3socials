@@ -51,8 +51,8 @@ class tx_t3socials_network_Config {
 			$config = tx_rnbase::makeInstance($config, $config);
 			if (!$config instanceof tx_t3socials_models_NetworkConfig) {
 				throw new Exception(
-					'The connection "' . get_class($config) .
-					'" has to implement the interface "tx_t3socials_network_IConnection".'
+					'The network configuration "' . get_class($config) .
+					'" has to implement the interface "tx_t3socials_models_NetworkConfig".'
 				);
 			}
 		}
@@ -161,7 +161,7 @@ class tx_t3socials_network_Config {
 		$id = $network instanceof tx_t3socials_models_Network
 			? $network->getNetwork() : $network;
 		tx_rnbase::load('tx_rnbase_util_Misc');
-		$title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_' . $id);
+		$title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_network_' . $id);
 		return empty($title) ? $id : $title;
 	}
 }

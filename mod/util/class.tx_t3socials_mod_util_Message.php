@@ -22,30 +22,47 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
-tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
- * Access a service instance
+ * Basis handler für HybridAuth
  *
  * @package tx_t3socials
- * @subpackage tx_t3socials_network
- * @author Rene Nitzsche <rene@system25.de>
+ * @subpackage tx_t3socials_mod
+ * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_ServiceRegistry {
+class tx_t3socials_mod_util_Message {
+
 
 	/**
-	 * Liefert den Network-Service
+	 * Erzeugt eine Flash Message
 	 *
-	 * @return tx_t3socials_srv_Network
+	 * @param string|array $message
+	 * @return void
 	 */
-	public static function getNetworkService() {
-		return tx_rnbase_util_Misc::getService('t3socials', 'network');
+	public static function showMessage($message) {
+		$msg = '';
+		$title = '';
+		$severity = t3lib_FlashMessage::OK;
+		$store = FALSE;
+		// wir haben eine erweiterte konfiguration
+		if (is_array($message)) {
+			$msg = $message['message'];
+			$title = $message['title'];
+			$severity = $message['severity'];
+			$store = boolean($message['storeinsession']);
+		}
+		// wir haben nur eine meldung
+		else {
+			$msg = $message;
+			$title = 'Message';
+		}
+		$this->getModule()->addMessage($msg, $title, $severity, $store);
 	}
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']);
 }

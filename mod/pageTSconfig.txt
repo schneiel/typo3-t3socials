@@ -12,5 +12,8 @@ mod {
 			hybridauth.template = EXT:t3socials/mod/templates/moduleHybridauthDefault.html
 			template = EXT:t3socials/mod/templates/module.html
 		}
+		trigger {
+			template = EXT:t3socials/mod/templates/trigger.html
+		}
 	}
 }

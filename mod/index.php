@@ -34,6 +34,8 @@ $BE_USER->modAccess($MCONF, 1);
 
 tx_rnbase::load('tx_rnbase_configurations');
 tx_rnbase::load('tx_rnbase_mod_BaseModule');
+tx_rnbase::load('tx_t3socials_mod_util_Template');
+tx_rnbase::load('tx_t3socials_mod_util_Message');
 
 /**
  * Backend Modul für t3socials

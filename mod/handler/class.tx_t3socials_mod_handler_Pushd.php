@@ -54,7 +54,7 @@ class tx_t3socials_mod_handler_Pushd
 	 * @return string
 	 */
 	public function getSubLabel() {
-		return '###LABEL_TAB_PUSHD###';
+		return 'Pushd';
 	}
 
 	/**
@@ -76,7 +76,7 @@ class tx_t3socials_mod_handler_Pushd
 		$set = t3lib_div::_GP('SET');
 		if (strlen($msg) == 0) {
 			$info = 'Bitte einen Text eingeben.<br />';
-			$mod->addMessage($info, 'Hinweis', 1);
+			$mod->addMessage($info, '###LABEL_MESSAGE###', 1);
 			return NULL;
 		}
 		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', $set['event']);
@@ -88,9 +88,9 @@ class tx_t3socials_mod_handler_Pushd
 			$conn = tx_rnbase::makeInstance('tx_t3socials_network_pushd_Connection');
 			$conn->setNetwork($account);
 			$conn->sendMessage($message);
-			$mod->addMessage('###LABEL_MESSAGE_SENT###', 'Hinweis', 0);
+			$mod->addMessage('###LABEL_MESSAGE_SENT###', '###LABEL_MESSAGE###', 0);
 		} catch (Exception $e) {
-			$mod->addMessage($e->getMessage(), 'Fehler', 2);
+			$mod->addMessage($e->getMessage(), '###LABEL_ERROR###', 2);
 		}
 		return NULL;
 	}
@@ -115,7 +115,7 @@ class tx_t3socials_mod_handler_Pushd
 		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccountsByType('pushd');
 		// wir haben accounts, die wir nun auflisten
 		if (empty($accounts)) {
-			$mod->addMessage('Es wurde kein Pushd-Account gefunden.', 'Hinweis', 0);
+			$mod->addMessage('Es wurde kein Pushd-Account gefunden.', '###LABEL_MESSAGE###', 0);
 			$subpartArr['###SEND_FORM###'] = '';
 		}
 		// wir haben accounts, die wir nun auflisten
