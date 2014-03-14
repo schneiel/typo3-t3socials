@@ -47,10 +47,10 @@ class tx_t3socials_tests_srv_Network_testcase
 	 * @test
 	 * @dataProvider getByRefererCallsSearchData
 	 */
-	public function testGetByRefererCallsSearchCorrect($trigger) {
+	public function testGetByRefererCallsSearchCorrect($trigger, $autosend) {
 		$fields = $options = array();
 		$fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
-		$fields['NETWORK.autosend'][OP_EQ_INT] = 1;
+		$fields['NETWORK.autosend'][OP_EQ_INT] = $autosend;
 
 		$service = $this->getMock(
 			'tx_t3socials_srv_Network', array('search')
@@ -59,7 +59,7 @@ class tx_t3socials_tests_srv_Network_testcase
 			->method('search')
 			->with($fields, $options);
 
-		$service->findAutoSaveAccountsByTriggers($triggers);
+		$service->findAccountsByTriggers($triggers, $autosend);
 	}
 
 	/**
@@ -69,10 +69,10 @@ class tx_t3socials_tests_srv_Network_testcase
 	 */
 	public function getByRefererCallsSearchData() {
 		return array(
-			__LINE__ => array('trigger' => 'tt_news'),
-			__LINE__ => array('trigger' => 'tt_news,tt_content'),
-			__LINE__ => array('trigger' => array('tt_news', 'tt_content')),
-			__LINE__ => array('trigger' => 'news'),
+			__LINE__ => array('trigger' => 'tt_news', 'autosend' => 1),
+			__LINE__ => array('trigger' => 'tt_news,tt_content', 'autosend' => 0),
+			__LINE__ => array('trigger' => array('tt_news', 'tt_content'), 'autosend' => 1),
+			__LINE__ => array('trigger' => 'news', 'autosend' => 1),
 		);
 	}
 }
