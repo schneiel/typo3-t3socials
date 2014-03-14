@@ -32,8 +32,5 @@ conf.py:
   - t3sphinx.ext.t3extras
   - t3sphinx.ext.t3tablerows
   - t3sphinx.ext.targets
-  - sphinxcontrib.googlechart
-  - sphinxcontrib.googlemaps
-  - sphinxcontrib.slide
-  - sphinxcontrib.youtube
+  - rst2pdf.pdfbuilder
 ...
