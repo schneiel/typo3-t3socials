@@ -38,7 +38,8 @@ class tx_t3socials_util_ResolverT3DB
 
 	/**
 	 * Der Resolver lädt den zu indizierenden Datensatz auf der Datenbank. D
-	 * @param string $tablename
+	 *
+	 * @param string $tableName
 	 * @param integer $uid
 	 * @return tx_t3socials_models_Base
 	 */

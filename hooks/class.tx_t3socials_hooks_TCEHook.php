@@ -59,8 +59,8 @@ class tx_t3socials_hooks_TCEHook {
 			$id = $tcemain->substNEWwithIDs[$id];
 		}
 
-		$networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
-		$networkSrv->exeuteAutoSend($table, $id);
+		$this->handleAutoSend($table, $id);
+		$this->handleInfo($table, $id);
 	}
 
 	/**
@@ -72,6 +72,61 @@ class tx_t3socials_hooks_TCEHook {
 	protected function isTriggerable($table) {
 		$triggerable = tx_t3socials_trigger_Config::getTriggerTableNames();
 		return in_array($table, $triggerable);
+	}
+
+	/**
+	 * Sendet automatisch einen Datensatz an die Netzwerke.
+	 *
+	 * @param string $table
+	 * @param int $uid
+	 * @return void
+	 */
+	protected function handleAutoSend($table, $uid) {
+		$networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
+		$states = $networkSrv->exeuteAutoSend($table, $uid);
+		tx_rnbase::load('tx_t3socials_util_Message');
+		/* @var $state tx_t3socials_models_State */
+		foreach ($states as $state) {
+			// wir zeigen nur erfolgsmeldungen an,
+			// alles weitere steht in der log
+			if ($state->isStateSuccess()) {
+				tx_t3socials_util_Message::showFlashMessage($state);
+			}
+		}
+	}
+
+	/**
+	 * Prüft, ob eine spezielle Info (Flash Message) erzeugt werden soll.
+	 *
+	 * @param string $table
+	 * @param int $uid
+	 * @return void
+	 */
+	protected function handleInfo($table, $uid) {
+		$triggers = tx_t3socials_trigger_Config::getTriggerNamesForTable($table);
+		$networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
+		$networks = $networkSrv->findAccountsByTriggers($triggers, FALSE);
+		// wir haben Konfigurierte Netzwerke,
+		// weche manuell getriggert werden können.
+		// wir bauen also die nachricht zusammen
+		if (!empty($networks)) {
+			$url  = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+			$thisUrl = rawurlencode(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REQUEST_URI'));
+			$url .= 'typo3conf/ext/t3socials/mod/index.php?1';
+			$url .= '&returnUrl=' . $thisUrl;
+			$url .= '&SET%5Btrigger%5D=' . reset($triggers);
+			$url .= '&SET%5Bresource%5D=' . (int) $uid;
+			$msg  = 'Sie können das eben gespeicherte Element über T3 SOCIALS an verschiedene Dienste senden. <br />';
+			$msg .= ' Klicken Sie <a href="' . $url . '">hier</a> um die Nachricht anzupassen und einen manuellen Versand durchzuführen.';
+			$message = array(
+				'message' => $msg,
+				'title' => '<a href="' . $url . '">T3 SOCIALS</a>',
+				'severity' => 0,
+				'storeinsession' => FALSE,
+			);
+			tx_rnbase::load('tx_t3socials_util_Message');
+			tx_t3socials_util_Message::showFlashMessage($message);
+		}
 	}
 
 }

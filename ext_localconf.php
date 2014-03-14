@@ -31,7 +31,7 @@ tx_t3socials_trigger_Config::registerTrigger(
 	'tx_t3socials_trigger_news_TriggerConfig'
 );
 // tx_t3socials_trigger_Config::registerTrigger(
-// 	tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', array('table'=>'pages'))
+// tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', array('table'=>'pages'))
 // );
 
 
@@ -40,7 +40,7 @@ tx_t3socials_trigger_Config::registerTrigger(
  * *** ****************** *** */
 // eid for FE (not used at the moment)
 // $GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include']['t3socials-hybridauth']
-// 	= t3lib_extMgm::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php');
+// = t3lib_extMgm::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php');
 // ajax id for BE
 $GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['t3socials-hybridauth']
 	= t3lib_extMgm::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php') .

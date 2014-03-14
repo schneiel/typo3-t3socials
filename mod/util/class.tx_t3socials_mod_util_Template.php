@@ -173,7 +173,9 @@ class tx_t3socials_mod_util_Template {
 				$network->getUid(),
 				tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_LOGOUT
 			);
-			$out .= '<a href="' . $url . '" target="_blank" onclick="if (!confirm(\'###LABEL_T3SOCIALS_STATE_LOGOUT_CONFIRM###\')) {return false;}' . $popup . '"><strong>###LABEL_T3SOCIALS_STATE_LOGOUT###</strong></a>';
+			$out .= '<a href="' . $url . '" target="_blank"' .
+				' onclick="if (!confirm(\'###LABEL_T3SOCIALS_STATE_LOGOUT_CONFIRM###\')) {return false;}' . $popup . '">' .
+				'<strong>###LABEL_T3SOCIALS_STATE_LOGOUT###</strong></a>';
 			$out .= ' <small>(###LABEL_T3SOCIALS_STATE_REFRESH_POPUP###)</small>';
 		}
 		// es besteht keine verbindung zum dienst
@@ -183,7 +185,8 @@ class tx_t3socials_mod_util_Template {
 				$network->getUid(),
 				tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_STATE
 			);
-			$out .= '<a href="' . $url . '" target="_blank" onclick="' . $popup . '"><strong>###LABEL_T3SOCIALS_STATE_LOGIN###</strong></a>';
+			$out .= '<a href="' . $url . '" target="_blank"' .
+				' onclick="' . $popup . '"><strong>###LABEL_T3SOCIALS_STATE_LOGIN###</strong></a>';
 			$out .= ' <small>(###LABEL_T3SOCIALS_STATE_REFRESH_POPUP###)</small>';
 		}
 		$out .= 	'</div>';

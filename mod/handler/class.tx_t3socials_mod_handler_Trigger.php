@@ -398,7 +398,6 @@ class tx_t3socials_mod_handler_Trigger
 		$html .= ' </label>';
 		$row[] = $html;
 
-
 		$row[] = tx_t3socials_mod_util_Template::getAuthentificationState($account);
 
 		return $row;

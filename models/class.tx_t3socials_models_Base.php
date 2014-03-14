@@ -118,7 +118,7 @@ class tx_t3socials_models_Base
 			// setColumnValue
 			case 'set':
 				$key = $this->underscore(substr($method, 3));
-				$result = $this->setProperty($key, isset($args[0]) ? $args[0] : NULL);
+				return $this->setProperty($key, isset($args[0]) ? $args[0] : NULL);
 			// unsetColumnValue
 			case 'uns':
 				$key = $this->underscore(substr($method, 3));

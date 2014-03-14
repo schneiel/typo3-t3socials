@@ -24,7 +24,7 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 
 /**
- * Basis handler für HybridAuth
+ * Util für Nachrichten
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_mod
@@ -40,25 +40,11 @@ class tx_t3socials_mod_util_Message {
 	 *
 	 * @param string|array $message
 	 * @return void
+	 * @deprecated use tx_t3socials_util_Message::showFlashMessage instead.
 	 */
 	public static function showMessage($message) {
-		$msg = '';
-		$title = '';
-		$severity = t3lib_FlashMessage::OK;
-		$store = FALSE;
-		// wir haben eine erweiterte konfiguration
-		if (is_array($message)) {
-			$msg = $message['message'];
-			$title = $message['title'];
-			$severity = $message['severity'];
-			$store = boolean($message['storeinsession']);
-		}
-		// wir haben nur eine meldung
-		else {
-			$msg = $message;
-			$title = 'Message';
-		}
-		$this->getModule()->addMessage($msg, $title, $severity, $store);
+		tx_rnbase::load('tx_t3socials_util_Message');
+		tx_t3socials_util_Message::showFlashMessage($message);
 	}
 
 }

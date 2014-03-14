@@ -63,14 +63,6 @@ class tx_t3socials_mod_handler_Facebook
 	 */
 	protected function prepareMessage(tx_t3socials_models_Message $message) {
 		$message = parent::prepareMessage($message);
-// 		if ($message instanceof tx_t3socials_models_Message) {
-// 			$msg = $message->getMessage();
-// 			if (strlen($msg) > 420) {
-// 				$info = 'Meldung zu lang. Sie dürfen maximal 420 Zeichen versenden.<br />';
-// 				$info .= ' Aktuell ' . strlen($msg) . ' Zeichen.';
-// 				return $info;
-// 			}
-// 		}
 		return $message;
 	}
 

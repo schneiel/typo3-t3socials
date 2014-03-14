@@ -63,7 +63,8 @@ class tx_t3socials_mod_Trigger
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
 
 		if (t3lib_div::_GP('trigger_back_resourceselector')) {
-			// @TODO: das funktioniert noch nicht wie es soll. daten bleiben teilweise erhalten
+			// @TODO: das funktioniert noch nicht wie es soll.
+			// daten bleiben teilweise erhalten
 			t3lib_BEfunc::getModuleData(
 				array('resource' => ''), array('resource' => ''),
 				$this->getModule()->getName()
@@ -71,14 +72,37 @@ class tx_t3socials_mod_Trigger
 			$this->resourceModel = NULL;
 		}
 
+		$markerArray = array();
+
 		$subOut = '';
 		if ($this->getTrigger() && $this->getResource()) {
 			$subOut = tx_rnbase_util_Templates::getSubpart($template, '###NETWORKS###');
-			$subOut = $this->showNetworks($subOut, $configurations, $formatter);
+			$subOut = $this->showNetworks($subOut, $configurations, $formatter, $markerArray);
 		} else {
 			$subOut = tx_rnbase_util_Templates::getSubpart($template, '###TRIGGERRESOURCE###');
-			$subOut = $this->showResourceSelector($subOut, $configurations, $formatter);
+			$subOut = $this->showResourceSelector($subOut, $configurations, $formatter, $markerArray);
 		}
+
+		// ggf returnUrl auswerten
+		$returnUrl = t3lib_div::_GP('returnUrl');
+		if ($returnUrl) {
+			// returnUrl weiter geben!
+			$content .= '<p style="position:absolute; top:-5000px; left:-5000px;">' .
+					'<input type="hidden" value="' . $returnUrl . '" />' .
+				'</p>';
+			// zurück button an return url generieren.
+			$markerArray['###BTN_BACK###'] = '<input type="submit"' .
+				' value="###LABEL_BTN_BACK###"' .
+				' name="trigger_back_resourceselector"' .
+				' onclick="window.location.href=\'' . rawurldecode($returnUrl) . '\'; return false;"' .
+				' />';
+		}
+
+		$markerArray['###BTN_REFRESH###'] = $this->getModule()->getFormTool()->createSubmit(
+			'refresh', '###LABEL_BTN_REFRESH###'
+		);
+
+		$subOut = tx_rnbase_util_Templates::substituteMarkerArrayCached($subOut, $markerArray);
 
 		$content = '';
 		$content .= tx_rnbase_util_Templates::getSubpart($template, '###COMMON_START###');
@@ -88,23 +112,20 @@ class tx_t3socials_mod_Trigger
 		return $content;
 	}
 
+
 	/**
 	 * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
 	 *
 	 * @param string $template
 	 * @param tx_rnbase_configurations &$configurations
 	 * @param tx_rnbase_util_FormatUtil &$formatter
+	 * @param array &$markerArray
 	 * @return string
 	 */
-	protected function showResourceSelector($template, &$configurations, &$formatter) {
-		$markerArray = array();
+	protected function showResourceSelector($template, &$configurations, &$formatter, &$markerArray) {
 		$markerArray['###TRIGGERSELECTOR###'] = $this->getTriggerMenue();
 		$markerArray['###RESOURCESELECTOR###'] = $this->getResourceMenue();
-		$markerArray['###BTN_REFRESH###'] = $this->getModule()->getFormTool()->createSubmit(
-			'refresh', '###LABEL_BTN_REFRESH###'
-		);
-		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray);
-		return $out;
+		return $template;
 	}
 	/**
 	 * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
@@ -112,9 +133,10 @@ class tx_t3socials_mod_Trigger
 	 * @param string $template
 	 * @param tx_rnbase_configurations &$configurations
 	 * @param tx_rnbase_util_FormatUtil &$formatter
+	 * @param array &$markerArray
 	 * @return string
 	 */
-	protected function showNetworks($template, &$configurations, &$formatter) {
+	protected function showNetworks($template, &$configurations, &$formatter, &$markerArray) {
 		$module = $this->getModule();
 
 		$options = array();
@@ -131,17 +153,12 @@ class tx_t3socials_mod_Trigger
 		// wir übergeben mit absicht ein leeres template, um das default zu nutzen
 		$out = $handler->showScreen('', $module, $options);
 
-		$markerArray = array();
 		$markerArray['###MESSAGE_FORM###'] = $out;
 		$markerArray['###BTN_BACK###'] = $module->getFormTool()->createSubmit(
 			'trigger_back_resourceselector', '###LABEL_BTN_BACK###'
 		);
-		$markerArray['###BTN_REFRESH###'] = $module->getFormTool()->createSubmit(
-			'refresh', '###LABEL_BTN_REFRESH###'
-		);
-		$out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray);
 
-		return $out;
+		return $template;
 	}
 
 	/**

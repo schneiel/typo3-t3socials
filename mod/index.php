@@ -79,7 +79,9 @@ $SOBE = t3lib_div::makeInstance('tx_t3socials_mod_Module');
 $SOBE->init();
 
 // Include files?
-foreach($SOBE->include_once as $INC_FILE)	include_once($INC_FILE);
+foreach ($SOBE->include_once as $incFile) {
+	require_once $incFile;
+}
 
 $SOBE->main();
 $SOBE->printContent();

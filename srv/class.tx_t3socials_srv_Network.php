@@ -51,16 +51,19 @@ class tx_t3socials_srv_Network
 	}
 
 	/**
+	 * Sendet automatisch einen Datensatz an die Netzwerke.
 	 *
-	 *
-	 * @param string$table
+	 * @param string $table
 	 * @param int $uid
-	 * @return void
+	 * @return array[tx_t3socials_models_State]
+	 *         Enthält eine statusmeldung für jedes netzwerk
 	 */
 	public function exeuteAutoSend($table, $uid) {
 		if ($this->hasSent($uid, $table)) {
-			return;
+			return array();
 		}
+
+		$states = array();
 
 		$hasSend = FALSE;
 
@@ -78,9 +81,17 @@ class tx_t3socials_srv_Network
 			$builder = tx_t3socials_trigger_Config::getMessageBuilder($trigger);
 			$message = $builder->buildGenericMessage($record);
 
-			$accounts = $this->findAutoSaveAccountsByTriggers($trigger->getTrigerId());
+			$accounts = $this->findAccountsByTriggers($trigger->getTrigerId(), TRUE);
 			/* @var tx_t3socials_models_Network $network */
 			foreach ($accounts as $network) {
+				/* @var $state tx_t3socials_models_State */
+				$state = tx_rnbase::makeInstance(
+					'tx_t3socials_models_State', 0
+				);
+				$state->setTriggerConfig($trigger);
+				$state->setMessageModel($message);
+				$state->setNetworkModel($network);
+
 				// spezielle netzwerk abhängige dinge durchführen.
 				$builder->prepareMessageForNetwork(
 					$message, $network, $trigger
@@ -88,12 +99,13 @@ class tx_t3socials_srv_Network
 				// verbindung aufbauen
 				$connection = tx_t3socials_network_Config::getNetworkConnection($network);
 
+				$msgId = '[' . $table . ':' . $uid . '->' . $trigger->getTrigerId() . '.' . $network->getNetwork() . ']';
 				// nachricht senden
 				try {
 					$error = $connection->sendMessage($message);
 					if ($error) {
 						tx_rnbase_util_Logger::warn(
-							'Error sending message! (' . $trigger->getTrigerId() . ' : ' . $network->getNetwork() . ')',
+							'Error sending message! ' . $msgId,
 							array(
 								'error' => (string) $error,
 								'account' => (string) $network->getName(),
@@ -102,13 +114,23 @@ class tx_t3socials_srv_Network
 								'trigger' => (string) $trigger->getTrigerId(),
 							)
 						);
+						$state->setState(
+							tx_t3socials_models_State::STATE_WARNING,
+							'Error sending message! ' . $msgId .
+							'. See DevLog for more Informations.'
+						);
 					}
+					// versand erfolgreich
 					else {
 						$hasSend = TRUE;
+						$state->setState(
+							tx_t3socials_models_State::STATE_OK,
+							'Message successfully send to network! ' . $msgId
+						);
 					}
 				} catch (Exception $e) {
 					tx_rnbase_util_Logger::fatal(
-						'Error sending message! (' . $trigger->getTrigerId() . ' : ' . $network->getNetwork() . ')',
+						'Error sending message! ' . $msgId,
 						't3socials',
 						array(
 							'exception' => (string) $e,
@@ -118,7 +140,13 @@ class tx_t3socials_srv_Network
 							'trigger' => (string) $trigger->getTrigerId(),
 						)
 					);
+					$state->setState(
+						tx_t3socials_models_State::STATE_ERROR,
+							'Error sending message! ' . $msgId .
+							'. See DevLog for more Informations.'
+					);
 				}
+				$states[] = $state;
 			}
 		}
 
@@ -126,6 +154,8 @@ class tx_t3socials_srv_Network
 		if ($hasSend) {
 			$this->setSent($uid, $table);
 		}
+
+		return $states;
 	}
 
 	/**
@@ -137,25 +167,28 @@ class tx_t3socials_srv_Network
 	 */
 	public function findAccounts($triggers) {
 		$triggers = is_array($triggers) ? implode(',', $triggers) : $triggers;
+		$fields = $options = array();
 		// @TODO: das funktioniert nur durch einen Bug in rn_base.
 		// Bei OP_INSET_INT wird aktuell keine Typumwandlung zum Integer gemacht.
 		$fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
-		$options = array();
 		return $this->search($fields, $options);
 	}
 	/**
 	 * Liefert alle Netzwerke für einen trigger, welche das Autosend-Flag haben.
 	 *
 	 * @param string|array $triggers
+	 * @param null|bool $autosave
 	 * @return array
 	 */
-	public function findAutoSaveAccountsByTriggers($triggers) {
+	public function findAccountsByTriggers($triggers, $autosave = NULL) {
 		$triggers = is_array($triggers) ? implode(',', $triggers) : $triggers;
+		$fields = $options = array();
 		// @TODO: das funktioniert nur durch einen Bug in rn_base.
 		// Bei OP_INSET_INT wird aktuell keine Typumwandlung zum Integer gemacht.
 		$fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
-		$fields['NETWORK.autosend'][OP_EQ_INT] = 1;
-		$options = array();
+		if ($autosave !== NULL) {
+			$fields['NETWORK.autosend'][OP_EQ_INT] = $autosave ? 1 : 0;
+		}
 		return $this->search($fields, $options);
 	}
 
@@ -166,9 +199,9 @@ class tx_t3socials_srv_Network
 	 * @return array
 	 */
 	public function findAccountsByType($types) {
+		$fields = $options = array();
 		// FIXME: OP_INSET
 		$fields['NETWORK.network'][OP_LIKE] = $types;
-		$options = array();
 		return $this->search($fields, $options);
 	}
 
