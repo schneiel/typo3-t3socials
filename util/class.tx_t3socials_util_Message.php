@@ -59,7 +59,8 @@ class tx_t3socials_util_Message {
 			$msg = $message->getMessage();
 			$severity = t3lib_FlashMessage::NOTICE;
 			if ($message->isStateSuccess()) {
-				$severity = t3lib_FlashMessage::OK;
+				$severity = $message->getState() === tx_t3socials_models_State::STATE_INFO
+					? t3lib_FlashMessage::INFO : t3lib_FlashMessage::OK;
 			} elseif ($message->isStateFailure()) {
 				$severity = t3lib_FlashMessage::WARNING;
 				if ($message->getErrorCode()) {

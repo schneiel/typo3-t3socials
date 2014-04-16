@@ -114,6 +114,7 @@ class tx_t3socials_hooks_TCEHook {
 			$thisUrl = rawurlencode(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REQUEST_URI'));
 			$url .= 'typo3conf/ext/t3socials/mod/index.php?1';
 			$url .= '&returnUrl=' . $thisUrl;
+			$url .= '&SET%5Bfunction%5D=tx_t3socials_mod_Trigger';
 			$url .= '&SET%5Btrigger%5D=' . reset($triggers);
 			$url .= '&SET%5Bresource%5D=' . (int) $uid;
 			$msg  = 'Sie können das eben gespeicherte Element über T3 SOCIALS an verschiedene Dienste senden. <br />';
@@ -121,7 +122,7 @@ class tx_t3socials_hooks_TCEHook {
 			$message = array(
 				'message' => $msg,
 				'title' => '<a href="' . $url . '">T3 SOCIALS</a>',
-				'severity' => 0,
+				'severity' => t3lib_FlashMessage::INFO,
 				'storeinsession' => FALSE,
 			);
 			tx_rnbase::load('tx_t3socials_util_Message');

@@ -19,7 +19,6 @@ if (TYPO3_MODE == 'BE') {
 		'LLL:EXT:t3socials/mod/locallang.xml:label_t3socials_connector'
 	);
 	// trigger
-	t3lib_extMgm::addModule('user', 'txt3socialsM1', '', t3lib_extMgm::extPath('t3socials') . 'mod/');
 	t3lib_extMgm::insertModuleFunction(
 		'user_txt3socialsM1', 'tx_t3socials_mod_Trigger',
 		t3lib_extMgm::extPath('t3socials', 'mod/class.tx_t3socials_mod_Trigger.php'),

@@ -1,12 +1,12 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'T3socials',
+	'title' => 'T3 SOCIALS',
 	'description' => 'Developer library to connect to social networks.',
 	'category' => 'service',
 	'author' => 'Michael Wagner, Rene Nitzsche',
-	'author_email' => 'kontakt@das-medienkombinat.de',
-	'author_company' => 'das MedienKombinat GmbH',
+	'author_email' => 'dev@dmk-ebusiness.de',
+	'author_company' => 'DMK E-BUSINESS GmbH',
 	'shy' => 0,
 	'version' => '1.0.0',
 	'dependencies' => 'cms, rn_base',

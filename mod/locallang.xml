@@ -8,9 +8,9 @@
 		<languageKey index="default" type="array">
 			<label index="title">T3 SOCIALS</label>
 			
-			<label index="mlang_tabs_tab">T3socials</label>
+			<label index="mlang_tabs_tab">T3 SOCIALS</label>
 			<label index="mlang_labels_tabdescr">Connect your TYPO3 with social networks</label>
-			<label index="mlang_labels_tablabel">T3socials - Stay connected</label>
+			<label index="mlang_labels_tablabel">T3 SOCIALS - Stay connected</label>
 
 			<label index="label_btn_back">Back</label>
 			<label index="label_btn_refresh">Refresh</label>
@@ -63,9 +63,9 @@
 
 		</languageKey>
 		<languageKey index="de" type="array">
-			<label index="mlang_tabs_tab">T3socials</label>
+			<label index="mlang_tabs_tab">T3 SOCIALS</label>
 			<label index="mlang_labels_tabdescr">Verbindet TYPO3 mit sozialen Netzwerken</label>
-			<label index="mlang_labels_tablabel">T3socials - Stay connected</label>
+			<label index="mlang_labels_tablabel">T3 SOCIALS - Stay connected</label>
 
 			<label index="message">Hinweis</label>
 			<label index="warning">Warnung</label>

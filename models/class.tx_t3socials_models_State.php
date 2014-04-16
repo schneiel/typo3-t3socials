@@ -37,10 +37,11 @@ class tx_t3socials_models_State
 	extends tx_t3socials_models_Base {
 
 	const STATE_UNKNOWN = 0;
-	const STATE_OK = 1;
-	const STATE_NOTICE = 2;
-	const STATE_WARNING = 3;
-	const STATE_ERROR = 4;
+	const STATE_INFO = 1;
+	const STATE_OK = 2;
+	const STATE_NOTICE = 3;
+	const STATE_WARNING = 4;
+	const STATE_ERROR = 5;
 
 	/**
 	 * Inits the model instance either with uid or a complete data record.
@@ -75,6 +76,7 @@ class tx_t3socials_models_State
 	 */
 	public function setState($state, $error = NULL) {
 		switch((int) $state) {
+			case self::STATE_INFO:
 			case self::STATE_OK:
 			case self::STATE_NOTICE:
 			case self::STATE_WARNING:
@@ -103,7 +105,8 @@ class tx_t3socials_models_State
 	 * @return boolean
 	 */
 	public function isStateSuccess() {
-		return $this->getProperty('state') === self::STATE_OK;
+		$state = $this->getProperty('state');
+		return $state === self::STATE_OK || $state === self::STATE_INFO;
 	}
 	/**
 	 * Ist der Status FAILURE?
@@ -111,7 +114,7 @@ class tx_t3socials_models_State
 	 * @return boolean
 	 */
 	public function isStateFailure() {
-		return $this->getProperty('state') !== self::STATE_OK;
+		return !$this->isStateSuccess();
 	}
 
 	/**
