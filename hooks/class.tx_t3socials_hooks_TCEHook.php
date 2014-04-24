@@ -45,11 +45,17 @@ class tx_t3socials_hooks_TCEHook {
 	 * @return void
 	 */
 	public function processDatamap_afterDatabaseOperations(
-		$status, $table, $id, $fieldArray, &$tcemain
+		$status, $table, $id, $fieldArray, t3lib_TCEmain &$tcemain
 	) {
 		if (
 			!(
+				// gibts trigger für die Tabelle?
 				$this->isTriggerable($table)
+				// wurden daten geändert?
+				&& !empty($tcemain->datamap)
+				// befinden wir uns im live workspace?
+				&& $tcemain->BE_USER->workspace === 0
+				// nur beim command new und update!
 				&& ($status == 'new' || $status == 'update')
 			)
 		) {
@@ -57,6 +63,39 @@ class tx_t3socials_hooks_TCEHook {
 		}
 		if ($status == 'new') {
 			$id = $tcemain->substNEWwithIDs[$id];
+		}
+
+		$this->handleAutoSend($table, $id);
+		$this->handleInfo($table, $id);
+	}
+
+	/**
+	 * Hook after performing different record actions in Typo3 backend:
+	 * Update indexes according to the just performed action
+	 *
+	 * @param string $command
+	 * @param string $table
+	 * @param int $id
+	 * @param int $value
+	 * @param t3lib_TCEmain $tce
+	 * @return void
+	 * @todo Treatment of any additional actions necessary?
+	 */
+	public function processCmdmap_postProcess(
+		$command, $table, $id, $value, t3lib_TCEmain $tcemain
+	) {
+		if (
+			!(
+				// gibts trigger für die Tabelle?
+				$this->isTriggerable($table)
+				// wurden änderungen am workspace gemacht?
+				&& $command == 'version'
+				// wurde die version ausgetauscht?
+				&& $value['action'] === 'swap'
+				&& $value['swapWith'] > 0
+			)
+		) {
+			return;
 		}
 
 		$this->handleAutoSend($table, $id);

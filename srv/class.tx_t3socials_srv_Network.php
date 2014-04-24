@@ -72,10 +72,14 @@ class tx_t3socials_srv_Network
 
 		/* @var tx_t3socials_models_TriggerConfig $trigger */
 		foreach ($triggers as $trigger) {
-
 			// the resolver creates the record!
 			$resolver = tx_t3socials_trigger_Config::getResolver($trigger);
 			$record = $resolver->getRecord($table, $uid);
+
+			// wenn gelöscht oder versteckt, nicht publizieren!
+			if ($record->isDeleted() || $record->isHidden()) {
+				continue;
+			}
 
 			// the builder generates the generic message
 			$builder = tx_t3socials_trigger_Config::getMessageBuilder($trigger);

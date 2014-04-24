@@ -47,9 +47,16 @@ class tx_t3socials_util_ResolverT3DB
 		$options = array();
 		$options['wrapperclass'] = 'tx_t3socials_models_Base';
 		$options['where'] = 'uid = ' . (int) $uid;
-		$options['enablefieldsoff'] = 1;
+		// wir wollen nur daten, welche auch im fe sichtbar sind!
+		$options['enablefieldsfe'] = TRUE;
 		$rows = tx_rnbase_util_DB::doSelect('*', $tableName, $options);
-		return empty($rows) ? NULL : reset($rows);
+		/* @var $item tx_t3socials_models_Base */
+		$item = empty($rows) ? NULL : reset($rows);
+		// Den Tabellennamen im Model setzen.
+		if ($item instanceof tx_t3socials_models_Base) {
+			$item->setTableName($tableName);
+		}
+		return $item;
 	}
 
 }

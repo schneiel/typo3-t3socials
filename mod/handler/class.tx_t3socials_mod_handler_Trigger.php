@@ -319,6 +319,24 @@ class tx_t3socials_mod_handler_Trigger
 				'###LABEL_TITLE###',
 				$model->record[$labelField],
 			);
+			// gelöscht oder hidden? dann meldung ausgeben!
+			$state = array();
+			if ($model->isDeleted()) {
+				$state[] = 'deleted';
+			}
+			if ($model->isHidden()) {
+				$state[] = 'hidden';
+			}
+			if (!empty($state)) {
+				$wrap = array(
+					'<span style="color:#AA0225;">',
+					'</span>'
+				);
+				$row[] = array(
+					$wrap[0] . 'State' . $wrap[1],
+					$wrap[0] . implode(' and ', $state) . '!' . $wrap[1]
+				);
+			}
 
 			$out = $mod->getDoc()->table($row);
 		}

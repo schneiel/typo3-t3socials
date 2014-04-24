@@ -37,6 +37,43 @@ class tx_t3socials_models_Base
 	extends tx_rnbase_model_base {
 
 	/**
+	 *
+	 * @var string|0
+	 */
+	private $tableName = 0;
+
+	/**
+	 * Most model-classes will be initialized by a uid or a database record. So
+	 * this is a common contructor.
+	 *
+	 * @TODO TableName in tx_rnbase_util_DB::doSelect automatisch setzen!
+	 *
+	 * @param array|int $rowOrUid
+	 * @param string $tableName
+	 */
+	function __construct($rowOrUid, $tableName = 0) {
+		parent::__construct($rowOrUid);
+		$this->setTableName($tableName);
+	}
+
+	/**
+	 * Liefert den aktuellen Tabellenname
+	 *
+	 * @return string
+	 */
+	function getTableName() {
+		return $this->tableName;
+	}
+	/**
+	 * Setzt den aktuellen Tabellenname
+	 *
+	 * @return string
+	 */
+	function setTableName($tableName = 0) {
+		$this->tableName = $tableName;
+	}
+
+	/**
 	 * Setzt einen Wert oder ersetzt alle Werte
 	 *
 	 * @param string|array $property
@@ -88,6 +125,34 @@ class tx_t3socials_models_Base
 	 */
 	protected function hasProperty($property) {
 		return isset($this->record[$property]);
+	}
+
+	/**
+	 * Ist der Datensatz als gelöscht markiert?
+	 * Wenn es keine Spalte oder TCA gibt, is es nie gelöscht!
+	 *
+	 * @return boolean
+	 */
+	public function isDeleted() {
+		$tableName = $this->getTableName();
+		$field = empty($GLOBALS['TCA'][$tableName]['ctrl']['delete'])
+			 ? 'deleted' : $GLOBALS['TCA'][$tableName]['ctrl']['delete'];
+		$value = $this->hasProperty($field) ? (int) $this->getProperty($field) : 0;
+		return $value > 0;
+	}
+
+	/**
+	 * Ist der Datensatz als gelöscht markiert?
+	 * Wenn es keine Spalte oder TCA gibt, is es nie gelöscht!
+	 *
+	 * @return boolean
+	 */
+	public function isHidden() {
+		$tableName = $this->getTableName();
+		$field = empty($GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']['disabled'])
+			 ? 'hidden' : $GLOBALS['TCA'][$tableName]['ctrl']['enablecolumns']['disabled'];
+		$value = $this->hasProperty($field) ? (int) $this->getProperty($field) : 0;
+		return $value > 0;
 	}
 
 	/**

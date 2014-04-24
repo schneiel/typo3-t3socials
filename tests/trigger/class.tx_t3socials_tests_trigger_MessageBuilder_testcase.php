@@ -55,12 +55,14 @@ class tx_t3socials_tests_trigger_MessageBuilder_testcase
 				'table' => 'pages'
 			)
 		);
+		/* @var $model tx_t3socials_models_Base */
 		$model = tx_rnbase::makeInstance(
 			'tx_t3socials_models_Base',
 			array(
 				'uid' => '5'
 			)
 		);
+		$model->setTableName('pages');
 
 		$builder->setTrigger($triger);
 
