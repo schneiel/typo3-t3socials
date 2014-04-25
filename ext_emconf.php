@@ -3,7 +3,7 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'T3 SOCIALS',
 	'description' => 'Developer library to connect to social networks.',
-	'category' => 'service',
+	'category' => 'services',
 	'author' => 'Michael Wagner, Rene Nitzsche',
 	'author_email' => 'dev@dmk-ebusiness.de',
 	'author_company' => 'DMK E-BUSINESS GmbH',
