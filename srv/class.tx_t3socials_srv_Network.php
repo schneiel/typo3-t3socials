@@ -77,7 +77,10 @@ class tx_t3socials_srv_Network
 			$record = $resolver->getRecord($table, $uid);
 
 			// wenn gelöscht oder versteckt, nicht publizieren!
-			if ($record->isDeleted() || $record->isHidden()) {
+			if (
+				!$record instanceof tx_t3socials_models_Base
+				|| $record->isDeleted() || $record->isHidden()
+			) {
 				continue;
 			}
 
