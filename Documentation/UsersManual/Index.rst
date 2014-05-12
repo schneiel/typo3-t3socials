@@ -11,11 +11,17 @@
 Users manual
 ============
 
-This chapter describes how to use the extension from a user point of view.
+Nach der Installation der Extension müssen zunächst
+die benötigten Accounts eingerichtet werden.
+Dafür am besten einen neuen Storage-Folder anlegen.
+In diesem wird dann ein Datensatz vom Typ *Social Network Account* erstellt.
+
 
 .. toctree::
-	:maxdepth: 5
-	:titlesonly:
-	:glob:
+   :maxdepth: 5
+   :titlesonly:
+   :glob:
 
-	Requirements/Index
+   Accounts
+   Dispatch
+   Apps

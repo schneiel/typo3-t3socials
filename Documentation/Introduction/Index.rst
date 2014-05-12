@@ -29,5 +29,5 @@ Screenshots
 
 Die Screenshots zeigen das Backend-Modul von T3 SCOIALS:
 
-.. figure:: ../Images/DmkLogo.png
-	:alt: Abbildung 1: Die Eingabemaske für manuelle Twitter-Nachrichten
+.. figure:: ../Images/ModNetworkTrigger.png
+	:alt: Das Modul zum Triggern von Statusmeldungen.
