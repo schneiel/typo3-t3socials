@@ -45,7 +45,8 @@ class tx_t3socials_util_Message {
 		$msg = '';
 		$title = 'T3 SOCIALS';
 		$severity = t3lib_FlashMessage::OK;
-		$store = FALSE;
+		// Wichtig, damit Meldungen auch nach einem redirect noch ausgegeben werden!
+		$store = TRUE;
 		// wir haben eine erweiterte konfiguration
 		if (is_array($message)) {
 			$msg = empty($message['message']) ? $msg : $message['message'];

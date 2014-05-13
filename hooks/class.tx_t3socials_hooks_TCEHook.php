@@ -162,7 +162,8 @@ class tx_t3socials_hooks_TCEHook {
 				'message' => $msg,
 				'title' => '<a href="' . $url . '">T3 SOCIALS</a>',
 				'severity' => t3lib_FlashMessage::INFO,
-				'storeinsession' => FALSE,
+				// Damit die meldung auch bei akttionen wie "speichern und schließen" ausgegeben wird.
+				'storeinsession' => TRUE,
 			);
 			tx_rnbase::load('tx_t3socials_util_Message');
 			tx_t3socials_util_Message::showFlashMessage($message);
