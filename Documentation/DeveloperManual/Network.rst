@@ -134,7 +134,6 @@ Bei Twitter sind dies 140 Zeichen.
 Bei cropAfterString kann ein String angegeben werden,
 welcher nach dem Abschneiden der Daten an die Nachricht angehängt wird.
 
-
 Hier ein Beispiel des Builders für Tritter:
 
 .. code-block:: php
@@ -151,6 +150,26 @@ Hier ein Beispiel des Builders für Tritter:
          return $url ? 120 : 140;
       }
    }
+
+
+
+Bei den in T3 SOCIALS integrierten Netzwerken und allen Netzwerken,
+welche von der Basisklasse *tx_t3socials_network_Connection* erben,
+ist es möglich in speziellen Fällen
+weitere Builder per Konfiguration festzulegen.
+
+Die Konfiguration für einen speziellen Message-Builder für ein Accound
+würde wie folgt Aussehen:
+
+.. code-block:: ts
+
+   twitter {
+      builder = Tx_Myext_Builder_SpecialTwitter  
+   }
+
+Die Klasse Tx_Myext_Builder_SpecialTwitter muss existieren und von
+der Klasse *tx_t3socials_network_MessageBuilder* erben.
+
 
 .. _network-config:
 

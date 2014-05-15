@@ -56,15 +56,9 @@ da dies für die Notifications nicht sinnvoll ist.
 
 Für die Umwandlung der Nachrichten verwenden
 die Network-Instanzen MessageBuilder.
-Es wird immer ein Default-Bilder mitgeliefert,
-man kann aber in speziellen Fällen weitere Builder per Konfiguration festlegen.
-Beim obigen Beispiel des Livetickers  wurde ein spezieller Builder verwendet.
-Dieser hat sogar die Möglichkeit den Versand einer Meldung noch zu unterbinden.
-Die Möglichkeiten sind hier also sehr groß.
-
-Wer nun Nachrichten für andere Datentypen absetzen will,
-muss lediglich den News-Service als Vorlage nehmen.
-
+Es wird immer ein Default-Bilder mitgeliefert!
+Zumindest bei den in T3 SOCIALS integrierten Netzwerken ist es möglich
+in speziellen Fällen weitere Builder per Konfiguration festzulegen.
 
 
 .. toctree::
