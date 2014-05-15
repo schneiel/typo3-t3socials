@@ -12,33 +12,39 @@ Developer manual
 ================
 
 Dieser Abschnitt soll einen kurzen Überblick über die technische Umsetzung
-und mögliche Erweiterungen von T3socials zeigen. Das soll am Beispiel
-des implementierten automatischen Versands der News-Meldungen erfolgen.
+und mögliche Erweiterungen von T3 SOCIALS zeigen. Das soll am Beispiel
+des implementierten automatischen Versands der News-Meldungen 
+über das netzwerk Twitter erfolgen.
 
-Der Automatismus startet wie üblich mit einem TCE-Hook.
-Dieser wird von der Klasse tx_t3socials_hooks_TCEHook bereitgestellt.
-Im Hook wird zunächst lediglich geprüft, ob die News die grundsätzlichen
-Anforderungen für den Trigger erfüllt. Falls ja wird der Newsdatensatz
-an die News-Service-Klasse tx_t3socials_srv_News übergeben.
+Um den Automatismus kümmert sich komplett T3 SOCIALS.
+Neue Netwerke oder Trigger müssen dies nicht mit beachten!
 
-Dieser Service prüft zuerst, ob die News bereits verschickt wurde.
-Dafür stellt T3socials eine generische Funkion bereit,
-die auch von anderen Services genutzt werden kann.
+Der Service wird von einem Trigger über eine neue Nachricht informiert.
 
-Wenn die Nachricht nun verschickt werden muss,
-dann fragt der News-Service zunächst beim Networkservice
-nach registrierten Accounts für den Event news an.
-Dabei handelt es sich genau um den String, der im Account-Datensatz
-als Trigger eingetragen werden muss.
+Beispielsweise fängt der Trigger für News beim Speichern einer neuen
+News diese ab, wandelt die News in eine genärische Messaage um und
+gibt diese Message an den Service weiter. Dies geschieht nur,
+wenn der Datensatz nicht gelöscht, nicht versteckt
+und noch nicht über einen Account verteilt wurde.
 
-Sollten Accounts gefunden werden, dann wird vom News-Service
-eine generische Message der Klasse tx_t3socials_models_Message instanziiert
-und mit den relevanten Daten der News gefüttert.
-Diese Message wird dann in einer Schleife für alle Accounts abgearbeitet.
-Für jeden Account wird eine Network-Instanz abgerufen
-und dieser wird die Message für den Versand übergeben.
-Als letzte Aktion markiert der News-Service den News-Datensatz
-als verschickt und ist mit seiner Arbeit fertig.
+Der Service nimmt die Message entgegen, bereited diese auf
+und verteilt diese an alle Konfigurierten Netzwerke.
+Dies sind alle Netzwerke deren ref:`accounts` für diesen Trigger defineirt sind.
+
+Die Netzwerke nehmen die Message wiederum entgegen,
+bauen die Statusmeldung zusammen
+und geben diese an die entsprechenden Dienste weiter.
+
+Das Zusammenbauen der Nachricht macht jedes Netzwerk
+speziell für den verwendeten Dienst.
+Für Twitter dar die Nachricht beispielsweise nur 160 Zeichen große sein.
+Für die Umwandlung der nachricht verwendet die Netzwork-Instanz einen
+Message-Builder. Mann kann per Konfiguration in dem Account
+auch einen eigenen Message-Builder definieren.
+
+Nach dem versand markiert der Service diesen Datensatz als versendet,
+damit dieser automatisch nicht erneut verteilt werden kann.
+
 
 Die Network-Instanz hat nun die Aufgabe,
 die generische Message in eine konkrete,
@@ -58,3 +64,13 @@ Die Möglichkeiten sind hier also sehr groß.
 
 Wer nun Nachrichten für andere Datentypen absetzen will,
 muss lediglich den News-Service als Vorlage nehmen.
+
+
+
+.. toctree::
+   :maxdepth: 5
+   :titlesonly:
+   :glob:
+
+   Network
+   Trigger

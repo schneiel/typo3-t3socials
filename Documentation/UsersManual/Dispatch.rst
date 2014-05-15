@@ -35,7 +35,8 @@ Dafür stehen mehrere Felder wie *Überschrift*, *Nachricht* und *Link*
 zur Verfügung.
 
 Bei den unterschiedlichen Diensten ist zu beachten,
-das der Text der Nachricht speziell für jeden Dienst angepasst wird.
+das der angegebene Text der Nachricht
+speziell für jeden Dienst automatisch angepasst wird.
 Dies ist notwendig, da Beispielsweise
 für Twitter maximal 140 und
 für XING höchstens 420 Zeichen inklusive News-Link übermittelt werden dürfen.
