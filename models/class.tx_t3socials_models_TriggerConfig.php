@@ -70,8 +70,11 @@ class tx_t3socials_models_TriggerConfig
 		if (!$this->hasProperty('trigger_id')) {
 			$this->setProperty('trigger_id', $this->getProperty('table'));
 		}
+		if (!$this->hasProperty('message_builder')) {
+			$this->setProperty('message_builder', NULL);
+		}
 		if (!$this->hasProperty('resolver')) {
-			$this->setProperty(resolver, 'tx_t3socials_util_ResolverT3DB');
+			$this->setProperty('resolver', 'tx_t3socials_util_ResolverT3DB');
 		}
 	}
 

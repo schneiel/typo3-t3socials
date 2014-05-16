@@ -34,16 +34,16 @@ Connection
 
 Für die eigentliche Connection hat man nun mehrere Möglichkeiten.
 Entweder nutzt man einen bereits in der HybridAuth enthaltenen Provider
-Oder man kümmert sich selbst um dinge wie Authentifizierung und Posten.
+Oder man kümmert sich selbst um Dinge wie Authentifizierung und Posten.
 
 Aktuell bei HybridAuth enthaltene Provider sind unter
 EXT:t3socials/lib/hybridauth/Hybrid/Providers
 zu finden.
 
-Eine weitere option wäre, eine komplett eigenständige Connection zu erstellen.
+Eine weitere Option wäre, eine komplett eigenständige Connection zu erstellen.
 Diese muss dann lediglich das Interfase *tx_t3socials_network_IConnection*
 implementieren. Auf diese Möglichkeit
-wird hier allerdings nicht wieter eingegangen.
+wird hier allerdings nicht weiter eingegangen.
 
 HybridAuth
 ^^^^^^^^^^
@@ -57,14 +57,14 @@ liefern. Mehr dazu im Abschnitt :ref:`network-message-builder`.
 
 .. code-block:: php
 
-	require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
-	tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
-	class tx_t3socials_network_tritter_Connection
-		extends tx_t3socials_network_hybridauth_Connection {
-		protected function getBuilderClass() {
-			return 'tx_t3socials_network_twitter_MessageBuilder';
-		}
-	}
+   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+   tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
+   class tx_t3socials_network_tritter_Connection
+      extends tx_t3socials_network_hybridauth_Connection {
+      protected function getBuilderClass() {
+         return 'tx_t3socials_network_twitter_MessageBuilder';
+      }
+   }
 
 Alles weitere wird von der Basisklasse und
 der noch anzulegenden Konfiguration erledigt.
@@ -109,18 +109,18 @@ Message-Builder
 Der Message-Builder ist dafür Zuständig,
 aus der von T3 SOCIALS erzeugten generischen Nachricht,
 eine für den Dienst verarbeitbare Nachricht zu erzeugen.
-In den meißten Fällen wird dies direkt ein String
+In den missten Fällen wird dies direkt ein String
 mit der enthaltenen Nachricht sein.
 Für einige Dienste ist es allerdings auch Möglich, andere Datentypen,
 wie ein Array zu erzeugen.
-Ein Beispiel dafür ist Facebook, da wird die Nachricht seperat zur URL versendet.
+Ein Beispiel dafür ist Facebook, da wird die Nachricht separat zur URL versendet.
 
 Ein Message-Builder ist nicht zwingend Notwendig, wenn eine eigene Connection,
-ohne ableitung einer bereits existierenden Basisklasse genutzt wird.
+ohne Ableitung einer bereits existierenden Basisklasse genutzt wird.
 
 Ein Message-Builder muss immer von
 der Klasse *tx_t3socials_network_MessageBuilder* ableiten.
-Wenn keine wieteren Anforderungen an die zu sendende Nachricht besteht,
+Wenn keine weiteren Anforderungen an die zu sendende Nachricht besteht,
 kann auch direkt diese Basisklasse als Message-Builder nutzen.
 
 Die Basisklasse baut die Nachricht bereits aus Allen vorhandenen Daten
@@ -129,7 +129,7 @@ wie Headline, Intro, Message und URL zusammen.
 Dabei werden bereits Angaben wie contentDelimiter, maxContentLength
 und cropAfterString beachtet.
 Mit dem contentDelimiter werden die einzelnen Daten zusammengefügt.
-Mit maxContentLength wird ie Maximallänge definiert.
+Mit maxContentLength wird die Maximallänge definiert.
 Bei Twitter sind dies 140 Zeichen.
 Bei cropAfterString kann ein String angegeben werden,
 welcher nach dem Abschneiden der Daten an die Nachricht angehängt wird.
@@ -167,7 +167,7 @@ würde wie folgt Aussehen:
       builder = Tx_Myext_Builder_SpecialTwitter  
    }
 
-Die Klasse Tx_Myext_Builder_SpecialTwitter muss existieren und von
+Die Klasse *Tx_Myext_Builder_SpecialTwitter* muss existieren und von
 der Klasse *tx_t3socials_network_MessageBuilder* erben.
 
 
@@ -183,12 +183,12 @@ Und zum anderen, um das Netzwerk bei T3 SOCIALS zu registrieren.
 Die Konfiguration muss immer über das Basismodel
 *tx_t3socials_models_NetworkConfig* geschehen.
 
-Entweder man legt nun eine eigene Klasse an, wleche von dem Basismodel erbt
+Entweder man legt nun eine eigene Klasse an, welche von dem Basismodel erbt
 und die Konfiguration enthält, oder man nutzt einfach das Basismodel
 und setzt darin die Konfiguration.
 
 
-Hier ein beispiel mit eigener Klasse:
+Hier ein Beispiel mit eigener Klasse:
 
 .. code-block:: php
 
@@ -221,7 +221,7 @@ Mögliche Optionen der Konfiguration:
 .. container:: table-row
 
     Property
-        provider_id
+        provider_id *
    
     Default
         NULL
@@ -245,7 +245,7 @@ Mögliche Optionen der Konfiguration:
 .. container:: table-row
 
     Property
-        connector
+        connector *
    
     Default
         NULL
@@ -286,7 +286,7 @@ Mögliche Optionen der Konfiguration:
          Enthält eine Beschreibung zum Netzwerk und dessen Konfiguration.
          Diese Beschreibung wird beim Editieren (TCE-FORM)
          für den Nutzer als Info ausgegeben.
-         Durch den Marker ###MORE### wird der drauffolgende versteckt
+         Durch den Marker ###MORE### wird der darauffolgende versteckt
          und mit einem "Mehr Anzeigen" Link ersetzt,
          welcher den Inhalt dann bei Klick ausgibt.
 
@@ -297,8 +297,10 @@ Mögliche Optionen der Konfiguration:
    
     Description
          Enthält die Vordefinierte Konfiguration.
-         Diese Konfiguration wird bei initialen Anlegen eines Accounts
-         in das Feld Configurations eingefügt.
+         Diese Konfiguration wird bei Initialen Anlegen eines Accounts
+         in das Feld *Configurations* eingefügt.
+
+Mit * Markierte Felder sind Pflichtangaben!
 
 
 .. _network-registrierung:
@@ -306,7 +308,7 @@ Mögliche Optionen der Konfiguration:
 Registrierung
 -------------
 
-Um ein Netzwerk zu konfigurieren, wird die Konfiguration benötigt.
+Um ein Netzwerk zu registrieren, wird die Konfiguration benötigt.
 Diese Konfiguration muss über die ext_localconf.php bei T3 SOCIALS
 registriert werden.
 

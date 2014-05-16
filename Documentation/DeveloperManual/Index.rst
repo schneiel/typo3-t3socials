@@ -14,22 +14,22 @@ Developer manual
 Dieser Abschnitt soll einen kurzen Überblick über die technische Umsetzung
 und mögliche Erweiterungen von T3 SOCIALS zeigen. Das soll am Beispiel
 des implementierten automatischen Versands der News-Meldungen 
-über das netzwerk Twitter erfolgen.
+über das Netzwerk Twitter erfolgen.
 
 Um den Automatismus kümmert sich komplett T3 SOCIALS.
-Neue Netwerke oder Trigger müssen dies nicht mit beachten!
+Neue Netzwerke oder Trigger müssen dies nicht mit beachten!
 
 Der Service wird von einem Trigger über eine neue Nachricht informiert.
 
 Beispielsweise fängt der Trigger für News beim Speichern einer neuen
-News diese ab, wandelt die News in eine genärische Messaage um und
+News diese ab, wandelt die News in eine generische Message um und
 gibt diese Message an den Service weiter. Dies geschieht nur,
 wenn der Datensatz nicht gelöscht, nicht versteckt
 und noch nicht über einen Account verteilt wurde.
 
-Der Service nimmt die Message entgegen, bereited diese auf
+Der Service nimmt die Message entgegen, bereitet diese auf
 und verteilt diese an alle Konfigurierten Netzwerke.
-Dies sind alle Netzwerke deren ref:`accounts` für diesen Trigger defineirt sind.
+Dies sind alle Netzwerke deren ref:`accounts` für diesen Trigger definiert sind.
 
 Die Netzwerke nehmen die Message wiederum entgegen,
 bauen die Statusmeldung zusammen
@@ -38,11 +38,11 @@ und geben diese an die entsprechenden Dienste weiter.
 Das Zusammenbauen der Nachricht macht jedes Netzwerk
 speziell für den verwendeten Dienst.
 Für Twitter dar die Nachricht beispielsweise nur 160 Zeichen große sein.
-Für die Umwandlung der nachricht verwendet die Netzwork-Instanz einen
-Message-Builder. Mann kann per Konfiguration in dem Account
+Für die Umwandlung der Nachricht verwendet die Netzwerk-Instanz einen
+Message-Builder. Man kann per Konfiguration in dem Account
 auch einen eigenen Message-Builder definieren.
 
-Nach dem versand markiert der Service diesen Datensatz als versendet,
+Nach dem Versand markiert der Service diesen Datensatz als versendet,
 damit dieser automatisch nicht erneut verteilt werden kann.
 
 

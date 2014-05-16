@@ -101,7 +101,7 @@ Einrichtung für pushd
 
 Das Vorgehen bei pushd ist ganz ähnlich.
 Auch hier muss ein Account-Datensatz angelegt werden.
-Für die Anbindung an pushd muss lediglich die URI konfiguriert werden.
+Für die Anbindung an pushd muss lediglich die URL konfiguriert werden.
 Die Absicherung der Verbindung erfolgt in pushd.
 
 .. code-block:: ts
@@ -134,10 +134,10 @@ die von der Extension more4t3sports genutzt wird:
 .. figure:: ../Images/EditSocialRecordLiveticker.png
    :alt: Beispielkonfiguration für pushd.
 
-Für den Versand von Livetickermeldungen werden hier weitere Events angelegt.
+Für den Versand von Liveticker-Meldungen werden hier weitere Events angelegt.
 Somit werden aus einem Trigger liveticker drei Events für pushd.
 Die Aufteilung in die Events übernimmt dabei der konfigurierte
-MessageBuilder von more4t3sports.
+Message-Builder von more4t3sports.
 
 .. code-block:: ts
 
@@ -200,7 +200,7 @@ Diese werden für die Dauer der Session genutzt.
    :alt: Popup Fenster mit den Daten der Authentifizierung.
 
 Die in der Abbildung aufgeführten Schlüssel
-entsprechen keinem realem Account!
+entsprechen keinem realen Account!
 
 Damit ein Verteilen der Nachrichten auch unabhängig der aktuellen Session,
 automatisiert oder durch andere Nutzer möglich ist,
@@ -209,3 +209,4 @@ Eingetragen werden.
 
 Siehe dazu Abschnitt *Configurations* unter :ref:`accounts`.
 Diese kann direkt über das Stift-Icon des Moduls aufgerufen werden.
+
