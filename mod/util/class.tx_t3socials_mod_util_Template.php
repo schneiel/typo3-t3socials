@@ -157,9 +157,16 @@ class tx_t3socials_mod_util_Template {
 		if (!$connection instanceof tx_t3socials_network_hybridauth_Interface) {
 			return '';
 		}
-		/* @var $adapter Hybrid_Provider_Model_OAuth1 */
-		$adapter = $connection->getProvider()->adapter;
-		$connected = $adapter->isUserConnected();
+		$connected = false;
+		$errMsg = '';
+		try {
+			/* @var $adapter Hybrid_Provider_Model_OAuth1 */
+			$adapter = $connection->getProvider()->adapter;
+			$connected = $adapter->isUserConnected();
+		}
+		catch(Exception $e) {
+			$errMsg = $e->getMessage();
+		}
 		$out  = '<div class="typo3-message ' . ($connected ? 'message-ok' : 'message-error') . '">';
 		$head = $connected ? '###LABEL_T3SOCIALS_STATE_connectED###' : '###LABEL_T3SOCIALS_STATE_DISconnectED###';
 		$out .= 	'<div class="message-header">' . $head . '</div>';
@@ -181,6 +188,9 @@ class tx_t3socials_mod_util_Template {
 		// es besteht keine verbindung zum dienst
 		else {
 			$out .= '###LABEL_T3SOCIALS_STATE_DISconnectED_DESC### <br />';
+			if($errMsg) {
+				$out .= '<br/><strong>'.$errMsg.'</strong><br/></br/>';
+			}
 			$url = tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl(
 				$network->getUid(),
 				tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_STATE

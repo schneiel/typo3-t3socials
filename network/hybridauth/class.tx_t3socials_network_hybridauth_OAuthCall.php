@@ -118,49 +118,60 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 			);
 		}
 
-		$adapter = $connection->getProvider()->adapter;
-		// es wurde der status angefragt
-		if ($type === self::OAUT_CALL_STATE) {
-			// Wenn angemeldet, Info ausgeben
-			if ($adapter->isUserConnected()) {
-				$template = t3lib_div::getURL(t3lib_extMgm::extPath('t3socials') . '/Resources/Private/Templates/eIDstatus.html');
-				$data = $network->getRecord();
-				$data['access_token'] = $adapter->token('access_token');
-				$data['access_token_secret'] = $adapter->token('access_token_secret');
-				$model = tx_rnbase::makeInstance(
-						'tx_rnbase_model_base', $data
-				);
-				$marker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
-				$out = $marker->parseTemplate(
-						$template, $model,
-						$network->getConfigurations()->getFormatter(),
-						'eid.state.', 'STATE'
-				);
-				return $out;
+		try {
+			$adapter = $connection->getProvider()->adapter;
+			// es wurde der status angefragt
+			if ($type === self::OAUT_CALL_STATE) {
+				// Wenn angemeldet, Info ausgeben
+				if ($adapter->isUserConnected()) {
+					$template = t3lib_div::getURL(t3lib_extMgm::extPath('t3socials') . '/Resources/Private/Templates/eIDstatus.html');
+					$data = $network->getRecord();
+					$data['access_token'] = $adapter->token('access_token');
+					$data['access_token_secret'] = $adapter->token('access_token_secret');
+					$model = tx_rnbase::makeInstance(
+							'tx_rnbase_model_base', $data
+					);
+					$marker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
+					$out = $marker->parseTemplate(
+							$template, $model,
+							$network->getConfigurations()->getFormatter(),
+							'eid.state.', 'STATE'
+					);
+					return $out;
+				}
+				// Wenn nicht angemeldet, Anmeldeprozess durchführen!
+				else {
+					$connection->getProvider()->login();
+					// Hybrid_Auth::authenticate($network->getNetwork());
+					return 'REDIRECT TO AUTH PAGE!';
+				}
 			}
-			// Wenn nicht angemeldet, Anmeldeprozess durchführen!
-			else {
-				$connection->getProvider()->login();
-				// Hybrid_Auth::authenticate($network->getNetwork());
-				return 'REDIRECT TO AUTH PAGE!';
+			// abmelden
+			elseif($type === self::OAUT_CALL_LOGOUT) {
+				$connection->getProvider()->logout();
+				// @TODO: template erstellen.
+				return
+				'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
+				'<h1>LOGGED OUT!</h1>' .
+				'<script type="text/javascript">alert("You have been successfully logged out!");window.close();</script>' .
+				'</body></html>';
+			}
+			// hybridauth login prozess
+			elseif ($type === self::OAUT_CALL_AUTHENTICATE) {
+				// die anfrage bearbeiten
+				Hybrid_Endpoint::process();
+
 			}
 		}
-		// abmelden
-		elseif($type === self::OAUT_CALL_LOGOUT) {
-			$connection->getProvider()->logout();
+		catch(Exception $e) {
 			// @TODO: template erstellen.
 			return
-				'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
-				'<h1>LOGED OUT!</h1>' .
-				'<script type="text/javascript">alert("You have been successfully logged!");window.close();</script>' .
-				'</body></html>';
+			'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
+			'<h1>CONNECTION ERROR!</h1>' .
+			'<script type="text/javascript">alert("'.$e->getMessage().'");window.close();</script>' .
+			'</body></html>';
 		}
-		// hybridauth login prozess
-		elseif ($type === self::OAUT_CALL_AUTHENTICATE) {
-			// die anfrage bearbeiten
-			Hybrid_Endpoint::process();
 
-		}
 	}
 
 }

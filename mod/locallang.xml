@@ -15,6 +15,8 @@
 			<label index="label_btn_back">Back</label>
 			<label index="label_btn_refresh">Refresh</label>
 			<label index="label_no_trigger_selected">Please specify a trigger first.</label>
+			<label index="label_select_target_accounts">Select target accounts for your message:</label>
+			
 			
 			<label index="message">Message</label>
 			<label index="warning">Warning</label>
@@ -24,10 +26,11 @@
 			<label index="label_error">Error</label>
 			<label index="label_note">Note</label>
 			<label index="label_warnings">Warnings</label>
+			<label index="label_error_message">Error message</label>
 			<label index="label_t3socials_connector">Networks</label>
 			<label index="label_t3socials_trigger">Trigger</label>
 			<label index="label_resource_info">Resourceinfo</label>
-			
+
 			<label index="label_table">Table</label>
 			<label index="label_account">Account</label>
 			<label index="label_state">State</label>
@@ -67,6 +70,11 @@
 			<label index="mlang_labels_tabdescr">Verbindet TYPO3 mit sozialen Netzwerken</label>
 			<label index="mlang_labels_tablabel">T3 SOCIALS - Stay connected</label>
 
+			<label index="label_btn_back">Zurück</label>
+			<label index="label_btn_refresh">Aktualisieren</label>
+			<label index="label_no_trigger_selected">Bitte zuerst einen Trigger auswählen.</label>
+			<label index="label_select_target_accounts">Die Ziel-Accounts für die Nachricht auswählen:</label>
+
 			<label index="message">Hinweis</label>
 			<label index="warning">Warnung</label>
 			<label index="error">Fehler</label>
@@ -75,14 +83,19 @@
 			<label index="label_error">Fehler</label>
 			<label index="label_note">Hinweis</label>
 			<label index="label_warnings">Warnungen</label>
+			<label index="label_error_message">Fehlermeldung</label>
 			<label index="label_t3socials_connector">Netzwerke</label>
 			<label index="label_t3socials_trigger">Trigger</label>
 			<label index="label_resource_info">Dateninformationen:</label>
 
+
 			<label index="label_table">Tabelle</label>
+			<label index="label_state">Status</label>
 			<label index="label_title">Titel</label>
 			<label index="label_message">Meldung</label>
+			<label index="label_headline">Überschrift</label>
 			<label index="label_event">Ereignis</label>
+			<label index="label_send_message">Meldung absenden</label>
 			<label index="label_submit">Absenden</label>
 			<label index="label_message_sent">Meldung erfolgreich erfolgreich abgesetzt!</label>
 			<label index="label_message_empty">Die zu versendente nachricht ist leer!</label>
