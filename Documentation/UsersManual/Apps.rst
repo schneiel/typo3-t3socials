@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -19,12 +19,12 @@ Twitter
 2. Die 4 Eingabefelder ausfüllen.
    Neben den Pflichtfeldern ist die Callback URL sehr wichtig!
    Hier einfach die URL der Webseite angeben.
-3. Im Tab Permissions *Reas and Write* aktivieren 
+3. Im Tab Permissions *Read and Write* aktivieren 
    und die Änderung mit einem Klick auf *Update settings* bestätigen.
 4. Nach dem Speichern in den Tab *API Keys* wechseln.
 5. Den Button *Create my access token*
    unter Umständen muss dies wiederholt werden,
-   bis der Beriech *Your access token* gefüllt ist.
+   bis der Bereich *Your access token* gefüllt ist.
 6. Für eine reibungslose Übertragung der Daten 
    werden folgende Schlüssel
    benötigt: *API key*, *API secret*, *Access token*, *Access token secret*
@@ -54,3 +54,27 @@ Facebook
 3. Über den Button *+ Platform hinzufügen* die Webseite-URL ergänzen.
 4. Für die Konfiguration werden folgende Schlüssel
    benötigt: *App-ID*, *Anwendungs-Geheimcode*
+
+pushd
+-----
+
+Installieren Sie den Dienst auf ihrem Server.
+Download: https://github.com/rs/pushd
+Die Absicherung der Zugriffe erfolgt in der Konfiguration von pushd. Mit 
+folgendem Eintrag in der settings.coffee limitieren Sie das Posten von 
+Nachrichten auf den lokalen Server: 
+
+.. code-block:: 
+
+   exports.server =
+       acl:
+           # restrict publish access to private networks
+           publish: ['127.0.0.1']
+Im Account-Datensatz muss dann lediglich die URI des Servers im Feld 
+*Configurations* eingeben werden:
+
+.. code-block:: ts
+
+   pushd {
+     connection = tx_t3socials_network_pushd_Connection
+     url = http://localhost:8180/

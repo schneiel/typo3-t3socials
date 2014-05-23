@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -11,10 +11,8 @@
 Users manual
 ============
 
-Nach der Installation der Extension müssen zunächst
-die benötigten Accounts eingerichtet werden.
-Dafür am besten einen neuen Storage-Folder anlegen.
-In diesem wird dann ein Datensatz vom Typ *Social Network Account* erstellt.
+In diesem Abschnitt wird erläutert, wie Administratoren Schnittstellen zu 
+sozialen Netzwerken einrichten und mit den gewünschten Daten befüllen können.
 
 
 .. toctree::
