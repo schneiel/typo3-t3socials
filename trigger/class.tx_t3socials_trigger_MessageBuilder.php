@@ -66,7 +66,7 @@ abstract class tx_t3socials_trigger_MessageBuilder
 	public function buildGenericMessage(
 		tx_t3socials_models_Base $model
 	) {
-		$type = $this->hasTrigger() ? $this->getTrigger()->getTrigerId() : NULL;
+		$type = $this->hasTrigger() ? $this->getTrigger()->getTriggerId() : NULL;
 		$message = $this->makeMessage($type);
 		return $this->buildMessage($message, $model);
 	}
@@ -95,7 +95,7 @@ abstract class tx_t3socials_trigger_MessageBuilder
 		tx_t3socials_models_Network $network,
 		tx_t3socials_models_TriggerConfig $trigger
 	) {
-		$confId = $network->getNetwork() . '.' . $trigger->getTrigerId() . '.';
+		$confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
 		$message->setUrl($network->getConfigData($confId . 'message.url'));
 	}
 

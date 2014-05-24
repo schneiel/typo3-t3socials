@@ -52,7 +52,7 @@ class tx_t3socials_trigger_Config {
 			if (!$config instanceof tx_t3socials_models_TriggerConfig) {
 				throw new Exception(
 					'The trigger configuration "' . get_class($config) .
-					'" has to implement the interface "tx_t3socials_models_TriggerConfig".'
+					'" has to extend the class "tx_t3socials_models_TriggerConfig".'
 				);
 			}
 		}
