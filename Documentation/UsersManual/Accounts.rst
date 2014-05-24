@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -39,13 +39,14 @@ entsprechen keiner realen App und müssen ersetzt werden.
 Im Feld *Trigger for network access* können bestimmte Datentypen definiert werden,
 welche von T3 SOCIALS verteilt werden können.
 
-Aktuell sind hier nur News möglich.
+Aktuell sind hier nur News (tt_news) möglich. Im Abschnitt für die Entwickler 
+ist nachzulesen, wie man weitere Datentypen implementieren kann.
 
 Die Auswahl *Autosend on save for triggers* legt fest,
-ob beim speichern die unter *Trigger for network access* gewählten
-Datensätze automatisch an den Dienst (hier Twitter) verteilt werden soll.
+ob beim Speichern, die unter *Trigger for network access* gewählten
+Datensätze, automatisch an den Dienst (hier Twitter) verteilt werden sollen.
 
-Ein Datensatz wird immer nur ein Mal automatisch verteilt und nie mehrfach!
+Ein Datensatz wird immer nur einmal automatisch verteilt und nie mehrfach!
 
 
 Alle weiteren Konfigurationen werden im Feld *Configurations*
@@ -53,8 +54,8 @@ in einer TypoScript-Notation gemacht.
 
 Wenn eine Verteilung der Daten ohne eine Nutzerauthentifizierung geschehen soll,
 dann müssen unter *access_token* und *access_token_secret*
-die Token des Accounts hinterlegt werden,
-an dessen Pinnwand die News abgesendet werden soll.
+die Token des Accounts hinterlegt werden, an dessen Pinnwand 
+die News abgesendet werden soll.
 
 .. code-block:: ts
 
@@ -182,12 +183,12 @@ Ein Klick auf *Anmelden* öffnet die Authentifizierung
 in einem neuem PopUp-Fenster.
 
 Je nach Dienst und Status Ihrer Anmeldung, werden Sie nun aufgefordert,
-sich Anzumelden. Dies muss mit dem Nutzer geschehen,
-in wessen Namen später die Meldungen geteilt werden.
+sich anzumelden. Dies muss mit dem Nutzer geschehen,
+in dessen Namen später die Meldungen geteilt werden.
 
-Im Anschluss werden Sie gebeten, die Berechtigung der Dienst App
+Im Anschluss werden Sie gebeten, die Berechtigung der Dienst-App
 für das Konto freizugeben.
-Dies ist notwendig, damit über die Dienst App
+Dies ist notwendig, damit über die Dienst-App
 Nachrichten auf der Pinnwand geteilt werden können.
 
 Ist die Authentifizierung erfolgreich gewesen,
@@ -205,7 +206,7 @@ entsprechen keinem realen Account!
 Damit ein Verteilen der Nachrichten auch unabhängig der aktuellen Session,
 automatisiert oder durch andere Nutzer möglich ist,
 müssen die Access Token aus dem PopUp-Fenster in die Dienstkonfiguration
-Eingetragen werden.
+eingetragen werden.
 
 Siehe dazu Abschnitt *Configurations* unter :ref:`accounts`.
 Diese kann direkt über das Stift-Icon des Moduls aufgerufen werden.

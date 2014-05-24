@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -34,7 +34,8 @@ Connection
 
 Für die eigentliche Connection hat man nun mehrere Möglichkeiten.
 Entweder nutzt man einen bereits in der HybridAuth enthaltenen Provider
-Oder man kümmert sich selbst um Dinge wie Authentifizierung und Posten.
+Oder man kümmert sich selbst um Dinge wie die Authentifizierung und 
+das Posten von Meldungen.
 
 Aktuell bei HybridAuth enthaltene Provider sind unter
 EXT:t3socials/lib/hybridauth/Hybrid/Providers
@@ -42,8 +43,8 @@ zu finden.
 
 Eine weitere Option wäre, eine komplett eigenständige Connection zu erstellen.
 Diese muss dann lediglich das Interfase *tx_t3socials_network_IConnection*
-implementieren. Auf diese Möglichkeit
-wird hier allerdings nicht weiter eingegangen.
+implementieren. Auf diese Möglichkeit wird hier allerdings nicht weiter 
+eingegangen.
 
 HybridAuth
 ^^^^^^^^^^
@@ -87,7 +88,7 @@ an den Dienst zu verteilen:
 
    require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_network_Connection');
-   class tx_t3socials_network_tritter_Connection
+   class tx_t3socials_network_twitter_Connection
       extends tx_t3socials_network_Connection {
       protected function getBuilderClass() {
          return 'tx_t3socials_network_twitter_MessageBuilder';
@@ -106,16 +107,16 @@ an den Dienst zu verteilen:
 Message-Builder
 ---------------
 
-Der Message-Builder ist dafür Zuständig,
+Der Message-Builder ist dafür zuständig,
 aus der von T3 SOCIALS erzeugten generischen Nachricht,
 eine für den Dienst verarbeitbare Nachricht zu erzeugen.
-In den missten Fällen wird dies direkt ein String
+In den meisten Fällen wird dies direkt ein String
 mit der enthaltenen Nachricht sein.
-Für einige Dienste ist es allerdings auch Möglich, andere Datentypen,
+Für einige Dienste ist es allerdings auch möglich, andere Datentypen
 wie ein Array zu erzeugen.
 Ein Beispiel dafür ist Facebook, da wird die Nachricht separat zur URL versendet.
 
-Ein Message-Builder ist nicht zwingend Notwendig, wenn eine eigene Connection,
+Ein Message-Builder ist nicht zwingend notwendig, wenn eine eigene Connection,
 ohne Ableitung einer bereits existierenden Basisklasse genutzt wird.
 
 Ein Message-Builder muss immer von
@@ -123,7 +124,7 @@ der Klasse *tx_t3socials_network_MessageBuilder* ableiten.
 Wenn keine weiteren Anforderungen an die zu sendende Nachricht besteht,
 kann auch direkt diese Basisklasse als Message-Builder nutzen.
 
-Die Basisklasse baut die Nachricht bereits aus Allen vorhandenen Daten
+Die Basisklasse baut die Nachricht bereits aus allen vorhandenen Daten
 wie Headline, Intro, Message und URL zusammen.
 
 Dabei werden bereits Angaben wie contentDelimiter, maxContentLength
@@ -134,7 +135,7 @@ Bei Twitter sind dies 140 Zeichen.
 Bei cropAfterString kann ein String angegeben werden,
 welcher nach dem Abschneiden der Daten an die Nachricht angehängt wird.
 
-Hier ein Beispiel des Builders für Tritter:
+Hier ein Beispiel des Builders für Twitter:
 
 .. code-block:: php
 
@@ -158,7 +159,7 @@ welche von der Basisklasse *tx_t3socials_network_Connection* erben,
 ist es möglich in speziellen Fällen
 weitere Builder per Konfiguration festzulegen.
 
-Die Konfiguration für einen speziellen Message-Builder für ein Accound
+Die Konfiguration für einen speziellen Message-Builder für ein Account
 würde wie folgt Aussehen:
 
 .. code-block:: ts
@@ -296,8 +297,8 @@ Mögliche Optionen der Konfiguration:
         default_configuration
    
     Description
-         Enthält die Vordefinierte Konfiguration.
-         Diese Konfiguration wird bei Initialen Anlegen eines Accounts
+         Enthält die vordefinierte Konfiguration.
+         Diese Konfiguration wird bei initialen Anlegen eines Accounts
          in das Feld *Configurations* eingefügt.
 
 Mit * Markierte Felder sind Pflichtangaben!

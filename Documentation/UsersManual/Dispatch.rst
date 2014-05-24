@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -14,8 +14,8 @@ Verteilen von Meldungen
 
 .. _dispatch-custom:
 
-Freihe Meldungen
-----------------
+Freie Meldungen
+---------------
 
 Über das *T3 SOCIALS* Modul ist es sehr einfach möglich,
 eine Statusmeldung an verschiedene Accounts auf einmal zu verteilen. 
@@ -37,11 +37,10 @@ zur Verfügung.
 Bei den unterschiedlichen Diensten ist zu beachten,
 das der angegebene Text der Nachricht
 speziell für jeden Dienst automatisch angepasst wird.
-Dies ist notwendig, da Beispielsweise
-für Twitter maximal 140 und
+Dies ist notwendig, da beispielsweise für Twitter maximal 140 und
 für XING höchstens 420 Zeichen inklusive News-Link übermittelt werden dürfen.
 
-Der Text wird dann automatisch an die maximallänge
+Der Text wird dann automatisch an die Maximallänge
 der einzelnen Dienste angepasst, an die Überschrift gehängt
 und durch die ggf. angegebene URL ergänzt. 
 
@@ -68,7 +67,7 @@ Siehe dazu Abschnitt *Triggers for network access* unter :ref:`accounts`.
 Automatische Verteilung
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Damit eine News direkt beim Speichern automatisch an die Konfigurierten
+Damit eine News direkt beim Speichern automatisch an die konfigurierten
 Dienste verteilt werden kann, muss in der Dienstkonfiguration der Punkt
 *Autosend on save for triggers* aktiviert sein.
 
@@ -100,8 +99,8 @@ die Möglichkeit der Verteilung über die Dienste informiert.
    :alt: Info zum versenden der News über bestimmte Dienste.
 
 
-Das Ziel des in der Info enthaltenen Links ist
-das *T3 SOCIALS* Backendmodul zum versenden einer News.
+Das Ziel, des in der Info enthaltenen Links, ist
+das *T3 SOCIALS* Backendmodul zum Versenden einer News.
 
 .. figure:: ../Images/ModTriggerNews.png
    :alt: Modul zum verteilen einer News.
@@ -110,8 +109,8 @@ Im Kopfbereich werden Informationen wie
 Tabelle, ID und Titel der News zum Datensatz ausgegeben.
 
 Auch ein Status der News ist hier zu finden.
-Beispielsweise wird darüber Informiert,
-das diese News bereits an Dienste versendet wurde.
+Beispielsweise wird darüber informiert,
+ob diese News bereits an Dienste versendet wurde.
 
 Darunter werden alle Dienste aufgelistet,
 welche über den Trigger für die News konfiguriert wurden.

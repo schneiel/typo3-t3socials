@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -124,7 +124,7 @@ Mögliche Optionen der Konfiguration:
         Der Klassenname des Message Builders.
         Mehr dazu im Abschnitt :ref:`trigger-message-builder`
 
-Mit * Markierte Felder sind Pflichtangaben!
+Mit * markierte Felder sind Pflichtangaben!
 
 
 .. _trigger-message-builder:
@@ -176,7 +176,7 @@ da wir auf eine Detailseite mit dem tt_news Detail Plugin verlinken müssen.
 
 Die Konfiguration eines Links in wird im Abschnitt :ref:`accounts` erklärt.
 
-Wie im Message Builder auf diese Konfiguration zugegriffen
+Wie im MessageBuilder auf diese Konfiguration zugegriffen
 und eine dynamische URL zusammen gebaut werden kann, zeigt folgendes Beispiel:
 
 .. code-block:: php
@@ -229,8 +229,8 @@ Um ein Trigger zu registrieren, wird die Konfiguration benötigt.
 Diese Konfiguration muss über die ext_localconf.php bei T3 SOCIALS
 registriert werden.
 
-mit der Registrierung werden alle Änderungen
-an der in der Konfiguration angegebenen Tabelle überwacht.
+Mit der Registrierung werden alle Änderungen
+an der, in der Konfiguration angegebenen Tabelle, überwacht.
 
 Je nach Konfiguration der angelegten Accounts
 und Status des Datensatzes,
