@@ -57,7 +57,7 @@ class tx_t3socials_trigger_Config {
 			}
 		}
 
-		$id = $config->getTrigerId();
+		$id = $config->getTriggerId();
 		self::$triggers[$id] = $config;
 	}
 
@@ -128,7 +128,7 @@ class tx_t3socials_trigger_Config {
 		$triggers = array();
 		/* @var $config tx_t3socials_models_TriggerConfig */
 		foreach ($configs as $config) {
-			$triggers[] = $config->getTrigerId();
+			$triggers[] = $config->getTriggerId();
 		}
 		return $triggers;
 	}
@@ -192,7 +192,7 @@ class tx_t3socials_trigger_Config {
 	 */
 	public static function translateTrigger($trigger) {
 		$id = $trigger instanceof tx_t3socials_models_TriggerConfig
-			? $trigger->getTrigerId() : $trigger;
+			? $trigger->getTriggerId() : $trigger;
 		tx_rnbase::load('tx_rnbase_util_Misc');
 		$title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_trigger_' . $id);
 		return empty($title) ? $id : $title;

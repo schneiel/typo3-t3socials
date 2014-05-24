@@ -11,14 +11,10 @@
 Trigger
 =======
 
-Ein Trigger in T3 SOCIALS ist die Schnittstelle
-zwischen einem Datensatz in Typo3 und T3 SOCIALS.
-
-Ein Trigger für News beispielsweise überwacht das System auf neue News hin,
-um diese an T3 SOCIALS zu übergeben und
-ggf. an ein oder mehrere Accounts zu verteilen.
-
-Ein Trigger in T3 SOCIALS anzulegen, verhält sich ähnlich wie bei den Netzwerken.
+Trigger bilden in T3 SOCIALS die Schnittstelle zwischen einem 
+Datensatz aus der TYPO3-Datenbank und T3 SOCIALS. Der Trigger für tt_news 
+beispielsweise, überwacht das System auf neue News, um diese an T3 SOCIALS 
+zu übergeben und ggf. an ein oder mehrere Accounts zu verteilen.
 
 Um ein Trigger für T3 SOCIALS zu registrieren, sind aktuell 2 Dinge notwendig:
 

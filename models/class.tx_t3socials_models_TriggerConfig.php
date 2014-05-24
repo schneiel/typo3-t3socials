@@ -85,7 +85,7 @@ class tx_t3socials_models_TriggerConfig
 	 *
 	 * @return string
 	 */
-	public function getTrigerId() {
+	public function getTriggerId() {
 		return $this->hasProperty('trigger_id')
 			? $this->getProperty('trigger_id')
 			: $this->getTableName();
