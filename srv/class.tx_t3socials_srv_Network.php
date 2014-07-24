@@ -59,18 +59,19 @@ class tx_t3socials_srv_Network
 	 *         Enthält eine statusmeldung für jedes netzwerk
 	 */
 	public function exeuteAutoSend($table, $uid) {
-		if ($this->hasSent($uid, $table)) {
-			return array();
-		}
 
 		$states = array();
-
 		$hasSend = FALSE;
 
 		// alle trigger zur tabelle holen
 		/* @var tx_t3socials_models_TriggerConfig $triggerConfig */
 		$triggerConfig = tx_t3socials_trigger_Config::getTriggerConfigsForTable($table);
 
+		// Doppelten Versand optional automatisch verhindern.
+		if (!$triggerConfig->isDoubleSentAllowed() && $this->hasSent($uid, $table)) {
+			return array();
+		}
+		
 		// the resolver creates the record!
 		$resolver = tx_t3socials_trigger_Config::getResolver($triggerConfig);
 		$record = $resolver->getRecord($table, $uid);

@@ -76,6 +76,9 @@ class tx_t3socials_models_TriggerConfig
 		if (!$this->hasProperty('resolver')) {
 			$this->setProperty('resolver', 'tx_t3socials_util_ResolverT3DB');
 		}
+		if (!$this->hasProperty('double_sent_allowed')) {
+			$this->setProperty('double_sent_allowed', false);
+		}
 	}
 
 	/**
@@ -117,7 +120,13 @@ class tx_t3socials_models_TriggerConfig
 	public function getResolverClass() {
 		return $this->getProperty('resolver');
 	}
-
+	/**
+	 * Doppelter Versand kann automatisch verhindert werden.
+	 * @return boolean
+	 */
+	public function isDoubleSentAllowed() {
+		return $this->getProperty('double_sent_allowed');
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']) {
