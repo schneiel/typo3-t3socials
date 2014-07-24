@@ -71,7 +71,7 @@ class tx_t3socials_trigger_Config {
 	}
 
 	/**
-	 * Liefert alle Tabelennamen, wleche Trigger haben könnten.
+	 * Liefert alle Tabellennamen, welche Trigger haben könnten.
 	 *
 	 * @return array
 	 */
@@ -100,21 +100,21 @@ class tx_t3socials_trigger_Config {
 	}
 
 	/**
-	 * Liefert alle Trigger für eine Tabelle.
-	 *
+	 * Liefert den Trigger für eine Tabelle.
+	 * Mehrere Trigger pro Tabelle werden nicht mehr unterstützt.
+	 * TODO: Methode umbenennen getTriggerConfigForTable
 	 * @param string $table
-	 * @return array[tx_t3socials_models_TriggerConfig]
+	 * @return tx_t3socials_models_TriggerConfig
 	 */
 	public static function getTriggerConfigsForTable($table) {
-		$configs = array();
 		/* @var $config tx_t3socials_models_TriggerConfig */
 		foreach (self::$triggers as $config) {
 			if ($config->getTableName() != $table) {
 				continue;
 			}
-			$configs[] = $config;
+			return $config;
 		}
-		return $configs;
+		return null;
 	}
 
 	/**
@@ -124,12 +124,13 @@ class tx_t3socials_trigger_Config {
 	 * @return array
 	 */
 	public static function getTriggerNamesForTable($table) {
-		$configs = self::getTriggerConfigsForTable($table);
-		$triggers = array();
 		/* @var $config tx_t3socials_models_TriggerConfig */
-		foreach ($configs as $config) {
-			$triggers[] = $config->getTriggerId();
-		}
+		$config = self::getTriggerConfigsForTable($table);
+		$triggers = array();
+		$triggers[] = $config->getTriggerId();
+// 		foreach ($configs as $config) {
+// 			$triggers[] = $config->getTriggerId();
+// 		}
 		return $triggers;
 	}
 

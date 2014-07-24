@@ -68,79 +68,52 @@ class tx_t3socials_srv_Network
 		$hasSend = FALSE;
 
 		// alle trigger zur tabelle holen
-		$triggerConfigs = tx_t3socials_trigger_Config::getTriggerConfigsForTable($table);
-
 		/* @var tx_t3socials_models_TriggerConfig $triggerConfig */
-		foreach ($triggerConfigs as $triggerConfig) {
-			// the resolver creates the record!
-			$resolver = tx_t3socials_trigger_Config::getResolver($triggerConfig);
-			$record = $resolver->getRecord($table, $uid);
+		$triggerConfig = tx_t3socials_trigger_Config::getTriggerConfigsForTable($table);
 
-			// wenn gelöscht oder versteckt, nicht publizieren!
-			if (
-				!$record instanceof tx_t3socials_models_Base
-				|| $record->isDeleted() || $record->isHidden()
-			) {
-				continue;
-			}
+		// the resolver creates the record!
+		$resolver = tx_t3socials_trigger_Config::getResolver($triggerConfig);
+		$record = $resolver->getRecord($table, $uid);
 
-			// the builder generates the generic message
-			$builder = tx_t3socials_trigger_Config::getMessageBuilder($triggerConfig);
-			$message = $builder->buildGenericMessage($record);
+		// wenn gelöscht oder versteckt, nicht publizieren!
+		if (
+			!$record instanceof tx_t3socials_models_Base
+			|| $record->isDeleted() || $record->isHidden()
+		) {
+			continue;
+		}
 
-			$accounts = $this->findAccountsByTriggers($triggerConfig->getTriggerId(), TRUE);
-			/* @var tx_t3socials_models_Network $network */
-			foreach ($accounts as $network) {
-				/* @var $state tx_t3socials_models_State */
-				$state = tx_rnbase::makeInstance(
-					'tx_t3socials_models_State', 0
-				);
-				$state->setTriggerConfig($triggerConfig);
-				$state->setMessageModel($message);
-				$state->setNetworkModel($network);
+		// the builder generates the generic message
+		$builder = tx_t3socials_trigger_Config::getMessageBuilder($triggerConfig);
+		$message = $builder->buildGenericMessage($record);
 
-				// spezielle netzwerk abhängige dinge durchführen.
-				$builder->prepareMessageForNetwork(
-					$message, $network, $triggerConfig
-				);
-				// verbindung aufbauen
-				$connection = tx_t3socials_network_Config::getNetworkConnection($network);
+		$accounts = $this->findAccountsByTriggers($triggerConfig->getTriggerId(), TRUE);
+		/* @var tx_t3socials_models_Network $network */
+		foreach ($accounts as $network) {
+			/* @var $state tx_t3socials_models_State */
+			$state = tx_rnbase::makeInstance(
+				'tx_t3socials_models_State', 0
+			);
+			$state->setTriggerConfig($triggerConfig);
+			$state->setMessageModel($message);
+			$state->setNetworkModel($network);
 
-				$msgId = '[' . $table . ':' . $uid . '->' . $triggerConfig->getTriggerId() . '.' . $network->getNetwork() . ']';
-				// nachricht senden
-				try {
-					$error = $connection->sendMessage($message);
-					if ($error) {
-						tx_rnbase_util_Logger::warn(
-							'Error sending message! ' . $msgId,
-							array(
-								'error' => (string) $error,
-								'account' => (string) $network->getName(),
-								'message' => (string) $message,
-								'network' => (string) $network->getNetwork(),
-								'trigger' => (string) $triggerConfig->getTriggerId(),
-							)
-						);
-						$state->setState(
-							tx_t3socials_models_State::STATE_WARNING,
-							'Error sending message! ' . $msgId .
-							'. See DevLog for more Informations.'
-						);
-					}
-					// versand erfolgreich
-					else {
-						$hasSend = TRUE;
-						$state->setState(
-							tx_t3socials_models_State::STATE_OK,
-							'Message successfully send to network! ' . $msgId
-						);
-					}
-				} catch (Exception $e) {
-					tx_rnbase_util_Logger::fatal(
+			// spezielle netzwerk abhängige dinge durchführen.
+			$builder->prepareMessageForNetwork(
+				$message, $network, $triggerConfig
+			);
+			// verbindung aufbauen
+			$connection = tx_t3socials_network_Config::getNetworkConnection($network);
+
+			$msgId = '[' . $table . ':' . $uid . '->' . $triggerConfig->getTriggerId() . '.' . $network->getNetwork() . ']';
+			// nachricht senden
+			try {
+				$error = $connection->sendMessage($message);
+				if ($error) {
+					tx_rnbase_util_Logger::warn(
 						'Error sending message! ' . $msgId,
-						't3socials',
 						array(
-							'exception' => (string) $e,
+							'error' => (string) $error,
 							'account' => (string) $network->getName(),
 							'message' => (string) $message,
 							'network' => (string) $network->getNetwork(),
@@ -148,13 +121,38 @@ class tx_t3socials_srv_Network
 						)
 					);
 					$state->setState(
-						tx_t3socials_models_State::STATE_ERROR,
-							'Error sending message! ' . $msgId .
-							'. See DevLog for more Informations.'
+						tx_t3socials_models_State::STATE_WARNING,
+						'Error sending message! ' . $msgId .
+						'. See DevLog for more Informations.'
 					);
 				}
-				$states[] = $state;
+				// versand erfolgreich
+				else {
+					$hasSend = TRUE;
+					$state->setState(
+						tx_t3socials_models_State::STATE_OK,
+						'Message successfully send to network! ' . $msgId
+					);
+				}
+			} catch (Exception $e) {
+				tx_rnbase_util_Logger::fatal(
+					'Error sending message! ' . $msgId,
+					't3socials',
+					array(
+						'exception' => (string) $e,
+						'account' => (string) $network->getName(),
+						'message' => (string) $message,
+						'network' => (string) $network->getNetwork(),
+						'trigger' => (string) $triggerConfig->getTriggerId(),
+					)
+				);
+				$state->setState(
+					tx_t3socials_models_State::STATE_ERROR,
+						'Error sending message! ' . $msgId .
+						'. See DevLog for more Informations.'
+				);
 			}
+			$states[] = $state;
 		}
 
 		// als versendet markieren
