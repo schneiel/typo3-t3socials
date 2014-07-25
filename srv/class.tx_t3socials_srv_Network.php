@@ -81,7 +81,7 @@ class tx_t3socials_srv_Network
 			!$record instanceof tx_t3socials_models_Base
 			|| $record->isDeleted() || $record->isHidden()
 		) {
-			continue;
+			return array();
 		}
 
 		// the builder generates the generic message
