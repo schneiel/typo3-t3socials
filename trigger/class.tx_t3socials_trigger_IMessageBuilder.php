@@ -54,7 +54,7 @@ interface tx_t3socials_trigger_IMessageBuilder {
 	 * @return tx_t3socials_models_IMessage
 	 */
 	public function prepareMessageForNetwork(
-		tx_t3socials_models_IMessage &$message,
+		tx_t3socials_models_IMessage $message,
 		tx_t3socials_models_Network $network,
 		tx_t3socials_models_TriggerConfig $trigger
 	);

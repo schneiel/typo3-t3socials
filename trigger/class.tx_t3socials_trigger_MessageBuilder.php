@@ -91,7 +91,7 @@ abstract class tx_t3socials_trigger_MessageBuilder
 	 * @return void
 	 */
 	public function prepareMessageForNetwork(
-		tx_t3socials_models_IMessage &$message,
+		tx_t3socials_models_IMessage $message,
 		tx_t3socials_models_Network $network,
 		tx_t3socials_models_TriggerConfig $trigger
 	) {
