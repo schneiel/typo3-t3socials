@@ -26,7 +26,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'depends' => array(
 			'cms' => '',
 			'php' => '5.0.0-0.0.0',
-			'rn_base' => '0.13.2',
+			'rn_base' => '0.14.6',
 			'typo3' => '4.4.0-6.1.99',
 		),
 		'conflicts' => array(
