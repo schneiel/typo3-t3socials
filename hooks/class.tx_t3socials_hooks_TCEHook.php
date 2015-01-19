@@ -150,7 +150,8 @@ class tx_t3socials_hooks_TCEHook {
 		// wir bauen also die nachricht zusammen
 		if (!empty($networks)) {
 			$url  = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
-			$thisUrl = rawurlencode(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REQUEST_URI'));
+			tx_rnbase::load('tx_rnbase_util_Misc');
+			$thisUrl = rawurlencode(tx_rnbase_util_Misc::getIndpEnv('REQUEST_URI'));
 			$url .= 'typo3conf/ext/t3socials/mod/index.php?1';
 			$url .= '&returnUrl=' . $thisUrl;
 			$url .= '&SET%5Bfunction%5D=tx_t3socials_mod_Trigger';
