@@ -78,9 +78,11 @@ class tx_t3socials_util_Link {
 			// das ist notwendig, wenn der link aus dem BE heraus erzeugtw erden soll!s
 			'TCEmainHook' => TRUE,
 		);
-		// jetzt die hoock aufrufen (unter anderem realurl)
+		// jetzt die hocks aufrufen (unter anderem realurl)
+		tx_rnbase::load('tx_rnbase_util_Misc');
 		foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tstemplate.php']['linkData-PostProc'] as $funcRef) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($funcRef, $params, $this);
+			tx_rnbase_util_Misc::callUserFunction($funcRef, $params, $this);
+//			\TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($funcRef, $params, $this);
 		}
 
 		return $ld['totalURL'];
