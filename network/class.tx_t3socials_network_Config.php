@@ -119,6 +119,7 @@ class tx_t3socials_network_Config {
 	 * @return tx_t3socials_network_IConnection
 	 */
 	public static function getNetworkConnection($network) {
+		
 		if ($network instanceof tx_t3socials_models_Network) {
 			$class = $network->getConfigData($network->getNetwork() . '.connection');
 			if ($class) {
@@ -129,6 +130,8 @@ class tx_t3socials_network_Config {
 						'" has to implement the interface "tx_t3socials_network_IConnection".'
 					);
 				}
+				// Auch hier das Netzwerk setzen...
+				$con->setNetwork($network);
 				return $con;
 			}
 		}
@@ -147,6 +150,7 @@ class tx_t3socials_network_Config {
 		if ($network instanceof tx_t3socials_models_Network) {
 			$con->setNetwork($network);
 		}
+					
 		return $con;
 	}
 
