@@ -48,7 +48,7 @@ class tx_t3socials_network_pushd_MessageBuilder {
 		// Wenn ein Intro vorhanden ist, wird dieses bevorzugt.
 		$msg = htmlspecialchars_decode(strip_tags(trim($message->getIntro() ? $message->getIntro() : $message->getMessage())),ENT_QUOTES);
 		$title = htmlspecialchars_decode(strip_tags(trim($message->getHeadline())),ENT_QUOTES);
-		$charsAvailable = 50;
+		$charsAvailable = 200;
 		$msg = self::cropText($msg, $charsAvailable, '...', true);
 
 		$data['title'] = $title;
