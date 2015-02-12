@@ -24,8 +24,11 @@
 unset($MCONF);
 require_once 'conf.php';
 require_once $BACK_PATH . 'init.php';
-require_once $BACK_PATH . 'template.php';
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+if (!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
+	require_once $BACK_PATH . 'template.php';
+}
+
 
 $LANG->includeLLFile('EXT:t3socials/mod/locallang.xml');
 // This checks permissions and exits if the users has no permission for entry.
