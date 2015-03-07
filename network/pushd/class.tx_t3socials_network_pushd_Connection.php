@@ -62,7 +62,7 @@ class tx_t3socials_network_pushd_Connection
 	 *
 	 * @param tx_t3socials_models_IMessage $message
 	 * @see tx_t3socials_network_IConnection::sendMessage()
-	 * @return void
+	 * @return null|string with error
 	 */
 	public function sendMessage(tx_t3socials_models_IMessage $message) {
 
@@ -99,7 +99,8 @@ class tx_t3socials_network_pushd_Connection
 				$message->setData($data->record);
 			tx_rnbase_util_Logger::fatal('Error sending pushd-message (' . $message->getMessageType() . ')!', 't3socials',
 				array('message' => (array) $message, 'options' => $options, 'url' => $url));
-			$message->setData($data);
+			return 'Error sending pushd-message';
+//			$message->setData($data);
 		}
 	}
 

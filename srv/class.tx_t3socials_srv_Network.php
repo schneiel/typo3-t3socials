@@ -123,7 +123,7 @@ class tx_t3socials_srv_Network
 			// verbindung aufbauen
 			$connection = tx_t3socials_network_Config::getNetworkConnection($network);
 
-			$msgId = '[' . $table . ':' . $uid . '->' . $triggerConfig->getTriggerId() . '.' . $network->getNetwork() . ']';
+			$msgId = '[' . $network->getName() . '->' . $triggerConfig->getTriggerId() . '.' . $network->getNetwork() . ']';
 			// nachricht senden
 			try {
 				$error = $connection->sendMessage($message);
