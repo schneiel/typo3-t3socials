@@ -163,15 +163,15 @@ class tx_t3socials_mod_util_Template {
 			/* @var $adapter Hybrid_Provider_Model_OAuth1 */
 			$adapter = $connection->getProvider()->adapter;
 			$connected = $adapter->isUserConnected();
-		}
-		catch(Exception $e) {
+		} catch(Exception $e) {
 			$errMsg = $e->getMessage();
 		}
 		$out  = '<div class="typo3-message ' . ($connected ? 'message-ok' : 'message-error') . '">';
 		$head = $connected ? '###LABEL_T3SOCIALS_STATE_connectED###' : '###LABEL_T3SOCIALS_STATE_DISconnectED###';
 		$out .= 	'<div class="message-header">' . $head . '</div>';
 		$out .= 	'<div class="message-body">';
-		$popup  = 'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', \'toolbar=no,scrollbars=yes,resizable=yes,width=800,height=600\');';
+		$popup  = 	'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', ' .
+					'\'toolbar=no,scrollbars=yes,resizable=yes,width=800,height=600\');';
 		$popup .= ' fenster.focus(); return false;';
 		// dienst ist verbunden
 		if ($connected) {
@@ -188,8 +188,8 @@ class tx_t3socials_mod_util_Template {
 		// es besteht keine verbindung zum dienst
 		else {
 			$out .= '###LABEL_T3SOCIALS_STATE_DISconnectED_DESC### <br />';
-			if($errMsg) {
-				$out .= '<br/><strong>'.$errMsg.'</strong><br/></br/>';
+			if ($errMsg) {
+				$out .= '<br/><strong>' . $errMsg . '</strong><br/></br/>';
 			}
 			$url = tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl(
 				$network->getUid(),
@@ -206,6 +206,9 @@ class tx_t3socials_mod_util_Template {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']) {
+if (
+	defined('TYPO3_MODE') &&
+	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
+) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']);
 }

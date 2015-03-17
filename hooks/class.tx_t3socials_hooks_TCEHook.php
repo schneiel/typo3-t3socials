@@ -163,7 +163,8 @@ class tx_t3socials_hooks_TCEHook {
 				'message' => $msg,
 				'title' => '<a href="' . $url . '">T3 SOCIALS</a>',
 				'severity' => t3lib_FlashMessage::INFO,
-				// Damit die meldung auch bei akttionen wie "speichern und schließen" ausgegeben wird.
+				// Damit die meldung auch bei akttionen wie
+				// speichern und schließen" ausgegeben wird.
 				'storeinsession' => TRUE,
 			);
 			tx_rnbase::load('tx_t3socials_util_Message');
@@ -173,6 +174,11 @@ class tx_t3socials_hooks_TCEHook {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/hooks/class.tx_more4t3sports_hooks_TCEHook.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/hooks/class.tx_more4t3sports_hooks_TCEHook.php']);
+if (
+	defined('TYPO3_MODE') &&
+	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php']
+) {
+	include_once(
+		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php']
+	);
 }

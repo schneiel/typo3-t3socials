@@ -58,7 +58,7 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 		else {
 			$url = t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST') . '/typo3/ajax.php?ajaxID=t3socials-hybridauth';
 		}
-		$url .= '&oAuthCallType='.$type;
+		$url .= '&oAuthCallType=' . $type;
 		if ($networkId > 0) {
 			$url .= '&network=' . (int) $networkId;
 		}
@@ -151,7 +151,8 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 				$connection->getProvider()->logout();
 				// @TODO: template erstellen.
 				return
-				'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
+				'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" ' .
+				'"http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
 				'<h1>LOGGED OUT!</h1>' .
 				'<script type="text/javascript">alert("You have been successfully logged out!");window.close();</script>' .
 				'</body></html>';
@@ -162,13 +163,13 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 				Hybrid_Endpoint::process();
 
 			}
-		}
-		catch(Exception $e) {
+		} catch(Exception $e) {
 			// @TODO: template erstellen.
 			return
-			'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
+			'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" ' .
+			'"http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
 			'<h1>CONNECTION ERROR!</h1>' .
-			'<script type="text/javascript">alert("'.$e->getMessage().'");window.close();</script>' .
+			'<script type="text/javascript">alert("' . $e->getMessage() . '");window.close();</script>' .
 			'</body></html>';
 		}
 
@@ -176,8 +177,13 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']);
+if (
+	defined('TYPO3_MODE') &&
+	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']
+) {
+	include_once(
+		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']
+	);
 }
 
 // eid Aufruf?

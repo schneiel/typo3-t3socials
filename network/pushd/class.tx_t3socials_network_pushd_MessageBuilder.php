@@ -24,9 +24,7 @@
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
-
 /**
- *
  * @package tx_t3socials
  * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
@@ -46,10 +44,12 @@ class tx_t3socials_network_pushd_MessageBuilder {
 		$data = array();
 		// alle Tags entfernen
 		// Wenn ein Intro vorhanden ist, wird dieses bevorzugt.
-		$msg = htmlspecialchars_decode(strip_tags(trim($message->getIntro() ? $message->getIntro() : $message->getMessage())),ENT_QUOTES);
-		$title = htmlspecialchars_decode(strip_tags(trim($message->getHeadline())),ENT_QUOTES);
+		$msg = htmlspecialchars_decode(strip_tags(trim(
+			$message->getIntro() ? $message->getIntro() : $message->getMessage()
+		)), ENT_QUOTES);
+		$title = htmlspecialchars_decode(strip_tags(trim($message->getHeadline())), ENT_QUOTES);
 		$charsAvailable = 200;
-		$msg = self::cropText($msg, $charsAvailable, '...', true);
+		$msg = self::cropText($msg, $charsAvailable, '...', TRUE);
 
 		$data['title'] = $title;
 		$data['msg'] = $msg;
@@ -66,17 +66,24 @@ class tx_t3socials_network_pushd_MessageBuilder {
 	 * @return string
 	 */
 	protected static function cropText($text, $chars, $afterstring, $crop2space) {
-		if(strlen($text) < $chars) {
+		if (strlen($text) < $chars) {
 			return $text;
 		}
 		// Kürzen
-		$text = substr($text,0,($chars-strlen($afterstring)));
-		$trunc_at = strrpos($text, ' ');
-		$text = ($trunc_at&&$crop2space) ? substr($text, 0, $trunc_at).$afterstring : $text.$afterstring;
+		$text = substr($text, 0, ($chars - strlen($afterstring)));
+		$truncAt = strrpos($text, ' ');
+		$text = ($truncAt && $crop2space) ?
+					substr($text, 0, $truncAt) . $afterstring :
+					$text . $afterstring;
 		return $text;
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']);
+if (
+	defined('TYPO3_MODE') &&
+	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
+) {
+	include_once(
+		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
+	);
 }

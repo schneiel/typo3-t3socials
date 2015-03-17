@@ -43,7 +43,7 @@ class tx_t3socials_models_Base
 	 * @param array|int $rowOrUid
 	 * @param string $tableName
 	 */
-	function __construct($rowOrUid, $tableName = 0) {
+	public function __construct($rowOrUid, $tableName = 0) {
 		parent::__construct($rowOrUid);
 		$this->setTableName($tableName);
 	}

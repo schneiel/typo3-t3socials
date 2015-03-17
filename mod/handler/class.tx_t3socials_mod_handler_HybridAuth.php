@@ -218,7 +218,11 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccountsByType($this->getNetworkId());
 		// wir haben keine Accounts, an die wir versenden könnten
 		if (empty($accounts)) {
-			$mod->addMessage('Es wurde kein Account für "' . $this->getNetworkConfig()->getProviderTitle() . '" gefunden.', '###LABEL_MESSAGE###', 0);
+			$mod->addMessage(
+				'Es wurde kein Account für "' . $this->getNetworkConfig()->getProviderTitle() .
+				'" gefunden.', '###LABEL_MESSAGE###',
+				0
+		);
 			$subpartArr['###SEND_FORM###'] = '';
 		}
 		// wir haben accounts, die wir nun auflisten
@@ -266,9 +270,11 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 		$adapter = $connection->getProvider()->adapter;
 		$connected = $adapter->isUserConnected();
 		$out  = '<div class="typo3-message ' . ($connected ? 'message-ok' : 'message-error') . '">';
-		$out .= 	'<div class="message-header">' . ($connected ? 'Connected' : 'Disconnected') . '</div>';
+		$out .= 	'<div class="message-header">' . ($connected ? 'Connected' : 'Disconnected') .
+					'</div>';
 		$out .= 	'<div class="message-body">';
-		$popup  = 'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', \'toolbar=no,scrollbars=yes,resizable=yes,width=800,height=600\');';
+		$popup  = 	'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', ' .
+					'\'toolbar=no,scrollbars=yes,resizable=yes,width=800,height=600\');';
 		$popup .= ' fenster.focus(); return false;';
 		// dienst ist verbunden
 		if ($connected) {
@@ -276,7 +282,9 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 				$networkId,
 				tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_LOGOUT
 			);
-			$out .= '<a href="' . $url . '" target="_blank" onclick="if (!confirm(\'Do you really want to log out?\')) {return false;}' . $popup . '"><strong>Logout</strong></a>';
+			$out .= '<a href="' . $url .
+					'" target="_blank" onclick="if (!confirm(\'Do you really want to log out?\')) {return false;}' .
+					$popup . '"><strong>Logout</strong></a>';
 			$out .= ' <small>(To see the new status you haveto refresh this page after the popup is closed!)</small>';
 		}
 		// es besteht keine verbindung zum dienst
@@ -312,6 +320,9 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php']) {
+if (
+	defined('TYPO3_MODE') &&
+	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php']
+) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php']);
 }

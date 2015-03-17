@@ -119,7 +119,6 @@ class tx_t3socials_network_Config {
 	 * @return tx_t3socials_network_IConnection
 	 */
 	public static function getNetworkConnection($network) {
-		
 		if ($network instanceof tx_t3socials_models_Network) {
 			$class = $network->getConfigData($network->getNetwork() . '.connection');
 			if ($class) {
@@ -150,7 +149,6 @@ class tx_t3socials_network_Config {
 		if ($network instanceof tx_t3socials_models_Network) {
 			$con->setNetwork($network);
 		}
-					
 		return $con;
 	}
 
@@ -176,6 +174,9 @@ class tx_t3socials_network_Config {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']);
+if (
+	defined('TYPO3_MODE') &&
+	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Config.php']
+) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Config.php']);
 }

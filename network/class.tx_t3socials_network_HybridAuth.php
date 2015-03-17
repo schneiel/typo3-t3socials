@@ -53,7 +53,9 @@ class tx_t3socials_network_HybridAuth {
 	private static function getBasicConfiguration(array $providers = array()) {
 		$basic = array(
 			'base_url' => tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl(0),
-			// if you want to enable logging, set 'debug_mode' to true  then provide a writable file by the web server on "debug_file"
+			// if you want to enable logging, set
+			// 'debug_mode' to true  then provide
+			// a writable file by the web server on "debug_file"
 			'debug_mode' => FALSE,
 			'debug_file' => '',
 			'providers' => $providers,
@@ -175,6 +177,9 @@ class tx_t3socials_network_HybridAuth {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']) {
+if (
+	defined('TYPO3_MODE') &&
+	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']
+) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']);
 }
