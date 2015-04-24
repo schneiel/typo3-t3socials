@@ -128,9 +128,7 @@ class tx_t3socials_trigger_Config {
 		$config = self::getTriggerConfigsForTable($table);
 		$triggers = array();
 		$triggers[] = $config->getTriggerId();
-// 		foreach ($configs as $config) {
-// 			$triggers[] = $config->getTriggerId();
-// 		}
+
 		return $triggers;
 	}
 

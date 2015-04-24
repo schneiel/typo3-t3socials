@@ -251,7 +251,6 @@ class tx_t3socials_mod_Trigger
 			if ($trigger) {
 				$module = $this->getModule();
 				$tableName = $trigger->getTableName();
-				// $tableLabel = $GLOBALS['TCA'][$tableName]['ctrl']['title'];
 				$labelField = $GLOBALS['TCA'][$tableName]['ctrl']['label'];
 
 				$options = array();

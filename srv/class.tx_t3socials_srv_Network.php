@@ -84,13 +84,14 @@ class tx_t3socials_srv_Network
 		// the builder generates the generic message
 		$builder = tx_t3socials_trigger_Config::getMessageBuilder($triggerConfig);
 		$message = $builder->buildGenericMessage($record);
-		if($message === NULL)
+		if ($message === NULL) {
 			return array();
+		}
 
 		$accounts = $this->findAccountsByTriggers($triggerConfig->getTriggerId(), TRUE);
 		$states = $this->sendMessage($message, $accounts, $builder, $triggerConfig);
 
-		foreach ($states As $state) {
+		foreach ($states as $state) {
 			if($state->getState() == tx_t3socials_models_State::STATE_OK) {
 				$this->setSent($uid, $table);
 				break;

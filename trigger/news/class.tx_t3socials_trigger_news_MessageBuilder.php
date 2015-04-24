@@ -79,7 +79,7 @@ class tx_t3socials_trigger_news_MessageBuilder
 		// tx_ttnews[tt_news]
 		$link->designator('tx_ttnews');
 		$link->initByTS($config, $confId . 'link.show.', array('tt_news' => $news->getUid()));
-		// wenn nicht anders konfiguriert, immer eine absoplute url setzesetzen!
+		// wenn nicht anders konfiguriert, immer eine absolute url setzen!
 		if (!$config->get($confId . 'link.show.absurl')) {
 			$link->setAbsUrl(TRUE);
 		}

@@ -73,7 +73,6 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 	 * @return void
 	 */
 	public function ajaxId(array &$params, &$ref) {
-		// $ref->getAjaxID();
 		$content = $this->oAuthCall();
 		$ref->setContentFormat('plain');
 		$ref->setContent(array($content));
@@ -85,9 +84,7 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 	 * @return void
 	 */
 	public function eID() {
-		// \TYPO3\CMS\Frontend\Utility\EidUtility();
 		tslib_eidtools::connectDB();
-		// @TODO: include security check!!!
 		$content = $this->oAuthCall();
 		exit($content);
 	}
