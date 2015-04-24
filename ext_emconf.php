@@ -9,7 +9,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'author_company' => 'DMK E-BUSINESS GmbH',
 	'shy' => 0,
 	'version' => '1.0.7',
-	'dependencies' => 'cms, rn_base',
+	'dependencies' => 'rn_base',
 	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
@@ -24,10 +24,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'cms' => '',
 			'php' => '5.0.0-0.0.0',
-			'rn_base' => '0.14.9',
-			'typo3' => '4.4.0-6.1.99',
+			'rn_base' => '0.14.9-0.0.0',
+			'typo3' => '4.4.0-6.2.99',
 		),
 		'conflicts' => array(
 		),
