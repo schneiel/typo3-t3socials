@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'T3 SOCIALS',
-	'description' => 'Developer library to connect to social networks.',
+	'description' => 'This TYPO3 extension provides an API to communicate with socials networks. So it\'s possible for example to publish newly created news (or whatever you like) directly into social networks.',
 	'category' => 'services',
 	'author' => 'Michael Wagner, Rene Nitzsche',
 	'author_email' => 'dev@dmk-ebusiness.de',
