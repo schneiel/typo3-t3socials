@@ -46,16 +46,16 @@ class tx_t3socials_network_facebook_NetworkConfig
 		$this->setProperty('provider_id', $this->uid = 'facebook');
 		$this->setProperty('hybridauth_provider', 'Facebook');
 		$this->setProperty('connector', 'tx_t3socials_network_facebook_Connection');
-		$this->setProperty('comunicator', 'tx_t3socials_mod_handler_Facebook');
+		$this->setProperty('communicator', 'tx_t3socials_mod_handler_Facebook');
 		$this->setProperty('description',
 			'Please enter the customer key into the field "Username"' .
 			' and the customer secret into the field "Password".' . CRLF .
 			' ###MORE###' . CRLF .
-			' To authenticate with a specific account, you has to ' .
+			' To authenticate with a specific account, you have to ' .
 			' put the customer token in the field "access_token"' .
 			' of the Configuration.' . CRLF .
 			' You can go to the T3Socials User Tools to autehtificate.' . CRLF .
-			' a customer end get the token from there.' . CRLF
+			' A customer end get the token from there.' . CRLF
 		);
 		$this->setProperty('default_configuration',
 			$this->getProviderId() . ' {' .

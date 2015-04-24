@@ -46,7 +46,7 @@ class tx_t3socials_network_pushd_NetworkConfig
 		parent::initConfig();
 		$this->setProperty('provider_id', $this->uid = 'pushd');
 		$this->setProperty('connector', 'tx_t3socials_network_pushd_Connection');
-		$this->setProperty('comunicator', 'tx_t3socials_mod_handler_Pushd');
+		$this->setProperty('communicator', 'tx_t3socials_mod_handler_Pushd');
 		$this->setProperty('default_configuration',
 			'pushd {' . CRLF .
 				'	url =' . CRLF .

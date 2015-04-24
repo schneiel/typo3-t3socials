@@ -47,7 +47,7 @@ class tx_t3socials_network_xing_NetworkConfig
 		$this->setProperty('provider_id', $this->uid = 'xing');
 		$this->setProperty('hybridauth_provider', 'XING');
 		$this->setProperty('connector', 'tx_t3socials_network_xing_Connection');
-		$this->setProperty('comunicator', 'tx_t3socials_mod_handler_Xing');
+		$this->setProperty('communicator', 'tx_t3socials_mod_handler_Xing');
 	}
 
 }

@@ -29,7 +29,7 @@ T3 SOCIALS
 		
 
 	:Keywords:
-		twitter, xing, facebook, social, media, pushd, push notification, forAdmins, forIntermediates
+		twitter, xing, facebook, social media, pushd, push notification, forAdmins, forIntermediates
 
 	:Copyright:
 		2013-2014 DMK E-Business GmbH

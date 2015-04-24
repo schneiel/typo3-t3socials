@@ -72,19 +72,19 @@ class tx_t3socials_models_NetworkConfig
 		if (!$this->hasProperty('connector')) {
 			$this->setProperty('connector', NULL);
 		}
-		if (!$this->hasProperty('comunicator')) {
-			$this->setProperty('comunicator', NULL);
+		if (!$this->hasProperty('communicator')) {
+			$this->setProperty('communicator', NULL);
 		}
 		if (!$this->hasProperty('description')) {
 			$this->setProperty('description',
 				'Please enter the customer key into the field "Username"' .
 				' and the customer secret into the field "Password".' . CRLF .
 				' ###MORE###' . CRLF .
-				' To authenticate with a specific account, you has to ' .
+				' To authenticate with a specific account, you have to ' .
 				' put the customer token in the fields "access_token" and' .
 				' "access_token_secret" of the Configuration.' . CRLF .
 				' You can go to the T3Socials User Tools to autehtificate.' . CRLF .
-				' a customer end get the tokens from there.' . CRLF
+				' A customer end get the tokens from there.' . CRLF
 			);
 		}
 		if (!$this->hasProperty('default_configuration')) {
@@ -156,8 +156,8 @@ class tx_t3socials_models_NetworkConfig
 	 *
 	 * @return string
 	 */
-	public function getComunicatorClass() {
-		return $this->getProperty('comunicator');
+	public function getCommunicatorClass() {
+		return $this->getProperty('communicator');
 	}
 
 }

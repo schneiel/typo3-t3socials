@@ -51,7 +51,7 @@ class tx_t3socials_mod_Communicator
 	 * @return array
 	 */
 	protected function getSubMenuItems() {
-		$menuItems = tx_t3socials_network_Config::getNewtorkComunicators();
+		$menuItems = tx_t3socials_network_Config::getNewtorkCommunicators();
 		array_unshift(
 			$menuItems,
 			tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger')

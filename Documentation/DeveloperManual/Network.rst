@@ -34,7 +34,7 @@ Connection
 
 Für die eigentliche Connection hat man nun mehrere Möglichkeiten.
 Entweder nutzt man einen bereits in der HybridAuth enthaltenen Provider
-Oder man kümmert sich selbst um Dinge wie die Authentifizierung und 
+oder man kümmert sich selbst um Dinge wie die Authentifizierung und 
 das Posten von Meldungen.
 
 Aktuell bei HybridAuth enthaltene Provider sind unter
@@ -42,7 +42,7 @@ EXT:t3socials/lib/hybridauth/Hybrid/Providers
 zu finden.
 
 Eine weitere Option wäre, eine komplett eigenständige Connection zu erstellen.
-Diese muss dann lediglich das Interfase *tx_t3socials_network_IConnection*
+Diese muss dann lediglich das Interface *tx_t3socials_network_IConnection*
 implementieren. Auf diese Möglichkeit wird hier allerdings nicht weiter 
 eingegangen.
 
@@ -257,14 +257,14 @@ Mögliche Optionen der Konfiguration:
 .. container:: table-row
 
     Property
-        comunicator
+        communicator
    
     Default
         NULL
         
     Description
-         Enthält den Klassennamen des Comunicators.
-         Der Comunicator wird für das Modul von T3 SOCIALS verwendet,
+         Enthält den Klassennamen des Communicators.
+         Der Communicator wird für das Modul von T3 SOCIALS verwendet,
          um direkt Nachrichten nur an diesen einen Dienst zu versenden.
          Dieser ist Optional und nicht notwendig.
 
@@ -277,11 +277,11 @@ Mögliche Optionen der Konfiguration:
         Please enter the customer key into the field "Username"
         and the customer secret into the field "Password".
         ###MORE###
-        To authenticate with a specific account, you has to
+        To authenticate with a specific account, you have to
         put the customer token in the fields "access_token" and
         "access_token_secret" of the Configuration.
         You can go to the T3Socials User Tools to autehtificate.
-        a customer end get the tokens from there.
+        A customer end get the tokens from there.
         
     Description
          Enthält eine Beschreibung zum Netzwerk und dessen Konfiguration.
@@ -298,7 +298,7 @@ Mögliche Optionen der Konfiguration:
    
     Description
          Enthält die vordefinierte Konfiguration.
-         Diese Konfiguration wird bei initialen Anlegen eines Accounts
+         Diese Konfiguration wird beim initialen Anlegen eines Accounts
          in das Feld *Configurations* eingefügt.
 
 Mit * Markierte Felder sind Pflichtangaben!

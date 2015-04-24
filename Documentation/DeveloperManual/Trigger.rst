@@ -80,7 +80,7 @@ Mögliche Optionen der Konfiguration:
         NULL
    
     Description
-        Der Tabelenname, wessen Datensätze überwacht und genutzt werden sollen.
+        Der Tabellenname, wessen Datensätze überwacht und genutzt werden sollen.
 
 .. container:: table-row
 
@@ -136,7 +136,7 @@ Der Message-Builder ist dafür zuständig, aus einem speziellen Datensatz,
 wie beispielsweise einer News,
 ein generisches Message-Model zu erzeugen und zu befüllen.
 
-Der Message-Bilder muss entweder von der Basisklasse
+Der Message-Builder muss entweder von der Basisklasse
 *tx_t3socials_trigger_MessageBuilder* erben, oder das Interface
 *tx_t3socials_trigger_IMessageBuilder* implementieren.
 
@@ -165,7 +165,7 @@ Hier ein kleines Beispiel für einen tt_news Datensatz:
       }
    }
 
-Wenn beim Bauen der Message, spezielle Anpassungen für Netzwerke
+Wenn beim Bauen der Message spezielle Anpassungen für Netzwerke
 oder deren Konfiguration durchgeführt werden müssen,
 kann dies über die Methode prepareMessageForNetwork geschehen.
 
@@ -174,7 +174,7 @@ Die URL kann im Falle einer News automatisiert nur anhand
 einer TypoScript Konfiguration erzeugt werden,
 da wir auf eine Detailseite mit dem tt_news Detail Plugin verlinken müssen.
 
-Die Konfiguration eines Links in wird im Abschnitt :ref:`accounts` erklärt.
+Die Konfiguration eines Links wird im Abschnitt :ref:`accounts` erklärt.
 
 Wie im MessageBuilder auf diese Konfiguration zugegriffen
 und eine dynamische URL zusammen gebaut werden kann, zeigt folgendes Beispiel:

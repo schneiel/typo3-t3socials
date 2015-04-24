@@ -87,26 +87,26 @@ class tx_t3socials_network_Config {
 	}
 
 	/**
-	 * Liefert eine Liste mit allen Comunicatoren für das BE-Modul.
+	 * Liefert eine Liste mit allen Communicatoren für das BE-Modul.
 	 *
 	 * @return array
 	 */
-	public static function getNewtorkComunicators() {
+	public static function getNewtorkCommunicators() {
 		$return = array();
 		/* @var $config tx_t3socials_models_NetworkConfig */
 		foreach (self::$networks as $config) {
-			$class = $config->getComunicatorClass();
+			$class = $config->getCommunicatorClass();
 			if (!$class) {
 				continue;
 			}
-			$comunicator = tx_rnbase::makeInstance($class);
-			if (!$comunicator instanceof tx_rnbase_mod_IModHandler) {
+			$communicator = tx_rnbase::makeInstance($class);
+			if (!$communicator instanceof tx_rnbase_mod_IModHandler) {
 				throw new Exception(
-					'The $comunicator "' . get_class($comunicator) .
+					'The $communicator "' . get_class($communicator) .
 					'" has to implement the interface "tx_rnbase_mod_IModHandler".'
 				);
 			}
-			$return[] = $comunicator;
+			$return[] = $communicator;
 		}
 		return $return;
 	}

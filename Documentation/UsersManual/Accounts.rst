@@ -115,7 +115,7 @@ Bei pushd besteht eine Besonderheit darin,
 dass der Dienst sogenannte Events unterstützt.
 Smartphone-Nutzer können sich über diesen Weg für bestimmte Events registrieren.
 Diese Events können serverseitig frei definiert werden.
-Die Anbindung von T3socials unterstützt diese freie Vergabe.
+Die Anbindung von T3 SOCIALS unterstützt diese freie Vergabe.
 Daher müssen zunächst die gewünschten Events
 in der Konfiguration angelegt werden.
 Für die in der Standardkonfiguration unterstützten
@@ -169,7 +169,7 @@ Erzeugen der Access Token
 
 Damit über einen Dienst, wie Twitter, Nachrichten an eine Pinnwand
 eines bestimmten Accounts geschrieben werden können,
-ist es notwendig, dass sich dieses Konto über die Dienst App authentifiziert.
+ist es notwendig, dass sich dieses Konto über die Dienst-App authentifiziert.
 
 Diese Authentifizierung kann über das Backendmodul *T3 SOCIALS* geschehen.
 
@@ -192,7 +192,7 @@ Dies ist notwendig, damit über die Dienst-App
 Nachrichten auf der Pinnwand geteilt werden können.
 
 Ist die Authentifizierung erfolgreich gewesen,
-So wird Ihnen eine Erfolgsmeldung mit dem Access Token ausgegeben,
+so wird Ihnen eine Erfolgsmeldung mit dem Access Token ausgegeben,
 welche für das Teilen der Nachrichten verwendet werden.
 
 Diese werden für die Dauer der Session genutzt.

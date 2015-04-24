@@ -11,7 +11,7 @@ if (TYPO3_MODE == 'BE') {
 	// Einbindung einer PageTSConfig
 	t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . 't3socials' . '/mod/pageTSconfig.txt">');
 
-	// comunicator
+	// communicator
 	t3lib_extMgm::addModule('user', 'txt3socialsM1', '', t3lib_extMgm::extPath('t3socials') . 'mod/');
 	t3lib_extMgm::insertModuleFunction(
 		'user_txt3socialsM1', 'tx_t3socials_mod_Communicator',

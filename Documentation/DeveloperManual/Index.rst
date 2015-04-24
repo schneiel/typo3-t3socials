@@ -29,7 +29,7 @@ und noch nicht über einen Account verteilt wurde.
 
 Der Service nimmt die Message entgegen, bereitet diese auf
 und verteilt diese an alle konfigurierten Netzwerke.
-Dies sind alle Netzwerke deren ref:`accounts` für diesen 
+Dies sind alle Netzwerke deren :ref:`accounts` für diesen 
 Trigger definiert sind.
 
 Die Netzwerke nehmen die Message wiederum entgegen, bauen die Statusmeldung 
@@ -58,7 +58,7 @@ Die Instanz für pushd wird dagegen keine Links verschicken,
 da dies für die Notifications nicht sinnvoll ist.
 
 Für die Umwandlung der Nachrichten verwenden die Network-Instanzen MessageBuilder.
-Es wird immer ein Default-Bilder mitgeliefert!
+Es wird immer ein Default-Builder mitgeliefert!
 Zumindest bei den in T3 SOCIALS integrierten Netzwerken ist es möglich,
 in speziellen Fällen weitere Builder per Konfiguration festzulegen.
 
