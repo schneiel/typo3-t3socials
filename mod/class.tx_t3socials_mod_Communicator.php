@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2014 DMK E-BUSINESS GmbH <kontakt@dmk-ebusiness.de>
+* (c) 2014 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
 * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@ tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
  * @package tx_t3socials
  * @subpackage tx_t3socials_mod
  * @author Rene Nitzsche <rene@system25.de>
- * @author Michael Wagner <michael.wagner@dmk-ebusiness.de>
+ * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
