@@ -64,7 +64,7 @@ Die Absicherung der Zugriffe erfolgt in der Konfiguration von pushd. Mit
 folgendem Eintrag in der settings.coffee limitieren Sie das Posten von 
 Nachrichten auf den lokalen Server: 
 
-.. code-block:: 
+.. code-block:: ts
 
    exports.server =
        acl:
