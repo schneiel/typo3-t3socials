@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -18,6 +18,7 @@ The following is a very high level overview of the changes in this extension.
 =========  ===========================================================================
 Version    Changes
 =========  ===========================================================================
+1.2.1      - some cleanup
 1.1.0      - Code refactoring for networks and triggers
            - HybridAuth inklusiv OAuth implemented
            - Network support for XING implemented
