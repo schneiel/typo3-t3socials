@@ -1,0 +1,53 @@
+{
+	"name" : "dmk/t3socials",
+	"description" : "This TYPO3 extension provides an API to communicate with socials networks. So it\'s possible for example to publish newly created news (or whatever you like) directly into social networks.",
+	"version" : "1.2.1",
+	"type" : "typo3-cms-extension",
+	"keywords" : ["TYPO3 CMS", "twitter", "xing", "facebook", "social media", "pushd", "push notification"],
+	"homepage" : "http://www.dmk-ebusiness.de/",
+	"license" : "GPL-2.0+",
+	"authors" : [
+		{
+			"name" : "Michael Wagner",
+			"email" : "michael.wagner@dmk-ebusiness.de",
+			"role" : "Developer"
+		},
+		{
+			"name" : "Hannes Bochmann",
+			"email" : "hannes.bochmann@dmk-ebusiness.de",
+			"role" : "Developer"
+		},
+		{
+			"name" : "René Nitzsche",
+			"email" : "nitzsche@dmk-ebusiness.de",
+			"role" : "Developer"
+		}
+	],
+	"support": {
+		"email": "dev@dmk-ebusiness.de",
+		"source": "https://github.com/DMKEBUSINESSGMBH/typo3-t3socials",
+		"issues": "https://github.com/DMKEBUSINESSGMBH/typo3-t3socials"
+	},
+	"replace": {
+		"typo3-ter/t3socials": "*"
+	},
+	"require" : {
+		"typo3/cms-core" : ">=4.5.0 <=7.6.99",
+		"digedag/rn-base" : ">=1.0.9"
+	},
+	"autoload": {
+		"classmap": [
+			"hooks/",
+			"lib/",
+			"mod/",
+			"models/",
+			"network/",
+			"provider/",
+			"models/",
+			"search/",
+			"srv/",
+			"trigger/",
+			"util/"
+		]
+	}
+}
