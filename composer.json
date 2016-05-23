@@ -1,6 +1,6 @@
 {
 	"name" : "dmk/t3socials",
-	"description" : "This TYPO3 extension provides an API to communicate with socials networks. So it\'s possible for example to publish newly created news (or whatever you like) directly into social networks.",
+	"description" : "This TYPO3 extension provides an API to communicate with socials networks. So it's possible for example to publish newly created news (or whatever you like) directly into social networks.",
 	"version" : "1.2.1",
 	"type" : "typo3-cms-extension",
 	"keywords" : ["TYPO3 CMS", "twitter", "xing", "facebook", "social media", "pushd", "push notification"],
