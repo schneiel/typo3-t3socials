@@ -21,8 +21,9 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
+tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 
 /**
  * Backend Modul für Nachrichtenversand
@@ -62,10 +63,10 @@ class tx_t3socials_mod_Trigger
 	 */
 	protected function getContent($template, &$configurations, &$formatter, $formTool) {
 
-		if (t3lib_div::_GP('trigger_back_resourceselector')) {
+		if (tx_rnbase_parameters::getPostOrGetParameter('trigger_back_resourceselector')) {
 			// @TODO: das funktioniert noch nicht wie es soll.
 			// daten bleiben teilweise erhalten
-			t3lib_BEfunc::getModuleData(
+			Tx_Rnbase_Backend_Utility::getModuleData(
 				array('resource' => ''), array('resource' => ''),
 				$this->getModule()->getName()
 			);
@@ -84,7 +85,7 @@ class tx_t3socials_mod_Trigger
 		}
 
 		// ggf returnUrl auswerten
-		$returnUrl = t3lib_div::_GP('returnUrl');
+		$returnUrl = tx_rnbase_parameters::getPostOrGetParameter('returnUrl');
 		if ($returnUrl) {
 			// returnUrl weiter geben!
 			$content .= '<p style="position:absolute; top:-5000px; left:-5000px;">' .

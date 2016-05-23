@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('tx_rnbase_mod_IModHandler');
 tx_rnbase::load('tx_t3socials_models_Message');
 tx_rnbase::load('tx_t3socials_mod_util_Template');
@@ -115,7 +115,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 	 */
 	protected function getFormData() {
 		if (is_null($this->formData)) {
-			$data = t3lib_div::_GP('data');
+			$data = tx_rnbase_parameters::getPostOrGetParameter('data');
 			$data = empty($data) || !is_array($data) ? array() : $data;
 			$this->formData = tx_rnbase::makeInstance('tx_t3socials_models_Base', $data);
 		}
@@ -151,7 +151,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 	 * @return string|null
 	 */
 	public function handleRequest(tx_rnbase_mod_IModule $mod) {
-		$submitted = t3lib_div::_GP($this->getSubmitName());
+		$submitted = tx_rnbase_parameters::getPostOrGetParameter($this->getSubmitName());
 		if (!$submitted) {
 			return NULL;
 		}
@@ -167,7 +167,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth
 			return NULL;
 		}
 
-		$set = t3lib_div::_GP('SET');
+		$set = tx_rnbase_parameters::getPostOrGetParameter('SET');
 		$account = tx_t3socials_srv_ServiceRegistry::getNetworkService()->get(
 			$set[$this->getNetworkId()]
 		);

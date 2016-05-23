@@ -34,7 +34,7 @@ Connection
 
 Für die eigentliche Connection hat man nun mehrere Möglichkeiten.
 Entweder nutzt man einen bereits in der HybridAuth enthaltenen Provider
-oder man kümmert sich selbst um Dinge wie die Authentifizierung und 
+oder man kümmert sich selbst um Dinge wie die Authentifizierung und
 das Posten von Meldungen.
 
 Aktuell bei HybridAuth enthaltene Provider sind unter
@@ -43,7 +43,7 @@ zu finden.
 
 Eine weitere Option wäre, eine komplett eigenständige Connection zu erstellen.
 Diese muss dann lediglich das Interface *tx_t3socials_network_IConnection*
-implementieren. Auf diese Möglichkeit wird hier allerdings nicht weiter 
+implementieren. Auf diese Möglichkeit wird hier allerdings nicht weiter
 eingegangen.
 
 HybridAuth
@@ -58,7 +58,6 @@ liefern. Mehr dazu im Abschnitt :ref:`network-message-builder`.
 
 .. code-block:: php
 
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
    class tx_t3socials_network_tritter_Connection
       extends tx_t3socials_network_hybridauth_Connection {
@@ -86,7 +85,6 @@ an den Dienst zu verteilen:
 
 .. code-block:: php
 
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_network_Connection');
    class tx_t3socials_network_twitter_Connection
       extends tx_t3socials_network_Connection {
@@ -139,7 +137,6 @@ Hier ein Beispiel des Builders für Twitter:
 
 .. code-block:: php
 
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_network_MessageBuilder');
    class tx_t3socials_network_twitter_MessageBuilder
       extends tx_t3socials_network_MessageBuilder {
@@ -165,7 +162,7 @@ würde wie folgt Aussehen:
 .. code-block:: ts
 
    twitter {
-      builder = Tx_Myext_Builder_SpecialTwitter  
+      builder = Tx_Myext_Builder_SpecialTwitter
    }
 
 Die Klasse *Tx_Myext_Builder_SpecialTwitter* muss existieren und von
@@ -193,7 +190,6 @@ Hier ein Beispiel mit eigener Klasse:
 
 .. code-block:: php
 
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_models_NetworkConfig');
    class tx_t3socials_network_twitter_NetworkConfig
       extends tx_t3socials_models_NetworkConfig {
@@ -223,10 +219,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         provider_id *
-   
+
     Default
         NULL
-        
+
     Description
         Eine eindeutige unique ID für das Netzwerk.
 
@@ -234,10 +230,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         hybridauth_provider
-   
+
     Default
         NULL
-        
+
     Description
          Der Name des HybridAuth Providers.
          Dies ist nur notwendig, wenn der Connector von der Basisklasse
@@ -247,10 +243,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         connector *
-   
+
     Default
         NULL
-        
+
     Description
          Enthält den Klassennamen des Connectors. Siehe :ref:`network-connection`.
 
@@ -258,10 +254,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         communicator
-   
+
     Default
         NULL
-        
+
     Description
          Enthält den Klassennamen des Communicators.
          Der Communicator wird für das Modul von T3 SOCIALS verwendet,
@@ -272,7 +268,7 @@ Mögliche Optionen der Konfiguration:
 
     Property
         description
-   
+
     Default
         Please enter the customer key into the field "Username"
         and the customer secret into the field "Password".
@@ -282,7 +278,7 @@ Mögliche Optionen der Konfiguration:
         "access_token_secret" of the Configuration.
         You can go to the T3Socials User Tools to autehtificate.
         A customer end get the tokens from there.
-        
+
     Description
          Enthält eine Beschreibung zum Netzwerk und dessen Konfiguration.
          Diese Beschreibung wird beim Editieren (TCE-FORM)
@@ -295,7 +291,7 @@ Mögliche Optionen der Konfiguration:
 
     Property
         default_configuration
-   
+
     Description
          Enthält die vordefinierte Konfiguration.
          Diese Konfiguration wird beim initialen Anlegen eines Accounts
@@ -320,7 +316,6 @@ Beispiel der Registrierung mit eigenem Configurationsmodel:
    /* *** **************************** *** *
     * *** Register T3 SOCIALS Networks *** *
     * *** **************************** *** */
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_network_Config');
    tx_t3socials_network_Config::registerNetwork(
       'tx_t3socials_network_twitter_NetworkConfig'
@@ -334,7 +329,6 @@ Hier ein Beispiel der Registrierung direkt mit der Basisklasse:
    /* *** **************************** *** *
     * *** Register T3 SOCIALS Networks *** *
     * *** **************************** *** */
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_network_Config');
    tx_t3socials_network_Config::registerNetwork(
       tx_rnbase::makeInstance(

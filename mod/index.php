@@ -21,18 +21,9 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-unset($MCONF);
-require_once 'conf.php';
-require_once $BACK_PATH . 'init.php';
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
-if (!tx_rnbase_util_TYPO3::isTYPO62OrHigher()) {
-	require_once $BACK_PATH . 'template.php';
-}
-
-
-$LANG->includeLLFile('EXT:t3socials/mod/locallang.xml');
+$GLOBALS['LANG']->includeLLFile('EXT:t3socials/mod/locallang.xml');
 // This checks permissions and exits if the users has no permission for entry.
-$BE_USER->modAccess($MCONF, 1);
+$GLOBALS['BE_USER']->modAccess($MCONF, 1);
 // DEFAULT initialization of a module [END]
 
 tx_rnbase::load('tx_rnbase_configurations');
@@ -71,6 +62,16 @@ class  tx_t3socials_mod_Module
 		$mainmenu = $this->getFormTool()->showTabMenu($this->getPid(), 'function', $this->getName(), $this->MOD_MENU['function']);
 		return $mainmenu['menu'];
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see tx_rnbase_mod_BaseModule::useModuleTemplate()
+	 * @TODO TRUE liefern wenn Probleme im Core gefixed sind. So werden Labels im Funktionsmenü
+	 * des Moduls noch nicht geparsed.
+	 */
+	protected function useModuleTemplate() {
+		return FALSE;
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']) {
@@ -78,11 +79,11 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socia
 }
 
 // Make instance:
-$SOBE = t3lib_div::makeInstance('tx_t3socials_mod_Module');
+$SOBE = tx_rnbase::makeInstance('tx_t3socials_mod_Module');
 $SOBE->init();
 
 // Include files?
-foreach ($SOBE->include_once as $incFile) {
+foreach ((array) $SOBE->include_once as $incFile) {
 	require_once $incFile;
 }
 

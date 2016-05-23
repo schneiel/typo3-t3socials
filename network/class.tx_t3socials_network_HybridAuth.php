@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+
 tx_rnbase::load('tx_t3socials_network_hybridauth_OAuthCall');
 
 /**
@@ -38,7 +38,7 @@ class tx_t3socials_network_HybridAuth {
 	/**
 	 * Enables the HybridAuth.LOG.
 	 * This Log will be written in the root of the t3socials extension.
-	 * t3lib_extMgm::extPath('t3socials') . 'HybridAuth.LOG'
+	 * tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG'
 	 *
 	 * @var boolean
 	 */
@@ -62,7 +62,7 @@ class tx_t3socials_network_HybridAuth {
 		);
 		if (self::DEBUG_ENABLED) {
 			$basic['debug_mode'] = TRUE;
-			$basic['debug_file'] = t3lib_extMgm::extPath('t3socials') . 'HybridAuth.LOG';
+			$basic['debug_file'] = tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG';
 			touch($basic['debug_file']);
 		}
 		return $basic;
@@ -75,11 +75,11 @@ class tx_t3socials_network_HybridAuth {
 	 */
 	private static function loadHybridAuth() {
 		if (!class_exists('Hybrid_Auth')) {
-			require_once t3lib_extMgm::extPath(
+			require_once tx_rnbase_util_Extensions::extPath(
 				't3socials',
 				'/lib/hybridauth/Hybrid/Auth.php'
 			);
-			require_once t3lib_extMgm::extPath(
+			require_once tx_rnbase_util_Extensions::extPath(
 				't3socials',
 				'/lib/hybridauth/Hybrid/Endpoint.php'
 			);

@@ -18,6 +18,7 @@ The following is a very high level overview of the changes in this extension.
 =========  ===========================================================================
 Version    Changes
 =========  ===========================================================================
+2.0.0      - added support for TYPO3 7.6
 1.2.1      - some cleanup
 1.1.0      - Code refactoring for networks and triggers
            - HybridAuth inklusiv OAuth implemented

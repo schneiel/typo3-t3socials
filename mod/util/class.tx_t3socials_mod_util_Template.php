@@ -21,7 +21,8 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Files');
+tx_rnbase::load('tx_rnbase_util_Network');
 
 /**
  * Basis handler für HybridAuth
@@ -110,8 +111,8 @@ class tx_t3socials_mod_util_Template {
 		$configurations = $mod->getConfigurations();
 
 		$file = $configurations->get('communicator.hybridauth.template');
-		$file = t3lib_div::getFileAbsFileName($file);
-		$templateCode = t3lib_div::getURL($file);
+		$file = tx_rnbase_util_Files::getFileAbsFileName($file);
+		$templateCode = tx_rnbase_util_Network::getURL($file);
 
 		if (empty($templateCode)) {
 			$out  = '<br />Template ConfId: communicator.hybridauth.template';

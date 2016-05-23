@@ -21,7 +21,9 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Misc');
+tx_rnbase::load('tx_rnbase_parameters');
+tx_rnbase::load('tx_rnbase_util_Network');
 
 /**
  * OAuth Klasse für die Authentifizierung für HybridAuth.
@@ -52,11 +54,11 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 	public static function getOAuthCallBaseUrl($networkId, $type = self::OAUT_CALL_AUTHENTICATE) {
 		// FE-URL
 		if (TYPO3_MODE === 'FE') {
-			$url = t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST') . '/index.php?eID=t3socials-hybridauth';
+			$url = tx_rnbase_util_Misc::getIndpEnv('TYPO3_REQUEST_HOST') . '/index.php?eID=t3socials-hybridauth';
 		}
 		// BE-URL
 		else {
-			$url = t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST') . '/typo3/ajax.php?ajaxID=t3socials-hybridauth';
+			$url = tx_rnbase_util_Misc::getIndpEnv('TYPO3_REQUEST_HOST') . '/typo3/ajax.php?ajaxID=t3socials-hybridauth';
 		}
 		$url .= '&oAuthCallType=' . $type;
 		if ($networkId > 0) {
@@ -84,7 +86,12 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 	 * @return void
 	 */
 	public function eID() {
-		tslib_eidtools::connectDB();
+		tx_rnbase::load('tx_rnbase_util_TYPO3');
+		tx_rnbase::load('tx_rnbase_util_Typo3Classes');
+		if (!tx_rnbase_util_TYPO3::isTYPO61OrHigher()) {
+			$eidUtility = tx_rnbase_util_Typo3Classes::getEidUtilityClass();
+			$eidUtility::connectDB();
+		}
 		$content = $this->oAuthCall();
 		exit($content);
 	}
@@ -95,8 +102,8 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 	 * @return string
 	 */
 	public function oAuthCall() {
-		$networkId = (int) t3lib_div::_GP('network');
-		$type = t3lib_div::_GP('oAuthCallType');
+		$networkId = (int) tx_rnbase_parameters::getPostOrGetParameter('network');
+		$type = tx_rnbase_parameters::getPostOrGetParameter('oAuthCallType');
 		if (!$networkId) {
 			return '';
 		}
@@ -121,7 +128,9 @@ class tx_t3socials_network_hybridauth_OAuthCall {
 			if ($type === self::OAUT_CALL_STATE) {
 				// Wenn angemeldet, Info ausgeben
 				if ($adapter->isUserConnected()) {
-					$template = t3lib_div::getURL(t3lib_extMgm::extPath('t3socials') . '/Resources/Private/Templates/eIDstatus.html');
+					$template = tx_rnbase_util_Network::getURL(
+						tx_rnbase_util_Extensions::extPath('t3socials') . '/Resources/Private/Templates/eIDstatus.html'
+					);
 					$data = $network->getRecord();
 					$data['access_token'] = $adapter->token('access_token');
 					$data['access_token_secret'] = $adapter->token('access_token_secret');
@@ -184,7 +193,7 @@ if (
 }
 
 // eid Aufruf?
-if (TYPO3_MODE === 'FE' && t3lib_div::_GP('eID') == 't3socials-hybridauth') {
+if (TYPO3_MODE === 'FE' && tx_rnbase_parameters::getPostOrGetParameter('eID') == 't3socials-hybridauth') {
 	$auth = tx_rnbase::makeInstance('tx_t3socials_network_hybridauth_OAuthCall');
 	$auth->eID();
 }

@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Typo3Classes');
 
 /**
  * Util für Nachrichten
@@ -44,7 +44,8 @@ class tx_t3socials_util_Message {
 	public static function showFlashMessage($message) {
 		$msg = '';
 		$title = 'T3 SOCIALS';
-		$severity = t3lib_FlashMessage::OK;
+		$flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
+		$severity = $flashMessageClass::OK;
 		// Wichtig, damit Meldungen auch nach einem redirect noch ausgegeben werden!
 		$store = TRUE;
 		// wir haben eine erweiterte konfiguration
@@ -58,12 +59,12 @@ class tx_t3socials_util_Message {
 		elseif($message instanceof tx_t3socials_models_State) {
 			$title = 'T3 SOCIALS';
 			$msg = $message->getMessage();
-			$severity = t3lib_FlashMessage::NOTICE;
+			$severity = $flashMessageClass::NOTICE;
 			if ($message->isStateSuccess()) {
 				$severity = $message->getState() === tx_t3socials_models_State::STATE_INFO
-					? t3lib_FlashMessage::INFO : t3lib_FlashMessage::OK;
+					? $flashMessageClass::INFO : $flashMessageClass::OK;
 			} elseif ($message->isStateFailure()) {
-				$severity = t3lib_FlashMessage::WARNING;
+				$severity = $flashMessageClass::WARNING;
 				if ($message->getErrorCode()) {
 					$title .= ' - Error (' . $message->getErrorCode() . '):';
 				}
@@ -91,14 +92,16 @@ class tx_t3socials_util_Message {
 		$severity = 0, $storeInSession = FALSE
 	) {
 		$message = tx_rnbase::makeInstance(
-			't3lib_FlashMessage',
+			tx_rnbase_util_Typo3Classes::getFlashMessageClass(),
 			$message,
 			$title,
 			$severity,
 			$storeInSession
 		);
 
-		t3lib_FlashMessageQueue::addMessage($message);
+		tx_rnbase::makeInstance(
+			tx_rnbase_util_Typo3Classes::getFlashMessageQueueClass(), md5($message . $title . $severity)
+		)->addMessage($message);
 	}
 
 }

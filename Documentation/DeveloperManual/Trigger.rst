@@ -11,9 +11,9 @@
 Trigger
 =======
 
-Trigger bilden in T3 SOCIALS die Schnittstelle zwischen einem 
-Datensatz aus der TYPO3-Datenbank und T3 SOCIALS. Der Trigger für tt_news 
-beispielsweise, überwacht das System auf neue News, um diese an T3 SOCIALS 
+Trigger bilden in T3 SOCIALS die Schnittstelle zwischen einem
+Datensatz aus der TYPO3-Datenbank und T3 SOCIALS. Der Trigger für tt_news
+beispielsweise, überwacht das System auf neue News, um diese an T3 SOCIALS
 zu übergeben und ggf. an ein oder mehrere Accounts zu verteilen.
 
 Um ein Trigger für T3 SOCIALS zu registrieren, sind aktuell 2 Dinge notwendig:
@@ -43,7 +43,6 @@ Die Verwendung ist dabei identisch zu der :ref:`network-config` eines Netzwerks.
 
 .. code-block:: php
 
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_models_NetworkConfig');
    class tx_t3socials_network_twitter_NetworkConfig
       extends tx_t3socials_models_NetworkConfig {
@@ -64,10 +63,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         trigger_id
-        
+
     Default
         Default ist der Wert der Eigenschaft *table*
-        
+
     Description
         Eine eindeutige ID für den Trigger.
 
@@ -75,10 +74,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         table *
-        
+
     Default
         NULL
-   
+
     Description
         Der Tabellenname, wessen Datensätze überwacht und genutzt werden sollen.
 
@@ -86,10 +85,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         resolver
-   
+
     Default
         tx_t3socials_util_ResolverT3DB
-   
+
     Description
         Der Resolver ist dafür Zuständig,
         aus einem Identifier (UID) und einem Tabellennamen
@@ -97,18 +96,18 @@ Mögliche Optionen der Konfiguration:
         Der Resolver muss das Interface
         *tx_t3socials_util_IResolver* implementieren.
         Defaultwert ist *tx_t3socials_util_ResolverT3DB*.
-                
+
         Der T3DB Resolver sollte für die meisten Zwecke ausreichen.
         Er besorgt sich aus der Datenbank
         den Datensatz mit einer bestimmten UID
         aus einer bestimmten Tabelle.
-        
+
         Der gelieferte Datensatz muss in einem Model verpackt zurückgegeben werden.
         Das Modell muss eine Instanz der Klasse *tx_t3socials_models_Base* sein.
         Beispielaufruf:
 
          .. code-block:: php
-         
+
             $model = tx_rnbase::makeInstance('tx_t3socials_models_Base', array(/* Record */))
             $model->setTableName($tableName);
 
@@ -116,10 +115,10 @@ Mögliche Optionen der Konfiguration:
 
     Property
         message_builder *
-   
+
     Default
         NULL
-   
+
     Description
         Der Klassenname des Message Builders.
         Mehr dazu im Abschnitt :ref:`trigger-message-builder`
@@ -149,7 +148,6 @@ Hier ein kleines Beispiel für einen tt_news Datensatz:
 
 .. code-block:: php
 
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
    class tx_t3socials_trigger_news_MessageBuilder
       extends tx_t3socials_trigger_MessageBuilder {
@@ -181,7 +179,6 @@ und eine dynamische URL zusammen gebaut werden kann, zeigt folgendes Beispiel:
 
 .. code-block:: php
 
-   require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
    tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
    class tx_t3socials_trigger_news_MessageBuilder
       extends tx_t3socials_trigger_MessageBuilder {
@@ -194,10 +191,10 @@ und eine dynamische URL zusammen gebaut werden kann, zeigt folgendes Beispiel:
          tx_t3socials_models_TriggerConfig $trigger
       ) {
          $confId = $network->getNetwork() . '.' . $trigger->getTrigerId() . '.';
-   
+
          tx_rnbase::load('tx_rnbase_util_Misc');
          $tsfe = tx_rnbase_util_Misc::prepareTSFE();
-   
+
          $news = $message->getData();
          $config = $network->getConfigurations();
          $link = $config->createLink();
@@ -214,7 +211,7 @@ und eine dynamische URL zusammen gebaut werden kann, zeigt folgendes Beispiel:
          // müssen wir uns im BE um die Umwandlung der URL kümmern!
          tx_rnbase::load('tx_t3socials_util_Link');
          $url = tx_t3socials_util_Link::getRealUrlAbsUrlForLink($link);
-   
+
          $message->setUrl($url);
       }
    }

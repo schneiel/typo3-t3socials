@@ -3,7 +3,7 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+
 
 /* *** ***************** *** *
  * *** Register Networks *** *
@@ -27,16 +27,18 @@ tx_t3socials_network_Config::registerNetwork(
  * *** Register Trigger *** *
  * *** **************** *** */
 tx_rnbase::load('tx_t3socials_trigger_Config');
-tx_t3socials_trigger_Config::registerTrigger(
-	'tx_t3socials_trigger_news_TriggerConfig'
-);
+if (tx_rnbase_util_Extensions::isLoaded('tt_news')) {
+	tx_t3socials_trigger_Config::registerTrigger(
+		'tx_t3socials_trigger_news_TriggerConfig'
+	);
+}
 
 /* *** ****************** *** *
  * *** HybridAuth (FE/BE) *** *
  * *** ****************** *** */
 // ajax id for BE
 $GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['t3socials-hybridauth']
-	= t3lib_extMgm::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php') .
+	= tx_rnbase_util_Extensions::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php') .
 		':tx_t3socials_network_hybridauth_OAuthCall->ajaxId';
 
 /* *** ***** *** *
@@ -52,12 +54,12 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
  * *** Register Services *** *
  * *** ***************** *** */
 tx_rnbase::load('tx_t3socials_srv_ServiceRegistry');
-t3lib_extMgm::addService($_EXTKEY, 't3socials' /* sv type */, 'tx_t3socials_srv_Network' /* sv key */,
+tx_rnbase_util_Extensions::addService($_EXTKEY, 't3socials' /* sv type */, 'tx_t3socials_srv_Network' /* sv key */,
 	array(
 		'title' => 'Social network accounts', 'description' => 'Handles accounts of social networks', 'subtype' => 'network',
 		'available' => TRUE, 'priority' => 50, 'quality' => 50,
 		'os' => '', 'exec' => '',
-		'classFile' => t3lib_extMgm::extPath($_EXTKEY, 'srv/class.tx_t3socials_srv_Network.php'),
+		'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY, 'srv/class.tx_t3socials_srv_Network.php'),
 		'className' => 'tx_t3socials_srv_Network',
 	)
 );

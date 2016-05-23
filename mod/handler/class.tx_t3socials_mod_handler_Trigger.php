@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('tx_rnbase_mod_IModHandler');
 tx_rnbase::load('tx_t3socials_models_Message');
 
@@ -96,7 +96,7 @@ class tx_t3socials_mod_handler_Trigger
 	 */
 	protected function getFormData() {
 		if ($this->formData === NULL) {
-			$data = t3lib_div::_GP('data');
+			$data = tx_rnbase_parameters::getPostOrGetParameter('data');
 			$data = empty($data) || !is_array($data) ? array() : $data;
 			// keine formdaten vorhanden? dann die vom record nutzen!
 			if (empty($data) && $this->getTriggerConfig() && $this->getResourceModel()) {
@@ -162,12 +162,12 @@ class tx_t3socials_mod_handler_Trigger
 	 * @return null|string
 	 */
 	public function handleRequest(tx_rnbase_mod_IModule $mod) {
-		$submitted = t3lib_div::_GP('sendtriggermessage');
+		$submitted = tx_rnbase_parameters::getPostOrGetParameter('sendtriggermessage');
 		if (!$submitted) {
 			return NULL;
 		}
 
-		$networks = t3lib_div::_GP('network');
+		$networks = tx_rnbase_parameters::getPostOrGetParameter('network');
 
 		// keine netzwerke / accounts gewählt
 		if (empty($networks)) {
@@ -392,7 +392,7 @@ class tx_t3socials_mod_handler_Trigger
 		tx_rnbase_mod_IModule $mod
 	) {
 
-		$checked = t3lib_div::_GP('network');
+		$checked = tx_rnbase_parameters::getPostOrGetParameter('network');
 		$checked = is_array($checked) ? $checked : array();
 
 		$uid = $account->getUid();

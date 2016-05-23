@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Typo3Classes');
 
 /**
  * TCE-HOOK
@@ -41,11 +41,11 @@ class tx_t3socials_hooks_TCEHook {
 	 * @param string $table
 	 * @param int $id
 	 * @param array $fieldArray
-	 * @param tce_main &$tcemain
+	 * @param TYPO3\CMS\Core\DataHandling\DataHandler &$tcemain
 	 * @return void
 	 */
 	public function processDatamap_afterDatabaseOperations(
-		$status, $table, $id, $fieldArray, t3lib_TCEmain &$tcemain
+		$status, $table, $id, $fieldArray, &$tcemain
 	) {
 		if (
 			!(
@@ -77,12 +77,12 @@ class tx_t3socials_hooks_TCEHook {
 	 * @param string $table
 	 * @param int $id
 	 * @param int $value
-	 * @param t3lib_TCEmain $tce
+	 * @param TYPO3\CMS\Core\DataHandling\DataHandler $tce
 	 * @return void
 	 * @todo Treatment of any additional actions necessary?
 	 */
 	public function processCmdmap_postProcess(
-		$command, $table, $id, $value, t3lib_TCEmain $tcemain
+		$command, $table, $id, $value, $tcemain
 	) {
 		if (
 			!(
@@ -149,7 +149,7 @@ class tx_t3socials_hooks_TCEHook {
 		// weche manuell getriggert werden können.
 		// wir bauen also die nachricht zusammen
 		if (!empty($networks)) {
-			$url  = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+			$url  = tx_rnbase_util_Misc::getIndpEnv('TYPO3_SITE_URL');
 			tx_rnbase::load('tx_rnbase_util_Misc');
 			$thisUrl = rawurlencode(tx_rnbase_util_Misc::getIndpEnv('REQUEST_URI'));
 			$url .= 'typo3conf/ext/t3socials/mod/index.php?1';
@@ -159,10 +159,11 @@ class tx_t3socials_hooks_TCEHook {
 			$url .= '&SET%5Bresource%5D=' . (int) $uid;
 			$msg  = 'Sie können das eben gespeicherte Element über T3 SOCIALS an verschiedene Dienste senden. <br />';
 			$msg .= ' Klicken Sie <a href="' . $url . '">hier</a> um die Nachricht anzupassen und einen manuellen Versand durchzuführen.';
+			$flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
 			$message = array(
 				'message' => $msg,
 				'title' => '<a href="' . $url . '">T3 SOCIALS</a>',
-				'severity' => t3lib_FlashMessage::INFO,
+				'severity' => $flashMessageClass::INFO,
 				// Damit die meldung auch bei akttionen wie
 				// speichern und schließen" ausgegeben wird.
 				'storeinsession' => TRUE,

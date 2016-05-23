@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Util zum handeln von Links und URLs
@@ -64,7 +64,7 @@ class tx_t3socials_util_Link {
 		// see tx_realurl->prefixEnablingSpURL
 		$tsfe->config['mainScript'] = 'index.php';
 		// den prefix für diese url setzen
-		$tsfe->absRefPrefix = $link->getAbsUrlSchema() ? $link->getAbsUrlSchema() : t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+		$tsfe->absRefPrefix = $link->getAbsUrlSchema() ? $link->getAbsUrlSchema() : tx_rnbase_util_Misc::getIndpEnv('TYPO3_SITE_URL');
 
 		// Die URL von rnbase darf dafür nie absolut sein!
 		// durch das setzen von absRefPrefix ist diese bereits absolut!

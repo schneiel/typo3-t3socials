@@ -347,14 +347,6 @@ class Hybrid_Auth
 	{
 		Hybrid_Logger::info( "Enter Hybrid_Auth::redirect( $url, $mode )" );
 
-// 		echo '<pre>'.var_export(array(
-// 				$url, $mode,
-// 				t3lib_utility_Debug::debugTrail(),
-// 				Hybrid_Auth::storage()->get( "hauth_session.XING.id_provider_params"),
-// 				'DEBUG: '.__FILE__.'&'.__METHOD__.' Line: '.__LINE__
-// 			),true).'</pre>'; // @TODO: remove me
-// 		exit;
-
 		if( $mode == "PHP" ){
 			header( "Location: $url" ) ;
 		}

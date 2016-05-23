@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
+tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('tx_rnbase_mod_IModHandler');
 
 /**
@@ -65,15 +65,15 @@ class tx_t3socials_mod_handler_Pushd
 	 * @return string|null
 	 */
 	public function handleRequest(tx_rnbase_mod_IModule $mod) {
-		$submitted = t3lib_div::_GP('sendpushd');
+		$submitted = tx_rnbase_parameters::getPostOrGetParameter('sendpushd');
 		if (!$submitted) {
 			return NULL;
 		}
 
-		$this->data = t3lib_div::_GP('data');
+		$this->data = tx_rnbase_parameters::getPostOrGetParameter('data');
 		$msg = trim($this->data['msg']);
 		$title = trim($this->data['title']);
-		$set = t3lib_div::_GP('SET');
+		$set = tx_rnbase_parameters::getPostOrGetParameter('SET');
 		if (strlen($msg) == 0) {
 			$info = 'Bitte einen Text eingeben.<br />';
 			$mod->addMessage($info, '###LABEL_MESSAGE###', 1);

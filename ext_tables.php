@@ -9,19 +9,19 @@ if (!defined ('TYPO3_MODE')) {
  * *** **************** *** */
 if (TYPO3_MODE == 'BE') {
 	// Einbindung einer PageTSConfig
-	t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . 't3socials' . '/mod/pageTSconfig.txt">');
+	tx_rnbase_util_Extensions::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . 't3socials' . '/mod/pageTSconfig.txt">');
 
 	// communicator
-	t3lib_extMgm::addModule('user', 'txt3socialsM1', '', t3lib_extMgm::extPath('t3socials') . 'mod/');
-	t3lib_extMgm::insertModuleFunction(
+	tx_rnbase_util_Extensions::addModule('user', 'txt3socialsM1', '', tx_rnbase_util_Extensions::extPath('t3socials') . 'mod/');
+	tx_rnbase_util_Extensions::insertModuleFunction(
 		'user_txt3socialsM1', 'tx_t3socials_mod_Communicator',
-		t3lib_extMgm::extPath('t3socials', 'mod/class.tx_t3socials_mod_Communicator.php'),
+		tx_rnbase_util_Extensions::extPath('t3socials', 'mod/class.tx_t3socials_mod_Communicator.php'),
 		'LLL:EXT:t3socials/mod/locallang.xml:label_t3socials_connector'
 	);
 	// trigger
-	t3lib_extMgm::insertModuleFunction(
+	tx_rnbase_util_Extensions::insertModuleFunction(
 		'user_txt3socialsM1', 'tx_t3socials_mod_Trigger',
-		t3lib_extMgm::extPath('t3socials', 'mod/class.tx_t3socials_mod_Trigger.php'),
+		tx_rnbase_util_Extensions::extPath('t3socials', 'mod/class.tx_t3socials_mod_Trigger.php'),
 		'LLL:EXT:t3socials/mod/locallang.xml:label_t3socials_trigger'
 	);
 
@@ -44,8 +44,8 @@ $TCA['tx_t3socials_networks'] = array (
 			'disabled' => 'hidden',
 		),
 		'requestUpdate' => 'network',
-		'dynamicConfigFile' => t3lib_extMgm::extPath('t3socials', 'Configuration/TCA/Network.php'),
-		'iconfile'          => t3lib_extMgm::extRelPath('t3socials', 'ext_icon.gif'),
+		'dynamicConfigFile' => tx_rnbase_util_Extensions::extPath('t3socials', 'Configuration/TCA/Network.php'),
+		'iconfile'          => 'EXT:t3socials/ext_icon.gif',
 	),
 	'feInterface' => array (
 		'fe_admin_fieldList' => 'name,username,password,config',
