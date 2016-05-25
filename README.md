@@ -11,7 +11,7 @@ Screenshots
 
 Die Screenshots zeigen das Backend-Modul von T3 SOCIALS:
 
-![](Documentation/Images/ModNetworkTrigger.png%0A%20:alt:%20Das%20Modul%20zum%20Triggern%20von%20Statusmeldungen.)
+![](Documentation/Images/ModNetworkTrigger.png)
 
 [UsersManual](Documentation/UsersManual/Index.md)
 
