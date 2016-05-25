@@ -1,7 +1,22 @@
 t3socials
 =======
 
-Check the manual at http://docs.typo3.org/typo3cms/extensions/t3socials/
+What does it do?
+----------------
 
-This TYPO3 extension provides an API to communicate with socials networks. So it's possible
-for example to publish newly created news (or whatever you like) directly into social networks.
+Die Extension verschickt Nachrichten in soziale Netzwerke. Dabei verfolgt sie einen sehr generischen Ansatz, der es ermöglicht, sowohl weitere Netzwerke zu integrieren, als auch weitere Nachrichten-Quellen einzurichten. Derzeit gibt es Anbindungen an Facebook, Twitter, XING, sowie eine Integration von pushd zum einfachen Versand von Push Notifications an Smartphones. Neben der automatischen Generierung von Nachrichten, verfügt die Extension auch über ein Backend-Modul zum manuellen Versand von Nachrichten.
+
+Screenshots
+-----------
+
+Die Screenshots zeigen das Backend-Modul von T3 SOCIALS:
+
+![](Documentation/Images/ModNetworkTrigger.png%0A%20:alt:%20Das%20Modul%20zum%20Triggern%20von%20Statusmeldungen.)
+
+[UsersManual](Documentation/UsersManual/Index.md)
+
+[DeveloperManual](Documentation/DeveloperManual/Index.md)
+
+[KnownProblems](Documentation/KnownProblems/Index.md)
+
+[ChangeLog](Documentation/ChangeLog/Index.md)
