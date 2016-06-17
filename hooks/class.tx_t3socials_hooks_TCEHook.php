@@ -140,6 +140,9 @@ class tx_t3socials_hooks_TCEHook {
 	 * @param string $table
 	 * @param int $uid
 	 * @return void
+	 *
+	 * @todo seit TYPO3 7.6 wird auf die nachricht htmlspecialchars ausgeführt. Dadurch
+	 * werden die Links nicht korrekt angezeigt.
 	 */
 	protected function handleInfo($table, $uid) {
 		$triggers = tx_t3socials_trigger_Config::getTriggerNamesForTable($table);
@@ -149,14 +152,20 @@ class tx_t3socials_hooks_TCEHook {
 		// weche manuell getriggert werden können.
 		// wir bauen also die nachricht zusammen
 		if (!empty($networks)) {
-			$url  = tx_rnbase_util_Misc::getIndpEnv('TYPO3_SITE_URL');
 			tx_rnbase::load('tx_rnbase_util_Misc');
-			$thisUrl = rawurlencode(tx_rnbase_util_Misc::getIndpEnv('REQUEST_URI'));
-			$url .= 'typo3conf/ext/t3socials/mod/index.php?1';
-			$url .= '&returnUrl=' . $thisUrl;
-			$url .= '&SET%5Bfunction%5D=tx_t3socials_mod_Trigger';
-			$url .= '&SET%5Btrigger%5D=' . reset($triggers);
-			$url .= '&SET%5Bresource%5D=' . (int) $uid;
+			tx_rnbase::load('Tx_Rnbase_Backend_Utility');
+			$url = Tx_Rnbase_Backend_Utility::getModuleUrl(
+					'user_txt3socialsM1',
+					array(
+						'returnUrl' => rawurlencode(tx_rnbase_util_Misc::getIndpEnv('REQUEST_URI')),
+						'SET' => array(
+							'function' => 'tx_t3socials_mod_Trigger',
+							'trigger' => reset($triggers),
+							'resource' => (int) $uid
+						)
+					),
+					''
+			);
 			$msg  = 'Sie können das eben gespeicherte Element über T3 SOCIALS an verschiedene Dienste senden. <br />';
 			$msg .= ' Klicken Sie <a href="' . $url . '">hier</a> um die Nachricht anzupassen und einen manuellen Versand durchzuführen.';
 			$flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
