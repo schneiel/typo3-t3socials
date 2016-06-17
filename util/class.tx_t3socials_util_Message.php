@@ -91,17 +91,7 @@ class tx_t3socials_util_Message {
 		$message, $title = '',
 		$severity = 0, $storeInSession = FALSE
 	) {
-		$message = tx_rnbase::makeInstance(
-			tx_rnbase_util_Typo3Classes::getFlashMessageClass(),
-			$message,
-			$title,
-			$severity,
-			$storeInSession
-		);
-
-		tx_rnbase::makeInstance(
-			tx_rnbase_util_Typo3Classes::getFlashMessageQueueClass(), md5($message . $title . $severity)
-		)->addMessage($message);
+		tx_rnbase_util_Misc::addFlashMessage($message, $title, $severity, $storeInSession);
 	}
 
 }
