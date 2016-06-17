@@ -75,14 +75,15 @@ class tx_t3socials_util_Link {
 		$params = array(
 			// hier steckt nur die url drin!
 			'LD' => &$ld,
-			// das ist notwendig, wenn der link aus dem BE heraus erzeugtw erden soll!s
+			// das ist notwendig, wenn der link aus dem BE heraus erzeugt werden soll!
 			'TCEmainHook' => TRUE,
 		);
-		// jetzt die hocks aufrufen (unter anderem realurl)
+		// jetzt die hooks aufrufen (unter anderem realurl)
 		tx_rnbase::load('tx_rnbase_util_Misc');
+		tx_rnbase::load('tx_rnbase_util_Typo3Classes');
+		$templateService = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getTemplateServiceClass());
 		foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tstemplate.php']['linkData-PostProc'] as $funcRef) {
-			tx_rnbase_util_Misc::callUserFunction($funcRef, $params, $this);
-//			\TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($funcRef, $params, $this);
+			tx_rnbase_util_Misc::callUserFunction($funcRef, $params, $templateService);
 		}
 
 		return $ld['totalURL'];
