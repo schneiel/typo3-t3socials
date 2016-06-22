@@ -117,7 +117,7 @@ class tx_t3socials_mod_handler_Trigger
 	 */
 	protected function getMessage() {
 		$formData = $this->getFormData();
-		$type = $this->getTriggerConfig() ? $this->getTriggerConfig()->getTrigerId() : 'manually';
+		$type = $this->getTriggerConfig() ? $this->getTriggerConfig()->getTriggerId() : 'manually';
 		$message = tx_t3socials_models_Message::getInstance($type);
 		$message->setHeadline($formData->getHeadline());
 		$message->setIntro($formData->getIntro());
@@ -293,7 +293,7 @@ class tx_t3socials_mod_handler_Trigger
 			$row[] = array('###LABEL_RESOURCE_INFO###', '');
 			$row[] = array(
 				'###LABEL_T3SOCIALS_TRIGGER###',
-				$trigger->getTrigerId(),
+				$trigger->getTriggerId(),
 			);
 			$networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
 			$hasSend = $networkSrv->hasSent($model->getUid(), $tableName);
@@ -360,7 +360,7 @@ class tx_t3socials_mod_handler_Trigger
 			$triggerConfig = $this->getTriggerConfig();
 			// nur accounts für einen bestimmten Trigger liefern
 			if ($triggerConfig) {
-				$accounts = $srv->findAccounts($triggerConfig->getTrigerId());
+				$accounts = $srv->findAccounts($triggerConfig->getTriggerId());
 			}
 			// alle accounts abrufen
 			else {
