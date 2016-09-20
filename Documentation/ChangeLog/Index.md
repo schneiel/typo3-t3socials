@@ -5,6 +5,7 @@ The following is a very high level overview of the changes in this extension.
 
 |Version|Changes|
 |-------|-------|
+|2.0.3|- fixed typo|
 |2.0.2|- fixed call of linkData-PostProc|
 ||- fixed URL in flash message for manual trigger|
 ||- using rn_base utility to add flash messages|
