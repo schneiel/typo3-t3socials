@@ -29,7 +29,8 @@
 		"issues": "https://github.com/DMKEBUSINESSGMBH/typo3-t3socials"
 	},
 	"replace": {
-		"typo3-ter/t3socials": "*"
+		"t3socials": "self.version",
+		"typo3-ter/t3socials": "self.version"
 	},
 	"require" : {
 		"typo3/cms-core" : ">=4.5.0 <=7.6.99",
