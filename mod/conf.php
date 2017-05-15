@@ -14,4 +14,3 @@ define('ICON_OK', -1);
 define('ICON_INFO', 1);
 define('ICON_WARN', 2);
 define('ICON_FATAL', 3);
-

@@ -33,37 +33,36 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-interface tx_t3socials_network_IConnection {
+interface tx_t3socials_network_IConnection
+{
 
-	/**
-	 * Setzt das zu verwendende Netzwerk-Model.
-	 *
-	 * @param tx_t3socials_models_Network $network
-	 * @return tx_t3socials_network_Connection
-	 */
-	public function setNetwork(tx_t3socials_models_Network $network);
+    /**
+     * Setzt das zu verwendende Netzwerk-Model.
+     *
+     * @param tx_t3socials_models_Network $network
+     * @return tx_t3socials_network_Connection
+     */
+    public function setNetwork(tx_t3socials_models_Network $network);
 
-	/**
-	 * Post data to network.
-	 *
-	 * @param tx_t3socials_models_Message $message
-	 * @return null or error message
-	 * @return null|string with error
-	 */
-	public function sendMessage(tx_t3socials_models_IMessage $message);
+    /**
+     * Post data to network.
+     *
+     * @param tx_t3socials_models_Message $message
+     * @return null or error message
+     * @return null|string with error
+     */
+    public function sendMessage(tx_t3socials_models_IMessage $message);
 
-	/**
-	 * Verify connection is valid
-	 *
-	 * @return boolean
-	 */
-	public function verify();
-
+    /**
+     * Verify connection is valid
+     *
+     * @return bool
+     */
+    public function verify();
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']
 ) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']);
 }

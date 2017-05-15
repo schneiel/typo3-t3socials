@@ -33,98 +33,97 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-interface tx_t3socials_models_IMessage {
+interface tx_t3socials_models_IMessage
+{
 
-	/**
-	 * Liefert den Typ.
-	 *
-	 * @return string
-	 */
-	public function getMessageType();
+    /**
+     * Liefert den Typ.
+     *
+     * @return string
+     */
+    public function getMessageType();
 
-	/**
-	 * Liefert die Headline.
-	 *
-	 * @return string
-	 */
-	public function getHeadline();
-	/**
-	 * Setzt die Headline.
-	 *
-	 * @param string $value
-	 * @return void
-	 */
-	public function setHeadline($value);
-
-
-	/**
-	 * Liefert den Introtext.
-	 *
-	 * @return string
-	 */
-	public function getIntro();
-
-	/**
-	 * Setzt den Introtext.
-	 *
-	 * @param string $value
-	 * @return void
-	 */
-	public function setIntro($value);
+    /**
+     * Liefert die Headline.
+     *
+     * @return string
+     */
+    public function getHeadline();
+    /**
+     * Setzt die Headline.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setHeadline($value);
 
 
-	/**
-	 * Liefert den Nachrichtentext.
-	 *
-	 * @return string
-	 */
-	public function getMessage();
+    /**
+     * Liefert den Introtext.
+     *
+     * @return string
+     */
+    public function getIntro();
 
-	/**
-	 * Setztden Nachrichtentext.
-	 *
-	 * @param string $value
-	 * @return void
-	 */
-	public function setMessage($value);
-
-
-	/**
-	 * Liefert die URL.
-	 *
-	 * @return string
-	 */
-	public function getUrl();
-
-	/**
-	 * Setzt die URL.
-	 *
-	 * @param string $value
-	 * @return void
-	 */
-	public function setUrl($value);
+    /**
+     * Setzt den Introtext.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setIntro($value);
 
 
-	/**
-	 * Liefert die Ursprungsdaten.
-	 *
-	 * @return mixed
-	 */
-	public function getData();
+    /**
+     * Liefert den Nachrichtentext.
+     *
+     * @return string
+     */
+    public function getMessage();
 
-	/**
-	 * Setzt die Ursprungsdaten.
-	 *
-	 * @param string $value
-	 * @return void
-	 */
-	public function setData($value);
+    /**
+     * Setztden Nachrichtentext.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setMessage($value);
 
+
+    /**
+     * Liefert die URL.
+     *
+     * @return string
+     */
+    public function getUrl();
+
+    /**
+     * Setzt die URL.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setUrl($value);
+
+
+    /**
+     * Liefert die Ursprungsdaten.
+     *
+     * @return mixed
+     */
+    public function getData();
+
+    /**
+     * Setzt die Ursprungsdaten.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setData($value);
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_IMessage.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_IMessage.php']
 ) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_IMessage.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_IMessage.php']);
 }

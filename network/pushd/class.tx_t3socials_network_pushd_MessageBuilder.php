@@ -31,59 +31,63 @@ tx_rnbase::load('tx_rnbase_util_Logger');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_network_pushd_MessageBuilder {
-	/**
-	 * Creates a push notification from generic message
-	 *
-	 * @param tx_t3socials_models_IMessage $message
-	 * @param tx_t3socials_models_Network $account
-	 * @param string $confId
-	 * @return array with title and msg
-	 */
-	public function build($message, $account, $confId) {
-		$data = array();
-		// alle Tags entfernen
-		// Wenn ein Intro vorhanden ist, wird dieses bevorzugt.
-		$msg = htmlspecialchars_decode(strip_tags(trim(
-			$message->getIntro() ? $message->getIntro() : $message->getMessage()
-		)), ENT_QUOTES);
-		$title = htmlspecialchars_decode(strip_tags(trim($message->getHeadline())), ENT_QUOTES);
-		$charsAvailable = 200;
-		$msg = self::cropText($msg, $charsAvailable, '...', TRUE);
+class tx_t3socials_network_pushd_MessageBuilder
+{
+    /**
+     * Creates a push notification from generic message
+     *
+     * @param tx_t3socials_models_IMessage $message
+     * @param tx_t3socials_models_Network $account
+     * @param string $confId
+     * @return array with title and msg
+     */
+    public function build($message, $account, $confId)
+    {
+        $data = array();
+        // alle Tags entfernen
+        // Wenn ein Intro vorhanden ist, wird dieses bevorzugt.
+        $msg = htmlspecialchars_decode(strip_tags(trim(
+            $message->getIntro() ? $message->getIntro() : $message->getMessage()
+        )), ENT_QUOTES);
+        $title = htmlspecialchars_decode(strip_tags(trim($message->getHeadline())), ENT_QUOTES);
+        $charsAvailable = 200;
+        $msg = self::cropText($msg, $charsAvailable, '...', true);
 
-		$data['title'] = $title;
-		$data['msg'] = $msg;
-		return $data;
-	}
+        $data['title'] = $title;
+        $data['msg'] = $msg;
 
-	/**
-	 * Crop text. This method is taken from TYPO3 stdWrap
-	 *
-	 * @param string $text
-	 * @param int $chars maximum length of string
-	 * @param string $afterstring Something like "..."
-	 * @param boolean $crop2space crop on last space character
-	 * @return string
-	 */
-	protected static function cropText($text, $chars, $afterstring, $crop2space) {
-		if (strlen($text) < $chars) {
-			return $text;
-		}
-		// Kürzen
-		$text = substr($text, 0, ($chars - strlen($afterstring)));
-		$truncAt = strrpos($text, ' ');
-		$text = ($truncAt && $crop2space) ?
-					substr($text, 0, $truncAt) . $afterstring :
-					$text . $afterstring;
-		return $text;
-	}
+        return $data;
+    }
+
+    /**
+     * Crop text. This method is taken from TYPO3 stdWrap
+     *
+     * @param string $text
+     * @param int $chars maximum length of string
+     * @param string $afterstring Something like "..."
+     * @param bool $crop2space crop on last space character
+     * @return string
+     */
+    protected static function cropText($text, $chars, $afterstring, $crop2space)
+    {
+        if (strlen($text) < $chars) {
+            return $text;
+        }
+        // Kürzen
+        $text = substr($text, 0, ($chars - strlen($afterstring)));
+        $truncAt = strrpos($text, ' ');
+        $text = ($truncAt && $crop2space) ?
+                    substr($text, 0, $truncAt) . $afterstring :
+                    $text . $afterstring;
+
+        return $text;
+    }
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
 ) {
-	include_once(
-		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
-	);
+    include_once(
+        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
+    );
 }

@@ -33,153 +33,161 @@ tx_rnbase::load('tx_t3socials_network_hybridauth_OAuthCall');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_network_HybridAuth {
+class tx_t3socials_network_HybridAuth
+{
 
-	/**
-	 * Enables the HybridAuth.LOG.
-	 * This Log will be written in the root of the t3socials extension.
-	 * tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG'
-	 *
-	 * @var boolean
-	 */
-	const DEBUG_ENABLED = FALSE;
+    /**
+     * Enables the HybridAuth.LOG.
+     * This Log will be written in the root of the t3socials extension.
+     * tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG'
+     *
+     * @var boolean
+     */
+    const DEBUG_ENABLED = false;
 
-	/**
-	 * Liefert die Basiskonfiguration für HybridAuth.
-	 *
-	 * @param array $providers
-	 * @return array
-	 */
-	private static function getBasicConfiguration(array $providers = array()) {
-		$basic = array(
-			'base_url' => tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl(0),
-			// if you want to enable logging, set
-			// 'debug_mode' to true  then provide
-			// a writable file by the web server on "debug_file"
-			'debug_mode' => FALSE,
-			'debug_file' => '',
-			'providers' => $providers,
-		);
-		if (self::DEBUG_ENABLED) {
-			$basic['debug_mode'] = TRUE;
-			$basic['debug_file'] = tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG';
-			touch($basic['debug_file']);
-		}
-		return $basic;
-	}
+    /**
+     * Liefert die Basiskonfiguration für HybridAuth.
+     *
+     * @param array $providers
+     * @return array
+     */
+    private static function getBasicConfiguration(array $providers = array())
+    {
+        $basic = array(
+            'base_url' => tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl(0),
+            // if you want to enable logging, set
+            // 'debug_mode' to true  then provide
+            // a writable file by the web server on "debug_file"
+            'debug_mode' => false,
+            'debug_file' => '',
+            'providers' => $providers,
+        );
+        if (self::DEBUG_ENABLED) {
+            $basic['debug_mode'] = true;
+            $basic['debug_file'] = tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG';
+            touch($basic['debug_file']);
+        }
 
-	/**
-	 * lädt die HybridAuth Klassen
-	 *
-	 * @return void
-	 */
-	private static function loadHybridAuth() {
-		if (!class_exists('Hybrid_Auth')) {
-			require_once tx_rnbase_util_Extensions::extPath(
-				't3socials',
-				'/lib/hybridauth/Hybrid/Auth.php'
-			);
-			require_once tx_rnbase_util_Extensions::extPath(
-				't3socials',
-				'/lib/hybridauth/Hybrid/Endpoint.php'
-			);
-		}
-	}
-	/**
-	 * Erzeugt die HybridAuth Klasse
-	 *
-	 * @param array $config
-	 * @return Hybrid_Auth
-	 */
-	private static function getHybridAuth($config) {
-		self::loadHybridAuth();
-		return new Hybrid_Auth($config);
-	}
+        return $basic;
+    }
 
-	/**
-	 * Meldet anhand von OAuth Token einen bestimmten Nutzer automatich an.
-	 *
-	 * @param string $providerId
-	 * @param string $token
-	 * @param string $secret
-	 * @return void
-	 */
-	private static function storeAccesToken($providerId, $token, $secret) {
-		$key = 'hauth_session.' . $providerId . '.';
-		self::loadHybridAuth();
-		// store the keys
-		Hybrid_Auth::storage()->set($key . 'token.access_token', $token);
-		Hybrid_Auth::storage()->set($key . 'token.access_token_secret', $secret);
-		// set the user as loged in!
-		Hybrid_Auth::storage()->set($key . 'is_logged_in', 1);
-	}
-	/**
-	 * Meldet anhand von OAuth Token einen bestimmten Nutzer automatich an.
-	 *
-	 * @param string $providerId
-	 * @param array $config
-	 * @return void
-	 */
-	private static function storeTokenByConfig($providerId, array $config = array()) {
-		if (
-			isset($config['keys']['access_token'])
-			|| isset($config['keys']['access_token_secret'])
-		) {
-			self::storeAccesToken(
-				$providerId,
-				$config['keys']['access_token'],
-				$config['keys']['access_token_secret']
-			);
-		}
-	}
+    /**
+     * lädt die HybridAuth Klassen
+     *
+     * @return void
+     */
+    private static function loadHybridAuth()
+    {
+        if (!class_exists('Hybrid_Auth')) {
+            require_once tx_rnbase_util_Extensions::extPath(
+                't3socials',
+                '/lib/hybridauth/Hybrid/Auth.php'
+            );
+            require_once tx_rnbase_util_Extensions::extPath(
+                't3socials',
+                '/lib/hybridauth/Hybrid/Endpoint.php'
+            );
+        }
+    }
+    /**
+     * Erzeugt die HybridAuth Klasse
+     *
+     * @param array $config
+     * @return Hybrid_Auth
+     */
+    private static function getHybridAuth($config)
+    {
+        self::loadHybridAuth();
 
-	/**
-	 * liefert einen HybridAuth Provider für eine Provider-ID.
-	 *
-	 * @param string $providerId
-	 * @param array $config
-	 * @return Hybrid_Provider_Adapter
-	 */
-	public static function getProvider($providerId, array $config = array()) {
-		$allConfigurations = self::getBasicConfiguration(
-			array($providerId => $config)
-		);
-		// aktuele network id an die base url anhängen
-		$allConfigurations['base_url']
-			= tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl($config['networkUid']);
+        return new Hybrid_Auth($config);
+    }
 
-		$auth = self::getHybridAuth($allConfigurations);
+    /**
+     * Meldet anhand von OAuth Token einen bestimmten Nutzer automatich an.
+     *
+     * @param string $providerId
+     * @param string $token
+     * @param string $secret
+     * @return void
+     */
+    private static function storeAccesToken($providerId, $token, $secret)
+    {
+        $key = 'hauth_session.' . $providerId . '.';
+        self::loadHybridAuth();
+        // store the keys
+        Hybrid_Auth::storage()->set($key . 'token.access_token', $token);
+        Hybrid_Auth::storage()->set($key . 'token.access_token_secret', $secret);
+        // set the user as loged in!
+        Hybrid_Auth::storage()->set($key . 'is_logged_in', 1);
+    }
+    /**
+     * Meldet anhand von OAuth Token einen bestimmten Nutzer automatich an.
+     *
+     * @param string $providerId
+     * @param array $config
+     * @return void
+     */
+    private static function storeTokenByConfig($providerId, array $config = array())
+    {
+        if (isset($config['keys']['access_token'])
+            || isset($config['keys']['access_token_secret'])
+        ) {
+            self::storeAccesToken(
+                $providerId,
+                $config['keys']['access_token'],
+                $config['keys']['access_token_secret']
+            );
+        }
+    }
 
-		// ggf. OAUTH Token übergeben
-		self::storeTokenByConfig($providerId, $config);
+    /**
+     * liefert einen HybridAuth Provider für eine Provider-ID.
+     *
+     * @param string $providerId
+     * @param array $config
+     * @return Hybrid_Provider_Adapter
+     */
+    public static function getProvider($providerId, array $config = array())
+    {
+        $allConfigurations = self::getBasicConfiguration(
+            array($providerId => $config)
+        );
+        // aktuele network id an die base url anhängen
+        $allConfigurations['base_url']
+            = tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl($config['networkUid']);
 
-		// clear all auth session (only for tests, dont do that on production mode!)
-		// self::clearHybridAuthSession();
+        $auth = self::getHybridAuth($allConfigurations);
 
-		// we just return the provider without authentification!
-		$adapter = $auth->getAdapter($providerId);
-		return $adapter;
-	}
+        // ggf. OAUTH Token übergeben
+        self::storeTokenByConfig($providerId, $config);
 
-	/**
-	 * Setzt die HybridAut Session zurück.
-	 * only for tests, dont do that on production mode!
-	 *
-	 * @return void
-	 */
-	public static function clearHybridAuthSession() {
-		$data = &$_SESSION;
-		$data['HA::STORE'] = NULL;
-		$data['HA::CONFIG'] = NULL;
-		unset($data['HA::STORE']);
-		unset($data['HA::CONFIG']);
-	}
+        // clear all auth session (only for tests, dont do that on production mode!)
+        // self::clearHybridAuthSession();
 
+        // we just return the provider without authentification!
+        $adapter = $auth->getAdapter($providerId);
+
+        return $adapter;
+    }
+
+    /**
+     * Setzt die HybridAut Session zurück.
+     * only for tests, dont do that on production mode!
+     *
+     * @return void
+     */
+    public static function clearHybridAuthSession()
+    {
+        $data = &$_SESSION;
+        $data['HA::STORE'] = null;
+        $data['HA::CONFIG'] = null;
+        unset($data['HA::STORE']);
+        unset($data['HA::CONFIG']);
+    }
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']
 ) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']);
 }

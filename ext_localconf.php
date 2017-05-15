@@ -1,6 +1,6 @@
 <?php
 if (!defined('TYPO3_MODE')) {
-	die('Access denied.');
+    die('Access denied.');
 }
 
 
@@ -10,16 +10,16 @@ if (!defined('TYPO3_MODE')) {
  * *** ***************** *** */
 tx_rnbase::load('tx_t3socials_network_Config');
 tx_t3socials_network_Config::registerNetwork(
-	'tx_t3socials_network_pushd_NetworkConfig'
+    'tx_t3socials_network_pushd_NetworkConfig'
 );
 tx_t3socials_network_Config::registerNetwork(
-	'tx_t3socials_network_twitter_NetworkConfig'
+    'tx_t3socials_network_twitter_NetworkConfig'
 );
 tx_t3socials_network_Config::registerNetwork(
-	'tx_t3socials_network_xing_NetworkConfig'
+    'tx_t3socials_network_xing_NetworkConfig'
 );
 tx_t3socials_network_Config::registerNetwork(
-	'tx_t3socials_network_facebook_NetworkConfig'
+    'tx_t3socials_network_facebook_NetworkConfig'
 );
 
 
@@ -28,9 +28,9 @@ tx_t3socials_network_Config::registerNetwork(
  * *** **************** *** */
 tx_rnbase::load('tx_t3socials_trigger_Config');
 if (tx_rnbase_util_Extensions::isLoaded('tt_news')) {
-	tx_t3socials_trigger_Config::registerTrigger(
-		'tx_t3socials_trigger_news_TriggerConfig'
-	);
+    tx_t3socials_trigger_Config::registerTrigger(
+        'tx_t3socials_trigger_news_TriggerConfig'
+    );
 }
 
 /* *** ****************** *** *
@@ -38,30 +38,33 @@ if (tx_rnbase_util_Extensions::isLoaded('tt_news')) {
  * *** ****************** *** */
 // ajax id for BE
 $GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['t3socials-hybridauth']
-	= tx_rnbase_util_Extensions::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php') .
-		':tx_t3socials_network_hybridauth_OAuthCall->ajaxId';
+    = tx_rnbase_util_Extensions::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php') .
+        ':tx_t3socials_network_hybridauth_OAuthCall->ajaxId';
 
 /* *** ***** *** *
  * *** Hooks *** *
  * *** ***** *** */
 // TCE-Hooks, um automatisch beim speichern trigger aufzurufen
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['t3socials']
-	= 'EXT:t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php:tx_t3socials_hooks_TCEHook';
+    = 'EXT:t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php:tx_t3socials_hooks_TCEHook';
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['t3socials']
-	= 'EXT:t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php:tx_t3socials_hooks_TCEHook';
+    = 'EXT:t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php:tx_t3socials_hooks_TCEHook';
 
 /* *** ***************** *** *
  * *** Register Services *** *
  * *** ***************** *** */
 tx_rnbase::load('tx_t3socials_srv_ServiceRegistry');
-tx_rnbase_util_Extensions::addService($_EXTKEY, 't3socials' /* sv type */, 'tx_t3socials_srv_Network' /* sv key */,
-	array(
-		'title' => 'Social network accounts', 'description' => 'Handles accounts of social networks', 'subtype' => 'network',
-		'available' => TRUE, 'priority' => 50, 'quality' => 50,
-		'os' => '', 'exec' => '',
-		'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY, 'srv/class.tx_t3socials_srv_Network.php'),
-		'className' => 'tx_t3socials_srv_Network',
-	)
+tx_rnbase_util_Extensions::addService(
+    $_EXTKEY,
+    't3socials' /* sv type */,
+    'tx_t3socials_srv_Network' /* sv key */,
+    array(
+        'title' => 'Social network accounts', 'description' => 'Handles accounts of social networks', 'subtype' => 'network',
+        'available' => true, 'priority' => 50, 'quality' => 50,
+        'os' => '', 'exec' => '',
+        'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY, 'srv/class.tx_t3socials_srv_Network.php'),
+        'className' => 'tx_t3socials_srv_Network',
+    )
 );
 
 /* *** ****************** *** *

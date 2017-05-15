@@ -33,33 +33,33 @@ tx_rnbase::load('tx_t3socials_network_MessageBuilder');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_network_facebook_MessageBuilder
-	extends tx_t3socials_network_MessageBuilder {
+class tx_t3socials_network_facebook_MessageBuilder extends tx_t3socials_network_MessageBuilder
+{
 
 
-	/**
-	 * Erzeugt anhand einers Message Models eine Statusmeldung.
-	 *
-	 * @param tx_t3socials_models_IMessage $message
-	 * @return string|array string with message or array with post data
-	 */
-	public function build(tx_t3socials_models_IMessage $message) {
-		$parameters = array();
-		$parameters['message'] = parent::build($message);
-		$url = $message->getUrl();
-		if (!empty($url)) {
-			$parameters['link'] = $url;
-		}
-		return $parameters;
-	}
+    /**
+     * Erzeugt anhand einers Message Models eine Statusmeldung.
+     *
+     * @param tx_t3socials_models_IMessage $message
+     * @return string|array string with message or array with post data
+     */
+    public function build(tx_t3socials_models_IMessage $message)
+    {
+        $parameters = array();
+        $parameters['message'] = parent::build($message);
+        $url = $message->getUrl();
+        if (!empty($url)) {
+            $parameters['link'] = $url;
+        }
 
+        return $parameters;
+    }
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']
 ) {
-	include_once(
-		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']
-	);
+    include_once(
+        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']
+    );
 }

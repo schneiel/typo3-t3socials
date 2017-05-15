@@ -34,86 +34,98 @@ tx_rnbase::load('tx_rnbase_util_SearchBase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_search_Network
-	extends tx_rnbase_util_SearchBase {
+class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
+{
 
-	/**
-	 * Kindklassen müssen ein Array bereitstellen, in denen die Aliases der
-	 * Tabellen zu den eigentlichen Tabellennamen gemappt werden.
-	 *
-	 * @return array(alias => tablename, ...)
-	 */
-	protected function getTableMappings() {
-		$tableMapping['NETWORK'] = 'tx_t3socials_networks';
+    /**
+     * Kindklassen müssen ein Array bereitstellen, in denen die Aliases der
+     * Tabellen zu den eigentlichen Tabellennamen gemappt werden.
+     *
+     * @return array(alias => tablename, ...)
+     */
+    protected function getTableMappings()
+    {
+        $tableMapping['NETWORK'] = 'tx_t3socials_networks';
 
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook(
-			't3socials', 'search_Network_getTableMapping_hook',
-			array('tableMapping' => &$tableMapping), $this
-		);
-		return $tableMapping;
-	}
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook(
+            't3socials',
+            'search_Network_getTableMapping_hook',
+            array('tableMapping' => &$tableMapping),
+            $this
+        );
 
-	/**
-	 * Name der Basistabelle, in der gesucht wird
-	 *
-	 * @return string
-	 */
-	protected function getBaseTable() {
-		return 'tx_t3socials_networks';
-	}
+        return $tableMapping;
+    }
 
-	/**
-	 * Name der Klasse, in die die Ergebnisse gemappt werden
-	 *
-	 * @return string
-	 */
-	public function getWrapperClass() {
-		return 'tx_t3socials_models_Network';
-	}
+    /**
+     * Name der Basistabelle, in der gesucht wird
+     *
+     * @return string
+     */
+    protected function getBaseTable()
+    {
+        return 'tx_t3socials_networks';
+    }
 
-	/**
-	 * Name des Alias' der Basistabelle, in der gesucht wird
-	 * Nicht abstract wg. Abwärts-Kompatibilität
-	 *
-	 * @return string
-	 */
-	protected function getBaseTableAlias() {
-		return 'NETWORK';
-	}
+    /**
+     * Name der Klasse, in die die Ergebnisse gemappt werden
+     *
+     * @return string
+     */
+    public function getWrapperClass()
+    {
+        return 'tx_t3socials_models_Network';
+    }
 
-	/**
-	 * As default the sql statement is build with tablenames.
-	 * If this method returns true, the aliases will
-	 * be used instead. But keep in mind,
-	 * to use aliases for Joins too and to overwrite getBaseTableAlias()!
-	 *
-	 * @return boolean
-	 */
-	protected function useAlias() {
-		return TRUE;
-	}
+    /**
+     * Name des Alias' der Basistabelle, in der gesucht wird
+     * Nicht abstract wg. Abwärts-Kompatibilität
+     *
+     * @return string
+     */
+    protected function getBaseTableAlias()
+    {
+        return 'NETWORK';
+    }
 
-	/**
-	 * Kindklassen liefern hier die notwendigen DB-Joins. Ist kein JOIN erforderlich
-	 * sollte ein leerer String geliefert werden.
-	 *
-	 * @param array $tableAliases
-	 * @return string
-	 */
-	protected function getJoins($tableAliases) {
-		$join = '';
+    /**
+     * As default the sql statement is build with tablenames.
+     * If this method returns true, the aliases will
+     * be used instead. But keep in mind,
+     * to use aliases for Joins too and to overwrite getBaseTableAlias()!
+     *
+     * @return bool
+     */
+    protected function useAlias()
+    {
+        return true;
+    }
 
-		// Hook to append other tables
-		tx_rnbase_util_Misc::callHook(
-			't3socials', 'search_Network_getJoins_hook',
-			array('join' => &$join, 'tableAliases' => $tableAliases), $this
-		);
-		return $join;
-	}
+    /**
+     * Kindklassen liefern hier die notwendigen DB-Joins. Ist kein JOIN erforderlich
+     * sollte ein leerer String geliefert werden.
+     *
+     * @param array $tableAliases
+     * @return string
+     */
+    protected function getJoins($tableAliases)
+    {
+        $join = '';
+
+        // Hook to append other tables
+        tx_rnbase_util_Misc::callHook(
+            't3socials',
+            'search_Network_getJoins_hook',
+            array('join' => &$join, 'tableAliases' => $tableAliases),
+            $this
+        );
+
+        return $join;
+    }
 }
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/search/class.tx_t3socials_search_Network.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/search/class.tx_t3socials_search_Network.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/search/class.tx_t3socials_search_Network.php']);
 }

@@ -33,33 +33,34 @@ tx_rnbase::load('tx_t3socials_models_Message');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-interface tx_t3socials_trigger_IMessageBuilder {
+interface tx_t3socials_trigger_IMessageBuilder
+{
 
-	/**
-	 * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
-	 *
-	 * @param tx_t3socials_models_Base $model
-	 * @return tx_t3socials_models_IMessage
-	 */
-	public function buildGenericMessage(
-		tx_t3socials_models_Base $model
-	);
+    /**
+     * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
+     *
+     * @param tx_t3socials_models_Base $model
+     * @return tx_t3socials_models_IMessage
+     */
+    public function buildGenericMessage(
+        tx_t3socials_models_Base $model
+    );
 
-	/**
-	 * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
-	 *
-	 * @param tx_t3socials_models_IMessage &$message
-	 * @param tx_t3socials_models_Network $network
-	 * @param tx_t3socials_models_TriggerConfig $trigger
-	 * @return tx_t3socials_models_IMessage
-	 */
-	public function prepareMessageForNetwork(
-		tx_t3socials_models_IMessage $message,
-		tx_t3socials_models_Network $network,
-		tx_t3socials_models_TriggerConfig $trigger
-	);
+    /**
+     * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
+     *
+     * @param tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_Network $network
+     * @param tx_t3socials_models_TriggerConfig $trigger
+     * @return tx_t3socials_models_IMessage
+     */
+    public function prepareMessageForNetwork(
+        tx_t3socials_models_IMessage $message,
+        tx_t3socials_models_Network $network,
+        tx_t3socials_models_TriggerConfig $trigger
+    );
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_IMessageBuilder.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_IMessageBuilder.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_IMessageBuilder.php']);
 }

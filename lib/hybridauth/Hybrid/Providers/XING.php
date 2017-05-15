@@ -11,11 +11,13 @@
  * @author  Fabian Beiner <mail@fabian-beiner.de>
  * @version 1.0.1
  */
-class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
+class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1
+{
     /**
      * Initialize.
      */
-    function initialize() {
+    public function initialize()
+    {
         if (!$this->config['keys']['key'] || !$this->config['keys']['secret']) {
             throw new Exception('You need a consumer key and secret to connect to ' . $this->providerId . '.');
         }
@@ -40,7 +42,8 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
     /**
      * Begin logging in.
      */
-    function loginBegin() {
+    public function loginBegin()
+    {
         // Handle the request token.
         $aToken                   = $this->api->requestToken($this->endpoint);
         $this->request_tokens_raw = $aToken;
@@ -55,7 +58,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
             throw new Exception('Authentication failed! ' . $this->providerId . ' returned an invalid OAuth token.');
         }
 
-        $this->token('request_token'       , $aToken['oauth_token']);
+        $this->token('request_token', $aToken['oauth_token']);
         $this->token('request_token_secret', $aToken['oauth_token_secret']);
 
         // Redirect to the XING authorization URL.
@@ -65,7 +68,8 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
     /**
      * Finish logging in.
      */
-    function loginFinish() {
+    public function loginFinish()
+    {
         $sToken    = (isset($_REQUEST['oauth_token'])) ? $_REQUEST['oauth_token'] : '';
         $sVerifier = (isset($_REQUEST['oauth_verifier'])) ? $_REQUEST['oauth_verifier'] : '';
 
@@ -92,7 +96,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
         $this->deleteToken('request_token_secret');
 
         // But store the access tokens for later usage.
-        $this->token('access_token',        $aToken['oauth_token']);
+        $this->token('access_token', $aToken['oauth_token']);
         $this->token('access_token_secret', $aToken['oauth_token_secret']);
 
         // Connection established!
@@ -104,7 +108,8 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
     *
     * @see https://dev.xing.com/docs/get/users/me
     */
-    function getUserProfile() {
+    public function getUserProfile()
+    {
         $oResponse = $this->api->get('users/me');
 
         // The HTTP status code needs to be 200 here. If it's not, something is wrong.
@@ -204,7 +209,8 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
      *
      * @see http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Status.html
      */
-    function setUserStatus($sMessage) {
+    public function setUserStatus($sMessage)
+    {
         $aParameters = array(
             'oauth_token' => $this->token('access_token')
            ,'id'          => 'me'
@@ -220,8 +226,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
         // Check if the message is <= 420 characters.
         if (strlen($sMessage) >= 420) {
             $aParameters['message'] = mb_substr($sMessage, 0, 419) . '…';
-        }
-        else {
+        } else {
             $aParameters['message'] = $sMessage;
         }
 
@@ -229,16 +234,13 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
             $oResponse = $this->api->post('users/' . $aParameters['id'] . '/status_message', $aParameters);
             if ($this->api->http_code === 201) {
                 return true;
-            }
-            elseif ($this->api->http_code === 403) {
+            } elseif ($this->api->http_code === 403) {
                 throw new Exception('Something went wrong. ' . $this->providerId . ' denied the access.');
-            }
-            elseif ($this->api->http_code === 404) {
+            } elseif ($this->api->http_code === 404) {
                 throw new Exception('The user "' . $aParameters['id'] . '" was not found.');
             }
             return false;
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception('Could not update the status. ' . $this->providerId . ' returned an error: ' . $e . '.');
         }
     }
@@ -248,7 +250,8 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
      *
      * @see http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Contacts.html
      */
-    function getUserContacts() {
+    public function getUserContacts()
+    {
         try {
             $oResponse = $this->api->get('users/me/contacts?limit=100&user_fields=id,display_name,permalink,web_profiles,photo_urls,display_name,interests,active_email&offset=0');
             $oTotal    = $oResponse->contacts->users;
@@ -258,8 +261,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
                 $oResponse = $this->api->get('users/me/contacts?limit=100&user_fields=id,display_name,permalink,web_profiles,photo_urls,display_name,interests,active_email&offset=' . $i);
                 $oTotal    = array_merge($oTotal, $oResponse->contacts->users);
             }
-        }
-        catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception('Could not fetch contacts. ' . $this->providerId . ' returned an error: ' . $e . '.');
         }
 
@@ -270,7 +272,7 @@ class Hybrid_Providers_XING extends Hybrid_Provider_Model_OAuth1 {
 
         // Create the contacts array.
         $aContacts = array();
-        foreach($oTotal as $aTitle) {
+        foreach ($oTotal as $aTitle) {
             $oContact = new Hybrid_User_Contact();
             $oContact->identifier  = (property_exists($aTitle, 'id'))           ? $aTitle->id           : '';
             $oContact->profileURL  = (property_exists($aTitle, 'permalink'))    ? $aTitle->permalink    : '';

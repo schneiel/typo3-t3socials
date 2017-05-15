@@ -34,63 +34,63 @@ tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_trigger_news_MessageBuilder
-	extends tx_t3socials_trigger_MessageBuilder {
+class tx_t3socials_trigger_news_MessageBuilder extends tx_t3socials_trigger_MessageBuilder
+{
 
-	/**
-	 * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
-	 *
-	 * @param tx_t3socials_models_Message $message
-	 * @param tx_t3socials_models_Base $model
-	 * @return tx_t3socials_models_IMessage
-	 */
-	protected function buildMessage(
-		tx_t3socials_models_Message $message,
-		tx_t3socials_models_Base $model
-	) {
-		$message->setHeadline($model->getTitle());
-		$message->setIntro($model->getShort());
-		$message->setMessage($model->getBodytext());
-		$message->setData($model);
-		return $message;
-	}
+    /**
+     * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
+     *
+     * @param tx_t3socials_models_Message $message
+     * @param tx_t3socials_models_Base $model
+     * @return tx_t3socials_models_IMessage
+     */
+    protected function buildMessage(
+        tx_t3socials_models_Message $message,
+        tx_t3socials_models_Base $model
+    ) {
+        $message->setHeadline($model->getTitle());
+        $message->setIntro($model->getShort());
+        $message->setMessage($model->getBodytext());
+        $message->setData($model);
 
-	/**
-	 * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
-	 *
-	 * @param tx_t3socials_models_IMessage &$message
-	 * @param tx_t3socials_models_Network $network
-	 * @param tx_t3socials_models_TriggerConfig $trigger
-	 * @return void
-	 */
-	public function prepareMessageForNetwork(
-		tx_t3socials_models_IMessage $message,
-		tx_t3socials_models_Network $network,
-		tx_t3socials_models_TriggerConfig $trigger
-	) {
-		$confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
+        return $message;
+    }
 
-		tx_rnbase::load('tx_rnbase_util_Misc');
-		$tsfe = tx_rnbase_util_Misc::prepareTSFE();
+    /**
+     * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
+     *
+     * @param tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_Network $network
+     * @param tx_t3socials_models_TriggerConfig $trigger
+     * @return void
+     */
+    public function prepareMessageForNetwork(
+        tx_t3socials_models_IMessage $message,
+        tx_t3socials_models_Network $network,
+        tx_t3socials_models_TriggerConfig $trigger
+    ) {
+        $confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
 
-		$news = $message->getData();
-		$config = $network->getConfigurations();
-		$link = $config->createLink();
-		// tx_ttnews[tt_news]
-		$link->designator('tx_ttnews');
-		$link->initByTS($config, $confId . 'link.show.', array('tt_news' => $news->getUid()));
-		// wenn nicht anders konfiguriert, immer eine absolute url setzen!
-		if (!$config->get($confId . 'link.show.absurl')) {
-			$link->setAbsUrl(TRUE);
-		}
-		tx_rnbase::load('tx_t3socials_util_Link');
-		$url = tx_t3socials_util_Link::getRealUrlAbsUrlForLink($link);
+        tx_rnbase::load('tx_rnbase_util_Misc');
+        $tsfe = tx_rnbase_util_Misc::prepareTSFE();
 
-		$message->setUrl($url);
-	}
+        $news = $message->getData();
+        $config = $network->getConfigurations();
+        $link = $config->createLink();
+        // tx_ttnews[tt_news]
+        $link->designator('tx_ttnews');
+        $link->initByTS($config, $confId . 'link.show.', array('tt_news' => $news->getUid()));
+        // wenn nicht anders konfiguriert, immer eine absolute url setzen!
+        if (!$config->get($confId . 'link.show.absurl')) {
+            $link->setAbsUrl(true);
+        }
+        tx_rnbase::load('tx_t3socials_util_Link');
+        $url = tx_t3socials_util_Link::getRealUrlAbsUrlForLink($link);
 
+        $message->setUrl($url);
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php']);
 }

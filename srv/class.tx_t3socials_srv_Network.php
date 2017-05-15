@@ -36,244 +36,258 @@ tx_rnbase::load('tx_rnbase_util_DB');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_Network
-	extends tx_rnbase_sv1_Base {
+class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
+{
+    const TABLE_AUTOSEND = 'tx_t3socials_autosends';
 
-	const TABLE_AUTOSEND = 'tx_t3socials_autosends';
+    /**
+     * Return name of search class
+     *
+     * @return string
+     */
+    public function getSearchClass()
+    {
+        return 'tx_t3socials_search_Network';
+    }
 
-	/**
-	 * Return name of search class
-	 *
-	 * @return string
-	 */
-	public function getSearchClass() {
-		return 'tx_t3socials_search_Network';
-	}
+    /**
+     * Sendet automatisch einen Datensatz an die Netzwerke.
+     *
+     * @param string $table
+     * @param int $uid
+     * @return array[tx_t3socials_models_State]
+     *         Enthält eine statusmeldung für jedes netzwerk
+     */
+    public function exeuteAutoSend($table, $uid)
+    {
 
-	/**
-	 * Sendet automatisch einen Datensatz an die Netzwerke.
-	 *
-	 * @param string $table
-	 * @param int $uid
-	 * @return array[tx_t3socials_models_State]
-	 *         Enthält eine statusmeldung für jedes netzwerk
-	 */
-	public function exeuteAutoSend($table, $uid) {
+        // alle trigger zur tabelle holen
+        /* @var tx_t3socials_models_TriggerConfig $triggerConfig */
+        $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfigsForTable($table);
 
-		// alle trigger zur tabelle holen
-		/* @var tx_t3socials_models_TriggerConfig $triggerConfig */
-		$triggerConfig = tx_t3socials_trigger_Config::getTriggerConfigsForTable($table);
+        // Doppelten Versand optional automatisch verhindern.
+        if (!$triggerConfig->isDoubleSentAllowed() && $this->hasSent($uid, $table)) {
+            return array();
+        }
+        
+        // the resolver creates the record!
+        $resolver = tx_t3socials_trigger_Config::getResolver($triggerConfig);
+        $record = $resolver->getRecord($table, $uid);
 
-		// Doppelten Versand optional automatisch verhindern.
-		if (!$triggerConfig->isDoubleSentAllowed() && $this->hasSent($uid, $table)) {
-			return array();
-		}
-		
-		// the resolver creates the record!
-		$resolver = tx_t3socials_trigger_Config::getResolver($triggerConfig);
-		$record = $resolver->getRecord($table, $uid);
+        // wenn gelöscht oder versteckt, nicht publizieren!
+        if (!$record instanceof tx_t3socials_models_Base
+            || $record->isDeleted() || $record->isHidden()
+        ) {
+            return array();
+        }
 
-		// wenn gelöscht oder versteckt, nicht publizieren!
-		if (
-			!$record instanceof tx_t3socials_models_Base
-			|| $record->isDeleted() || $record->isHidden()
-		) {
-			return array();
-		}
+        // the builder generates the generic message
+        $builder = tx_t3socials_trigger_Config::getMessageBuilder($triggerConfig);
+        $message = $builder->buildGenericMessage($record);
+        if ($message === null) {
+            return array();
+        }
 
-		// the builder generates the generic message
-		$builder = tx_t3socials_trigger_Config::getMessageBuilder($triggerConfig);
-		$message = $builder->buildGenericMessage($record);
-		if ($message === NULL) {
-			return array();
-		}
+        $accounts = $this->findAccountsByTriggers($triggerConfig->getTriggerId(), true);
+        $states = $this->sendMessage($message, $accounts, $builder, $triggerConfig);
 
-		$accounts = $this->findAccountsByTriggers($triggerConfig->getTriggerId(), TRUE);
-		$states = $this->sendMessage($message, $accounts, $builder, $triggerConfig);
+        foreach ($states as $state) {
+            if ($state->getState() == tx_t3socials_models_State::STATE_OK) {
+                $this->setSent($uid, $table);
+                break;
+            }
+        }
 
-		foreach ($states as $state) {
-			if($state->getState() == tx_t3socials_models_State::STATE_OK) {
-				$this->setSent($uid, $table);
-				break;
-			}
-		}
+        return $states;
+    }
+    /**
+     *
+     * @param tx_t3socials_models_Message $message
+     * @param array[tx_t3socials_models_Network] $accounts
+     * @return array[tx_t3socials_models_State]
+     */
+    public function sendMessage($message, $accounts, $builder, $triggerConfig)
+    {
+        $states = array();
+        /* @var tx_t3socials_models_Network $network */
+        foreach ($accounts as $network) {
+            /* @var $state tx_t3socials_models_State */
+            $state = tx_rnbase::makeInstance(
+                'tx_t3socials_models_State',
+                0
+            );
+            $state->setTriggerConfig($triggerConfig);
+            $state->setMessageModel($message);
+            $state->setNetworkModel($network);
+            // spezielle netzwerk abhängige dinge durchführen.
+            $builder->prepareMessageForNetwork(
+                $message,
+                $network,
+                $triggerConfig
+            );
+            // verbindung aufbauen
+            $connection = tx_t3socials_network_Config::getNetworkConnection($network);
 
-		return $states;
-	}
-	/**
-	 * 
-	 * @param tx_t3socials_models_Message $message
-	 * @param array[tx_t3socials_models_Network] $accounts
-	 * @return array[tx_t3socials_models_State]
-	 */
-	public function sendMessage($message, $accounts, $builder, $triggerConfig) {
-		$states = array();
-		/* @var tx_t3socials_models_Network $network */
-		foreach ($accounts as $network) {
-			/* @var $state tx_t3socials_models_State */
-			$state = tx_rnbase::makeInstance(
-					'tx_t3socials_models_State', 0
-			);
-			$state->setTriggerConfig($triggerConfig);
-			$state->setMessageModel($message);
-			$state->setNetworkModel($network);
-			// spezielle netzwerk abhängige dinge durchführen.
-			$builder->prepareMessageForNetwork(
-				$message, $network, $triggerConfig
-			);
-			// verbindung aufbauen
-			$connection = tx_t3socials_network_Config::getNetworkConnection($network);
+            $msgId = '[' . $network->getName() . '->' . $triggerConfig->getTriggerId() . '.' . $network->getNetwork() . ']';
+            // nachricht senden
+            try {
+                $error = $connection->sendMessage($message);
+                if ($error) {
+                    tx_rnbase_util_Logger::warn(
+                        'Error sending message! ' . $msgId,
+                        array(
+                            'error' => (string) $error,
+                            'account' => (string) $network->getName(),
+                            'message' => (string) $message,
+                            'network' => (string) $network->getNetwork(),
+                            'trigger' => (string) $triggerConfig->getTriggerId(),
+                        )
+                    );
+                    $state->setState(
+                        tx_t3socials_models_State::STATE_WARNING,
+                        'Error sending message! ' . $msgId .
+                        '. See DevLog for more Informations.'
+                    );
+                } // versand erfolgreich
+                else {
+                    $state->setState(
+                        tx_t3socials_models_State::STATE_OK,
+                        'Message successfully send to network! ' . $msgId
+                    );
+                }
+            } catch (Exception $e) {
+                tx_rnbase_util_Logger::fatal(
+                    'Error sending message! ' . $msgId,
+                    't3socials',
+                    array(
+                        'exception' => (string) $e,
+                        'account' => (string) $network->getName(),
+                        'message' => (string) $message,
+                        'network' => (string) $network->getNetwork(),
+                        'trigger' => (string) $triggerConfig->getTriggerId(),
+                    )
+                );
+                $state->setState(
+                    tx_t3socials_models_State::STATE_ERROR,
+                    'Error sending message! ' . $msgId .
+                        '. See DevLog for more Informations.'
+                );
+            }
+            $states[] = $state;
+        }
 
-			$msgId = '[' . $network->getName() . '->' . $triggerConfig->getTriggerId() . '.' . $network->getNetwork() . ']';
-			// nachricht senden
-			try {
-				$error = $connection->sendMessage($message);
-				if ($error) {
-					tx_rnbase_util_Logger::warn(
-						'Error sending message! ' . $msgId,
-						array(
-							'error' => (string) $error,
-							'account' => (string) $network->getName(),
-							'message' => (string) $message,
-							'network' => (string) $network->getNetwork(),
-							'trigger' => (string) $triggerConfig->getTriggerId(),
-						)
-					);
-					$state->setState(
-						tx_t3socials_models_State::STATE_WARNING,
-						'Error sending message! ' . $msgId .
-						'. See DevLog for more Informations.'
-					);
-				}
-				// versand erfolgreich
-				else {
-					$state->setState(
-						tx_t3socials_models_State::STATE_OK,
-						'Message successfully send to network! ' . $msgId
-					);
-				}
-			} catch (Exception $e) {
-				tx_rnbase_util_Logger::fatal(
-					'Error sending message! ' . $msgId,
-					't3socials',
-					array(
-						'exception' => (string) $e,
-						'account' => (string) $network->getName(),
-						'message' => (string) $message,
-						'network' => (string) $network->getNetwork(),
-						'trigger' => (string) $triggerConfig->getTriggerId(),
-					)
-				);
-				$state->setState(
-					tx_t3socials_models_State::STATE_ERROR,
-						'Error sending message! ' . $msgId .
-						'. See DevLog for more Informations.'
-				);
-			}
-			$states[] = $state;
-		}
-		return $states;
-	}
+        return $states;
+    }
 
-	/**
-	 * Liefert alle Netzwerke für einen trigger.
-	 * Eine Netzwerkkonfiguration kann mehrere Trigger haben!
-	 *
-	 * @param string|array $triggers
-	 * @return array
-	 */
-	public function findAccounts($triggers) {
-		$triggers = is_array($triggers) ? implode(',', $triggers) : $triggers;
-		$fields = $options = array();
-		// @TODO: das funktioniert nur durch einen Bug in rn_base.
-		// Bei OP_INSET_INT wird aktuell keine Typumwandlung zum Integer gemacht.
-		// FIXME: Da muss ein weiterer Operator in rn_base angelegt werden. OP_INSET_STR
-		$fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
-		return $this->search($fields, $options);
-	}
-	/**
-	 * Liefert alle Netzwerke für einen trigger, welche das Autosend-Flag haben.
-	 *
-	 * @param string|array $triggers
-	 * @param null|bool $autosend
-	 * @return array
-	 */
-	public function findAccountsByTriggers($triggers, $autosend = NULL) {
-		$triggers = is_array($triggers) ? implode(',', $triggers) : $triggers;
-		$fields = $options = array();
-		// @TODO: das funktioniert nur durch einen Bug in rn_base.
-		// Bei OP_INSET_INT wird aktuell keine Typumwandlung zum Integer gemacht.
-		$fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
-		if ($autosend !== NULL) {
-			$fields['NETWORK.autosend'][OP_EQ_INT] = $autosend ? 1 : 0;
-		}
-		return $this->search($fields, $options);
-	}
+    /**
+     * Liefert alle Netzwerke für einen trigger.
+     * Eine Netzwerkkonfiguration kann mehrere Trigger haben!
+     *
+     * @param string|array $triggers
+     * @return array
+     */
+    public function findAccounts($triggers)
+    {
+        $triggers = is_array($triggers) ? implode(',', $triggers) : $triggers;
+        $fields = $options = array();
+        // @TODO: das funktioniert nur durch einen Bug in rn_base.
+        // Bei OP_INSET_INT wird aktuell keine Typumwandlung zum Integer gemacht.
+        // FIXME: Da muss ein weiterer Operator in rn_base angelegt werden. OP_INSET_STR
+        $fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
 
-	/**
-	 * Liefert alle Accounts eines Typs
-	 *
-	 * @param string $types
-	 * @return array
-	 */
-	public function findAccountsByType($types) {
-		$fields = $options = array();
-		// FIXME: OP_INSET
-		$fields['NETWORK.network'][OP_LIKE] = $types;
-		return $this->search($fields, $options);
-	}
+        return $this->search($fields, $options);
+    }
+    /**
+     * Liefert alle Netzwerke für einen trigger, welche das Autosend-Flag haben.
+     *
+     * @param string|array $triggers
+     * @param null|bool $autosend
+     * @return array
+     */
+    public function findAccountsByTriggers($triggers, $autosend = null)
+    {
+        $triggers = is_array($triggers) ? implode(',', $triggers) : $triggers;
+        $fields = $options = array();
+        // @TODO: das funktioniert nur durch einen Bug in rn_base.
+        // Bei OP_INSET_INT wird aktuell keine Typumwandlung zum Integer gemacht.
+        $fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
+        if ($autosend !== null) {
+            $fields['NETWORK.autosend'][OP_EQ_INT] = $autosend ? 1 : 0;
+        }
 
-	/**
-	 * Search database for networks
-	 *
-	 * @param array $fields
-	 * @param array $options
-	 * @return array of tx_t3socials_models_Network
-	 */
-	public function search($fields, $options) {
-		tx_rnbase::load('tx_rnbase_util_SearchBase');
-		$searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3socials_search_Network');
-		return $searcher->search($fields, $options);
-	}
+        return $this->search($fields, $options);
+    }
 
-	/**
-	 * Check if a record was send to networks before
-	 *
-	 * @param int $uid
-	 * @param string $table
-	 * @return boolean
-	 */
-	public function hasSent($uid, $table) {
-		// enablefields gibts nicht für die tabelle
-		$options['enablefieldsoff'] = 1;
-		$table = $GLOBALS['TYPO3_DB']->fullQuoteStr($table, 'tx_t3socials_autosends');
-		$options['where'] = 'recid = ' . (int) $uid . ' AND tablename = ' . $table;
-		$result = tx_rnbase_util_DB::doSelect('count(uid) as cnt', self::TABLE_AUTOSEND, $options);
-		return (int) $result[0]['cnt'] > 0;
-	}
+    /**
+     * Liefert alle Accounts eines Typs
+     *
+     * @param string $types
+     * @return array
+     */
+    public function findAccountsByType($types)
+    {
+        $fields = $options = array();
+        // FIXME: OP_INSET
+        $fields['NETWORK.network'][OP_LIKE] = $types;
 
-	/**
-	 * Markiert einen Datensatz als versendet.
-	 *
-	 * @param int $uid
-	 * @param string $table
-	 * @return int  UID of created record
-	 */
-	public function setSent($uid, $table) {
-		if ($this->hasSent($uid, $table)) {
-			return 0;
-		}
-		$values = array(
-			'recid' => $uid,
-			'tablename' => $table,
-		);
-		return tx_rnbase_util_DB::doInsert(self::TABLE_AUTOSEND, $values);
-	}
+        return $this->search($fields, $options);
+    }
 
+    /**
+     * Search database for networks
+     *
+     * @param array $fields
+     * @param array $options
+     * @return array of tx_t3socials_models_Network
+     */
+    public function search($fields, $options)
+    {
+        tx_rnbase::load('tx_rnbase_util_SearchBase');
+        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3socials_search_Network');
+
+        return $searcher->search($fields, $options);
+    }
+
+    /**
+     * Check if a record was send to networks before
+     *
+     * @param int $uid
+     * @param string $table
+     * @return bool
+     */
+    public function hasSent($uid, $table)
+    {
+        // enablefields gibts nicht für die tabelle
+        $options['enablefieldsoff'] = 1;
+        $table = $GLOBALS['TYPO3_DB']->fullQuoteStr($table, 'tx_t3socials_autosends');
+        $options['where'] = 'recid = ' . (int) $uid . ' AND tablename = ' . $table;
+        $result = tx_rnbase_util_DB::doSelect('count(uid) as cnt', self::TABLE_AUTOSEND, $options);
+
+        return (int) $result[0]['cnt'] > 0;
+    }
+
+    /**
+     * Markiert einen Datensatz als versendet.
+     *
+     * @param int $uid
+     * @param string $table
+     * @return int  UID of created record
+     */
+    public function setSent($uid, $table)
+    {
+        if ($this->hasSent($uid, $table)) {
+            return 0;
+        }
+        $values = array(
+            'recid' => $uid,
+            'tablename' => $table,
+        );
+
+        return tx_rnbase_util_DB::doInsert(self::TABLE_AUTOSEND, $values);
+    }
 }
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_Network.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_Network.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_Network.php']);
 }
-

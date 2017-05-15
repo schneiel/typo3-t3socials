@@ -33,19 +33,20 @@ tx_rnbase::load('tx_rnbase_util_Misc');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_ServiceRegistry {
+class tx_t3socials_srv_ServiceRegistry
+{
 
-	/**
-	 * Liefert den Network-Service
-	 *
-	 * @return tx_t3socials_srv_Network
-	 */
-	public static function getNetworkService() {
-		return tx_rnbase_util_Misc::getService('t3socials', 'network');
-	}
-
+    /**
+     * Liefert den Network-Service
+     *
+     * @return tx_t3socials_srv_Network
+     */
+    public static function getNetworkService()
+    {
+        return tx_rnbase_util_Misc::getService('t3socials', 'network');
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']);
 }

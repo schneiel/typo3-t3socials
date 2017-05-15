@@ -34,45 +34,48 @@ tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_srv_Network_testcase
-	extends tx_t3socials_tests_BaseTestCase {
+class tx_t3socials_tests_srv_Network_testcase extends tx_t3socials_tests_BaseTestCase
+{
 
-	/**
-	 * Testet die getByRefererCallsSearchCorrect Methode.
-	 *
-	 * @param string $trigger
-	 * @return void
-	 *
-	 * @group unit
-	 * @test
-	 * @dataProvider getByRefererCallsSearchData
-	 */
-	public function testGetByRefererCallsSearchCorrect($trigger, $autosend) {
-		$fields = $options = array();
-		$fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
-		$fields['NETWORK.autosend'][OP_EQ_INT] = $autosend;
+    /**
+     * Testet die getByRefererCallsSearchCorrect Methode.
+     *
+     * @param string $trigger
+     * @return void
+     *
+     * @group unit
+     * @test
+     * @dataProvider getByRefererCallsSearchData
+     */
+    public function testGetByRefererCallsSearchCorrect($trigger, $autosend)
+    {
+        $fields = $options = array();
+        $fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
+        $fields['NETWORK.autosend'][OP_EQ_INT] = $autosend;
 
-		$service = $this->getMock(
-			'tx_t3socials_srv_Network', array('search')
-		);
-		$service->expects($this->once())
-			->method('search')
-			->with($fields, $options);
+        $service = $this->getMock(
+            'tx_t3socials_srv_Network',
+            array('search')
+        );
+        $service->expects($this->once())
+            ->method('search')
+            ->with($fields, $options);
 
-		$service->findAccountsByTriggers($triggers, $autosend);
-	}
+        $service->findAccountsByTriggers($triggers, $autosend);
+    }
 
-	/**
-	 * Liefert die Daten für den testGetByRefererCallsSearchCorrect testcase.
-	 *
-	 * @return array
-	 */
-	public function getByRefererCallsSearchData() {
-		return array(
-			__LINE__ => array('trigger' => 'tt_news', 'autosend' => 1),
-			__LINE__ => array('trigger' => 'tt_news,tt_content', 'autosend' => 0),
-			__LINE__ => array('trigger' => array('tt_news', 'tt_content'), 'autosend' => 1),
-			__LINE__ => array('trigger' => 'news', 'autosend' => 1),
-		);
-	}
+    /**
+     * Liefert die Daten für den testGetByRefererCallsSearchCorrect testcase.
+     *
+     * @return array
+     */
+    public function getByRefererCallsSearchData()
+    {
+        return array(
+            __LINE__ => array('trigger' => 'tt_news', 'autosend' => 1),
+            __LINE__ => array('trigger' => 'tt_news,tt_content', 'autosend' => 0),
+            __LINE__ => array('trigger' => array('tt_news', 'tt_content'), 'autosend' => 1),
+            __LINE__ => array('trigger' => 'news', 'autosend' => 1),
+        );
+    }
 }

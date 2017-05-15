@@ -33,23 +33,23 @@ tx_rnbase::load('tx_rnbase_model_base');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_models_Base
-	extends tx_rnbase_model_base {
+class tx_t3socials_models_Base extends tx_rnbase_model_base
+{
 
-	/**
-	 * Most model-classes will be initialized by a uid or a database record. So
-	 * this is a common contructor.
-	 *
-	 * @param array|int $rowOrUid
-	 * @param string $tableName
-	 */
-	public function __construct($rowOrUid, $tableName = 0) {
-		parent::__construct($rowOrUid);
-		$this->setTableName($tableName);
-	}
-
+    /**
+     * Most model-classes will be initialized by a uid or a database record. So
+     * this is a common contructor.
+     *
+     * @param array|int $rowOrUid
+     * @param string $tableName
+     */
+    public function __construct($rowOrUid, $tableName = 0)
+    {
+        parent::__construct($rowOrUid);
+        $this->setTableName($tableName);
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php']);
 }

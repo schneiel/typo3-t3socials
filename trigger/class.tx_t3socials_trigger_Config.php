@@ -32,173 +32,185 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_trigger_Config {
+class tx_t3socials_trigger_Config
+{
+    private static $triggers = array();
 
-	private static $triggers = array();
+    /**
+     * Wir registrieren ein neues Netzwerk
+     *
+     * @param string $config
+     * @return void
+     */
+    public static function registerTrigger($config)
+    {
+        if (!$config instanceof tx_t3socials_models_TriggerConfig) {
+            $config = (string) $config;
+            if (!tx_rnbase::load($config)) {
+                throw new Exception('Could not load trigger configuration: ' . $config);
+            }
+            $config = tx_rnbase::makeInstance($config, $config);
+            if (!$config instanceof tx_t3socials_models_TriggerConfig) {
+                throw new Exception(
+                    'The trigger configuration "' . get_class($config) .
+                    '" has to extend the class "tx_t3socials_models_TriggerConfig".'
+                );
+            }
+        }
 
-	/**
-	 * Wir registrieren ein neues Netzwerk
-	 *
-	 * @param string $config
-	 * @return void
-	 */
-	public static function registerTrigger($config) {
-		if (!$config instanceof tx_t3socials_models_TriggerConfig) {
-			$config = (string) $config;
-			if (!tx_rnbase::load($config)) {
-				throw new Exception('Could not load trigger configuration: ' . $config);
-			}
-			$config = tx_rnbase::makeInstance($config, $config);
-			if (!$config instanceof tx_t3socials_models_TriggerConfig) {
-				throw new Exception(
-					'The trigger configuration "' . get_class($config) .
-					'" has to extend the class "tx_t3socials_models_TriggerConfig".'
-				);
-			}
-		}
+        $id = $config->getTriggerId();
+        self::$triggers[$id] = $config;
+    }
 
-		$id = $config->getTriggerId();
-		self::$triggers[$id] = $config;
-	}
+    /**
+     * Liefert alle Netzwerk ID's
+     *
+     * @return array
+     */
+    public static function getTriggerIds()
+    {
+        return array_keys(self::$triggers);
+    }
 
-	/**
-	 * Liefert alle Netzwerk ID's
-	 *
-	 * @return array
-	 */
-	public static function getTriggerIds() {
-		return array_keys(self::$triggers);
-	}
+    /**
+     * Liefert alle Tabellennamen, welche Trigger haben könnten.
+     *
+     * @return array
+     */
+    public static function getTriggerTableNames()
+    {
+        $tables = array();
+        /* @var $config tx_t3socials_models_TriggerConfig */
+        foreach (self::$triggers as $config) {
+            $tables[] = $config->getTableName();
+        }
 
-	/**
-	 * Liefert alle Tabellennamen, welche Trigger haben könnten.
-	 *
-	 * @return array
-	 */
-	public static function getTriggerTableNames() {
-		$tables = array();
-		/* @var $config tx_t3socials_models_TriggerConfig */
-		foreach (self::$triggers as $config) {
-			$tables[] = $config->getTableName();
-		}
-		return $tables;
-	}
+        return $tables;
+    }
 
-	/**
-	 * Liefert eine Triggerconfig eines bestimmten Trigger.
-	 *
-	 * @param string $trigger
-	 * @throws Exception
-	 * @return tx_t3socials_models_TriggerConfig
-	 */
-	public static function getTriggerConfig($trigger) {
-		$id = $trigger;
-		if (!isset(self::$triggers[$id])) {
-			throw new Exception('Unknown trigger: ' . $id);
-		}
-		return self::$triggers[$id];
-	}
+    /**
+     * Liefert eine Triggerconfig eines bestimmten Trigger.
+     *
+     * @param string $trigger
+     * @throws Exception
+     * @return tx_t3socials_models_TriggerConfig
+     */
+    public static function getTriggerConfig($trigger)
+    {
+        $id = $trigger;
+        if (!isset(self::$triggers[$id])) {
+            throw new Exception('Unknown trigger: ' . $id);
+        }
 
-	/**
-	 * Liefert den Trigger für eine Tabelle.
-	 * Mehrere Trigger pro Tabelle werden nicht mehr unterstützt.
-	 * TODO: Methode umbenennen getTriggerConfigForTable
-	 * @param string $table
-	 * @return tx_t3socials_models_TriggerConfig
-	 */
-	public static function getTriggerConfigsForTable($table) {
-		/* @var $config tx_t3socials_models_TriggerConfig */
-		foreach (self::$triggers as $config) {
-			if ($config->getTableName() != $table) {
-				continue;
-			}
-			return $config;
-		}
-		return null;
-	}
+        return self::$triggers[$id];
+    }
 
-	/**
-	 * Liefert alle Trigger für eine Tabelle.
-	 *
-	 * @param string $table
-	 * @return array
-	 */
-	public static function getTriggerNamesForTable($table) {
-		/* @var $config tx_t3socials_models_TriggerConfig */
-		$config = self::getTriggerConfigsForTable($table);
-		$triggers = array();
-		$triggers[] = $config->getTriggerId();
+    /**
+     * Liefert den Trigger für eine Tabelle.
+     * Mehrere Trigger pro Tabelle werden nicht mehr unterstützt.
+     * TODO: Methode umbenennen getTriggerConfigForTable
+     * @param string $table
+     * @return tx_t3socials_models_TriggerConfig
+     */
+    public static function getTriggerConfigsForTable($table)
+    {
+        /* @var $config tx_t3socials_models_TriggerConfig */
+        foreach (self::$triggers as $config) {
+            if ($config->getTableName() != $table) {
+                continue;
+            }
 
-		return $triggers;
-	}
+            return $config;
+        }
 
-	/**
-	 * Liefert ein Connector für ein Konfigurierter-Netzwerk.
-	 *
-	 * @param string|tx_t3socials_models_TriggerConfig $trigger
-	 * @throws Exception
-	 * @return tx_t3socials_network_IConnection
-	 */
-	public static function getMessageBuilder($trigger) {
-		$config = $trigger instanceof tx_t3socials_models_TriggerConfig
-			? $trigger : self::getTriggerConfig($trigger);
-		$class = $config->getMessageBuilderClass();
-		if (!tx_rnbase::load($class)) {
-			throw new Exception('Could not load message builder: ' . $class);
-		}
-		$builder = tx_rnbase::makeInstance($class);
-		if (!$builder instanceof tx_t3socials_trigger_IMessageBuilder) {
-			throw new Exception(
-				'The message builder "' . get_class($builder) .
-				'" has to implement the interface "tx_t3socials_trigger_IMessageBuilder".'
-			);
-		}
-		if ($builder instanceof tx_t3socials_trigger_MessageBuilder) {
-			$builder->setTrigger($config);
-		}
-		return $builder;
-	}
+        return null;
+    }
 
-	/**
-	 * Liefert ein Connector für ein Konfigurierter-Netzwerk.
-	 *
-	 * @param string|tx_t3socials_models_TriggerConfig $trigger
-	 * @throws Exception
-	 * @return tx_t3socials_network_IConnection
-	 */
-	public static function getResolver($trigger) {
-		$config = $trigger instanceof tx_t3socials_models_TriggerConfig
-			? $trigger : self::getTriggerConfig($trigger);
-		$class = $config->getResolverClass();
-		if (!tx_rnbase::load($class)) {
-			throw new Exception('Could not load resolver: ' . $class);
-		}
-		$resolver = tx_rnbase::makeInstance($class);
-		if (!$resolver instanceof tx_t3socials_util_IResolver) {
-			throw new Exception(
-				'The resolver "' . get_class($resolver) .
-				'" has to implement the interface "tx_t3socials_util_IResolver".'
-			);
-		}
-		return $resolver;
-	}
+    /**
+     * Liefert alle Trigger für eine Tabelle.
+     *
+     * @param string $table
+     * @return array
+     */
+    public static function getTriggerNamesForTable($table)
+    {
+        /* @var $config tx_t3socials_models_TriggerConfig */
+        $config = self::getTriggerConfigsForTable($table);
+        $triggers = array();
+        $triggers[] = $config->getTriggerId();
 
-	/**
-	 * Übersetzt eine TriggerID zu einem Titel.
-	 *
-	 * @param string|tx_t3socials_models_TriggerConfig $trigger
-	 * @return string
-	 */
-	public static function translateTrigger($trigger) {
-		$id = $trigger instanceof tx_t3socials_models_TriggerConfig
-			? $trigger->getTriggerId() : $trigger;
-		tx_rnbase::load('tx_rnbase_util_Misc');
-		$title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_trigger_' . $id);
-		return empty($title) ? $id : $title;
-	}
+        return $triggers;
+    }
 
+    /**
+     * Liefert ein Connector für ein Konfigurierter-Netzwerk.
+     *
+     * @param string|tx_t3socials_models_TriggerConfig $trigger
+     * @throws Exception
+     * @return tx_t3socials_network_IConnection
+     */
+    public static function getMessageBuilder($trigger)
+    {
+        $config = $trigger instanceof tx_t3socials_models_TriggerConfig ? $trigger : self::getTriggerConfig($trigger);
+        $class = $config->getMessageBuilderClass();
+        if (!tx_rnbase::load($class)) {
+            throw new Exception('Could not load message builder: ' . $class);
+        }
+        $builder = tx_rnbase::makeInstance($class);
+        if (!$builder instanceof tx_t3socials_trigger_IMessageBuilder) {
+            throw new Exception(
+                'The message builder "' . get_class($builder) .
+                '" has to implement the interface "tx_t3socials_trigger_IMessageBuilder".'
+            );
+        }
+        if ($builder instanceof tx_t3socials_trigger_MessageBuilder) {
+            $builder->setTrigger($config);
+        }
+
+        return $builder;
+    }
+
+    /**
+     * Liefert ein Connector für ein Konfigurierter-Netzwerk.
+     *
+     * @param string|tx_t3socials_models_TriggerConfig $trigger
+     * @throws Exception
+     * @return tx_t3socials_network_IConnection
+     */
+    public static function getResolver($trigger)
+    {
+        $config = $trigger instanceof tx_t3socials_models_TriggerConfig ? $trigger : self::getTriggerConfig($trigger);
+        $class = $config->getResolverClass();
+        if (!tx_rnbase::load($class)) {
+            throw new Exception('Could not load resolver: ' . $class);
+        }
+        $resolver = tx_rnbase::makeInstance($class);
+        if (!$resolver instanceof tx_t3socials_util_IResolver) {
+            throw new Exception(
+                'The resolver "' . get_class($resolver) .
+                '" has to implement the interface "tx_t3socials_util_IResolver".'
+            );
+        }
+
+        return $resolver;
+    }
+
+    /**
+     * Übersetzt eine TriggerID zu einem Titel.
+     *
+     * @param string|tx_t3socials_models_TriggerConfig $trigger
+     * @return string
+     */
+    public static function translateTrigger($trigger)
+    {
+        $id = $trigger instanceof tx_t3socials_models_TriggerConfig ? $trigger->getTriggerId() : $trigger;
+        tx_rnbase::load('tx_rnbase_util_Misc');
+        $title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_trigger_' . $id);
+
+        return empty($title) ? $id : $title;
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_Config.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_Config.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_Config.php']);
 }

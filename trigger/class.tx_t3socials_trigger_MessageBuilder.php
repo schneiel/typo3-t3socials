@@ -34,103 +34,107 @@ tx_rnbase::load('tx_t3socials_models_Message');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class tx_t3socials_trigger_MessageBuilder
-	implements tx_t3socials_trigger_IMessageBuilder {
+abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigger_IMessageBuilder
+{
 
-	/**
-	 * Triger Konfiguration
-	 *
-	 * @var tx_t3socials_models_TriggerConfig
-	 */
-	private $trigger = NULL;
+    /**
+     * Triger Konfiguration
+     *
+     * @var tx_t3socials_models_TriggerConfig
+     */
+    private $trigger = null;
 
-	/**
-	 * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
-	 * Muss von der Kindklasse überschrieben werden, um die Message zu füllen!
-	 *
-	 * @param tx_t3socials_models_Message $message
-	 * @param tx_t3socials_models_Base $model
-	 * @return tx_t3socials_models_IMessage
-	 */
-	abstract protected function buildMessage(
-		tx_t3socials_models_Message $message,
-		tx_t3socials_models_Base $model
-	);
+    /**
+     * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
+     * Muss von der Kindklasse überschrieben werden, um die Message zu füllen!
+     *
+     * @param tx_t3socials_models_Message $message
+     * @param tx_t3socials_models_Base $model
+     * @return tx_t3socials_models_IMessage
+     */
+    abstract protected function buildMessage(
+        tx_t3socials_models_Message $message,
+        tx_t3socials_models_Base $model
+    );
 
-	/**
-	 * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
-	 *
-	 * @param tx_t3socials_models_Base $model
-	 * @return tx_t3socials_models_IMessage
-	 */
-	public function buildGenericMessage(
-		tx_t3socials_models_Base $model
-	) {
-		$type = $this->hasTrigger() ? $this->getTrigger()->getTriggerId() : NULL;
-		$message = $this->makeMessage($type);
-		return $this->buildMessage($message, $model);
-	}
+    /**
+     * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
+     *
+     * @param tx_t3socials_models_Base $model
+     * @return tx_t3socials_models_IMessage
+     */
+    public function buildGenericMessage(
+        tx_t3socials_models_Base $model
+    ) {
+        $type = $this->hasTrigger() ? $this->getTrigger()->getTriggerId() : null;
+        $message = $this->makeMessage($type);
 
-	/**
-	 * Liefert eine Instanz des Objekts
-	 *
-	 * @param array|string $messageType
-	 * @return tx_t3socials_models_Message
-	 */
-	protected function makeMessage($messageType = NULL) {
-		$messageType = empty($messageType) ? 'default' : $messageType;
-		return tx_t3socials_models_Message::getInstance($messageType);
-	}
+        return $this->buildMessage($message, $model);
+    }
 
-	/**
-	 * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
-	 *
-	 * @param tx_t3socials_models_IMessage &$message
-	 * @param tx_t3socials_models_Network $network
-	 * @param tx_t3socials_models_TriggerConfig $trigger
-	 * @return void
-	 */
-	public function prepareMessageForNetwork(
-		tx_t3socials_models_IMessage $message,
-		tx_t3socials_models_Network $network,
-		tx_t3socials_models_TriggerConfig $trigger
-	) {
-		$confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
-		$message->setUrl($network->getConfigData($confId . 'message.url'));
-	}
+    /**
+     * Liefert eine Instanz des Objekts
+     *
+     * @param array|string $messageType
+     * @return tx_t3socials_models_Message
+     */
+    protected function makeMessage($messageType = null)
+    {
+        $messageType = empty($messageType) ? 'default' : $messageType;
 
-	/**
-	 * Liefert den aktuellen Trigger.
-	 *
-	 * @return tx_t3socials_models_TriggerConfig|null $trigger
-	 */
-	public function hasTrigger() {
-		return $this->trigger instanceof tx_t3socials_models_TriggerConfig;
-	}
+        return tx_t3socials_models_Message::getInstance($messageType);
+    }
 
-	/**
-	 * Setzt den aktuellen Trigger.
-	 *
-	 * @param tx_t3socials_models_TriggerConfig $trigger
-	 * @return void
-	 */
-	public function setTrigger(
-		tx_t3socials_models_TriggerConfig $trigger
-	) {
-		$this->trigger = $trigger;
-	}
+    /**
+     * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
+     *
+     * @param tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_Network $network
+     * @param tx_t3socials_models_TriggerConfig $trigger
+     * @return void
+     */
+    public function prepareMessageForNetwork(
+        tx_t3socials_models_IMessage $message,
+        tx_t3socials_models_Network $network,
+        tx_t3socials_models_TriggerConfig $trigger
+    ) {
+        $confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
+        $message->setUrl($network->getConfigData($confId . 'message.url'));
+    }
 
-	/**
-	 * Liefert den aktuellen Trigger.
-	 *
-	 * @return tx_t3socials_models_TriggerConfig|null $trigger
-	 */
-	public function getTrigger() {
-		return $this->trigger;
-	}
+    /**
+     * Liefert den aktuellen Trigger.
+     *
+     * @return tx_t3socials_models_TriggerConfig|null $trigger
+     */
+    public function hasTrigger()
+    {
+        return $this->trigger instanceof tx_t3socials_models_TriggerConfig;
+    }
 
+    /**
+     * Setzt den aktuellen Trigger.
+     *
+     * @param tx_t3socials_models_TriggerConfig $trigger
+     * @return void
+     */
+    public function setTrigger(
+        tx_t3socials_models_TriggerConfig $trigger
+    ) {
+        $this->trigger = $trigger;
+    }
+
+    /**
+     * Liefert den aktuellen Trigger.
+     *
+     * @return tx_t3socials_models_TriggerConfig|null $trigger
+     */
+    public function getTrigger()
+    {
+        return $this->trigger;
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_MessageBuilder.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_MessageBuilder.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_MessageBuilder.php']);
 }

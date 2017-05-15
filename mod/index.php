@@ -40,42 +40,45 @@ tx_rnbase::load('tx_t3socials_mod_util_Message');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class  tx_t3socials_mod_Module
-	extends tx_rnbase_mod_BaseModule {
+class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
+{
 
-	/**
-	 * Method to get the extension key
-	 *
-	 * @return	string Extension key
-	 */
-	public function getExtensionKey() {
-		return 't3socials';
-	}
+    /**
+     * Method to get the extension key
+     *
+     * @return string Extension key
+     */
+    public function getExtensionKey()
+    {
+        return 't3socials';
+    }
 
-	/**
-	 * Method to set the tabs for the mainmenu
-	 * Umstellung von SelectBox auf Menu
-	 *
-	 * @return array
-	 */
-	protected function getFuncMenu() {
-		$mainmenu = $this->getFormTool()->showTabMenu($this->getPid(), 'function', $this->getName(), $this->MOD_MENU['function']);
-		return $mainmenu['menu'];
-	}
+    /**
+     * Method to set the tabs for the mainmenu
+     * Umstellung von SelectBox auf Menu
+     *
+     * @return array
+     */
+    protected function getFuncMenu()
+    {
+        $mainmenu = $this->getFormTool()->showTabMenu($this->getPid(), 'function', $this->getName(), $this->MOD_MENU['function']);
+        return $mainmenu['menu'];
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * @see tx_rnbase_mod_BaseModule::useModuleTemplate()
-	 * @TODO TRUE liefern wenn Probleme im Core gefixed sind. So werden Labels im Funktionsmenü
-	 * des Moduls noch nicht geparsed.
-	 */
-	protected function useModuleTemplate() {
-		return FALSE;
-	}
+    /**
+     * {@inheritDoc}
+     * @see tx_rnbase_mod_BaseModule::useModuleTemplate()
+     * @TODO TRUE liefern wenn Probleme im Core gefixed sind. So werden Labels im Funktionsmenü
+     * des Moduls noch nicht geparsed.
+     */
+    protected function useModuleTemplate()
+    {
+        return false;
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']);
 }
 
 // Make instance:
@@ -84,7 +87,7 @@ $SOBE->init();
 
 // Include files?
 foreach ((array) $SOBE->include_once as $incFile) {
-	require_once $incFile;
+    require_once $incFile;
 }
 
 $SOBE->main();

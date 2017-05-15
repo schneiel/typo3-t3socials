@@ -33,23 +33,23 @@ tx_rnbase::load('tx_t3socials_models_TriggerConfig');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_trigger_news_TriggerConfig
-	extends tx_t3socials_models_TriggerConfig {
+class tx_t3socials_trigger_news_TriggerConfig extends tx_t3socials_models_TriggerConfig
+{
 
-	/**
-	 * Initialisiert die Konfiguration für das Netzwerk.
-	 *
-	 * @return void
-	 */
-	protected function initConfig() {
-		parent::initConfig();
-		$this->setProperty('trigger_id', $this->uid = 'news');
-		$this->setProperty('table', 'tt_news');
-		$this->setProperty('message_builder', 'tx_t3socials_trigger_news_MessageBuilder');
-	}
-
+    /**
+     * Initialisiert die Konfiguration für das Netzwerk.
+     *
+     * @return void
+     */
+    protected function initConfig()
+    {
+        parent::initConfig();
+        $this->setProperty('trigger_id', $this->uid = 'news');
+        $this->setProperty('table', 'tt_news');
+        $this->setProperty('message_builder', 'tx_t3socials_trigger_news_MessageBuilder');
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/news/class.tx_t3socials_trigger_news_TriggerConfig.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/news/class.tx_t3socials_trigger_news_TriggerConfig.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/news/class.tx_t3socials_trigger_news_TriggerConfig.php']);
 }

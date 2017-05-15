@@ -33,38 +33,39 @@ tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_network_MessageBuilder_testcase
-	extends tx_t3socials_tests_BaseTestCase {
+class tx_t3socials_tests_network_MessageBuilder_testcase extends tx_t3socials_tests_BaseTestCase
+{
 
-	/**
-	 * Test build Method
-	 *
-	 * @group unit
-	 * @test
-	 *
-	 * @return void
-	 */
-	public function testBuild() {
-		$builder = $this->getMessageBuilder();
-		$message = tx_t3socials_tests_Mock::getMessageMock();
-		$status = $builder->build($message);
-		$expected  = $message->getHeadline() . CRLF . CRLF;
-		$expected .= $message->getIntro() . CRLF . CRLF;
-		$expected .= $message->getUrl();
-		$this->assertEquals($expected, $status);
-	}
+    /**
+     * Test build Method
+     *
+     * @group unit
+     * @test
+     *
+     * @return void
+     */
+    public function testBuild()
+    {
+        $builder = $this->getMessageBuilder();
+        $message = tx_t3socials_tests_Mock::getMessageMock();
+        $status = $builder->build($message);
+        $expected  = $message->getHeadline() . CRLF . CRLF;
+        $expected .= $message->getIntro() . CRLF . CRLF;
+        $expected .= $message->getUrl();
+        $this->assertEquals($expected, $status);
+    }
 
-	/**
-	 * Liefert den Basis Message Builder
-	 *
-	 * @return tx_t3socials_network_MessageBuilder
-	 */
-	protected function getMessageBuilder() {
-		return tx_rnbase::makeInstance('tx_t3socials_network_MessageBuilder');
-	}
-
+    /**
+     * Liefert den Basis Message Builder
+     *
+     * @return tx_t3socials_network_MessageBuilder
+     */
+    protected function getMessageBuilder()
+    {
+        return tx_rnbase::makeInstance('tx_t3socials_network_MessageBuilder');
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilder_testcase.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilder_testcase.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilder_testcase.php']);
 }

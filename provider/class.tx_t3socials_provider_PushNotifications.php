@@ -42,79 +42,87 @@ tx_rnbase::load('tx_rnbase_util_Logger');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_provider_PushNotifications
-	extends tx_t3rest_provider_AbstractBase {
+class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_AbstractBase
+{
 
-	/**
-	 * @param tx_rnbase_configurations $configurations
-	 * @param string $confId
-	 * @return tx_t3socials_model_Network
-	 */
-	protected function handleRequest($configurations, $confId) {
-		if ($tableAlias = $configurations->getParameters()->get('get')) {
-			$data = $this->getNetwork($tableAlias, $configurations, $confId . 'get.');
-		}
-		return $data;
-	}
+    /**
+     * @param tx_rnbase_configurations $configurations
+     * @param string $confId
+     * @return tx_t3socials_model_Network
+     */
+    protected function handleRequest($configurations, $confId)
+    {
+        if ($tableAlias = $configurations->getParameters()->get('get')) {
+            $data = $this->getNetwork($tableAlias, $configurations, $confId . 'get.');
+        }
 
-	/**
-	 * @return string
-	 */
-	protected function getConfId() {
-		return 't3socials.pushd.';
-	}
-	
-	/**
-	 * @return string
-	 */
-	protected function getBaseClass() {
-		return 'tx_t3socials_models_Network';
-	}
+        return $data;
+    }
 
-	/**
-	 * Lädt einen Account
-	 *
-	 * @param string $tableAlias string-Identifier
-	 *
-	 * @return tx_t3socials_model_Network
-	 */
-	private function getNetwork($tableAlias, $configurations, $confId) {
-		$ret = FALSE;
-		// Prüfen, ob der Dienst konfiguriert ist
-		$defined = $configurations->getKeyNames($confId . 'defined.');
-		if (in_array($tableAlias, $defined)) {
-			$ret = new stdClass();
-			$itemId = $configurations->get($confId . 'defined.' . $tableAlias . '.network');
-			$account = tx_rnbase::makeInstance('tx_t3socials_models_Network', $itemId);
-			$ret = $this->getEvents($account);
-		}
-		return $ret;
-	}
+    /**
+     * @return string
+     */
+    protected function getConfId()
+    {
+        return 't3socials.pushd.';
+    }
+    
+    /**
+     * @return string
+     */
+    protected function getBaseClass()
+    {
+        return 'tx_t3socials_models_Network';
+    }
 
-	/**
-	 * 
-	 * @param tx_t3socials_models_Network $account
-	 * @return array
-	 */
-	private function getEvents($account){
-		$entries = array();
-		$confId = 'pushd.events.';
+    /**
+     * Lädt einen Account
+     *
+     * @param string $tableAlias string-Identifier
+     *
+     * @return tx_t3socials_model_Network
+     */
+    private function getNetwork($tableAlias, $configurations, $confId)
+    {
+        $ret = false;
+        // Prüfen, ob der Dienst konfiguriert ist
+        $defined = $configurations->getKeyNames($confId . 'defined.');
+        if (in_array($tableAlias, $defined)) {
+            $ret = new stdClass();
+            $itemId = $configurations->get($confId . 'defined.' . $tableAlias . '.network');
+            $account = tx_rnbase::makeInstance('tx_t3socials_models_Network', $itemId);
+            $ret = $this->getEvents($account);
+        }
 
-		$events = $account->getConfigurations()->getKeyNames($confId);
-		foreach ($events as $event) {
-			$label = $account->getConfigData($confId.$event.'.label');
-			$hidden = $account->getConfigData($confId.$event.'.hidden');
-			if (intval($hidden) != 1) {
-				$entries[] = array(
-					'label' => $label ? $label : $event,
-					'event'=>$event
-				);
-			}
-		}
-		return $entries;
-	}
+        return $ret;
+    }
+
+    /**
+     *
+     * @param tx_t3socials_models_Network $account
+     * @return array
+     */
+    private function getEvents($account)
+    {
+        $entries = array();
+        $confId = 'pushd.events.';
+
+        $events = $account->getConfigurations()->getKeyNames($confId);
+        foreach ($events as $event) {
+            $label = $account->getConfigData($confId.$event.'.label');
+            $hidden = $account->getConfigData($confId.$event.'.hidden');
+            if (intval($hidden) != 1) {
+                $entries[] = array(
+                    'label' => $label ? $label : $event,
+                    'event' => $event
+                );
+            }
+        }
+
+        return $entries;
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php']);
 }

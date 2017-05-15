@@ -33,32 +33,34 @@ tx_rnbase::load('tx_t3socials_tests_Util');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_Mock {
+class tx_t3socials_tests_Mock
+{
 
-	/**
-	 * Liefert ein Message Model
-	 *
-	 * @return tx_t3socials_models_Message
-	 */
-	public static function getMessageMock() {
-		$lorem = tx_t3socials_tests_Util::getLoremIpsum();
-		tx_rnbase::load('tx_t3socials_models_Message');
-		return tx_t3socials_models_Message::getInstance(
-			array(
-				'message_type' => 'manually',
-				'headline' => 'Überschrift',
-				'intro' => 'Intro.' . CRLF .
-						'Enthält bevorzugten Text.' . CRLF . $lorem,
-				'message' => 'Message.' . CRLF .
-							'Enthält Text, der genutzt wird wenn kein Into existiert.' . CRLF . $lorem,
-				'url' => 'http://www.dmk-ebusiness.de/',
-				'data' => NULL,
-			)
-		);
-	}
+    /**
+     * Liefert ein Message Model
+     *
+     * @return tx_t3socials_models_Message
+     */
+    public static function getMessageMock()
+    {
+        $lorem = tx_t3socials_tests_Util::getLoremIpsum();
+        tx_rnbase::load('tx_t3socials_models_Message');
 
+        return tx_t3socials_models_Message::getInstance(
+            array(
+                'message_type' => 'manually',
+                'headline' => 'Überschrift',
+                'intro' => 'Intro.' . CRLF .
+                        'Enthält bevorzugten Text.' . CRLF . $lorem,
+                'message' => 'Message.' . CRLF .
+                            'Enthält Text, der genutzt wird wenn kein Into existiert.' . CRLF . $lorem,
+                'url' => 'http://www.dmk-ebusiness.de/',
+                'data' => null,
+            )
+        );
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/class.tx_t3socials_tests_Mock.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/class.tx_t3socials_tests_Mock.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/class.tx_t3socials_tests_Mock.php']);
 }

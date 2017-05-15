@@ -32,70 +32,70 @@ tx_rnbase::load('tx_rnbase_util_Typo3Classes');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_util_Message {
+class tx_t3socials_util_Message
+{
 
 
-	/**
-	 * Erzeugt eine Flash Message
-	 *
-	 * @param string|array $message
-	 * @return void
-	 */
-	public static function showFlashMessage($message) {
-		$msg = '';
-		$title = 'T3 SOCIALS';
-		$flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
-		$severity = $flashMessageClass::OK;
-		// Wichtig, damit Meldungen auch nach einem redirect noch ausgegeben werden!
-		$store = TRUE;
-		// wir haben eine erweiterte konfiguration
-		if (is_array($message)) {
-			$msg = empty($message['message']) ? $msg : $message['message'];
-			$title = empty($message['title']) ? $title : $message['title'];
-			$severity = empty($message['severity']) ? $severity : $message['severity'];
-			$store = empty($message['storeinsession']) ? $store : (bool) $message['storeinsession'];
-		}
-		// wir haben eine status naachricht
-		elseif($message instanceof tx_t3socials_models_State) {
-			$title = 'T3 SOCIALS';
-			$msg = $message->getMessage();
-			$severity = $flashMessageClass::NOTICE;
-			if ($message->isStateSuccess()) {
-				$severity = $message->getState() === tx_t3socials_models_State::STATE_INFO
-					? $flashMessageClass::INFO : $flashMessageClass::OK;
-			} elseif ($message->isStateFailure()) {
-				$severity = $flashMessageClass::WARNING;
-				if ($message->getErrorCode()) {
-					$title .= ' - Error (' . $message->getErrorCode() . '):';
-				}
-			}
-		}
-		// wir haben nur eine meldung
-		else {
-			$msg = $message;
-			$title = 'Message';
-		}
-		self::addMessage($msg, $title, $severity, $store);
-	}
+    /**
+     * Erzeugt eine Flash Message
+     *
+     * @param string|array $message
+     * @return void
+     */
+    public static function showFlashMessage($message)
+    {
+        $msg = '';
+        $title = 'T3 SOCIALS';
+        $flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
+        $severity = $flashMessageClass::OK;
+        // Wichtig, damit Meldungen auch nach einem redirect noch ausgegeben werden!
+        $store = true;
+        // wir haben eine erweiterte konfiguration
+        if (is_array($message)) {
+            $msg = empty($message['message']) ? $msg : $message['message'];
+            $title = empty($message['title']) ? $title : $message['title'];
+            $severity = empty($message['severity']) ? $severity : $message['severity'];
+            $store = empty($message['storeinsession']) ? $store : (bool) $message['storeinsession'];
+        } // wir haben eine status naachricht
+        elseif ($message instanceof tx_t3socials_models_State) {
+            $title = 'T3 SOCIALS';
+            $msg = $message->getMessage();
+            $severity = $flashMessageClass::NOTICE;
+            if ($message->isStateSuccess()) {
+                $severity = $message->getState() === tx_t3socials_models_State::STATE_INFO ? $flashMessageClass::INFO : $flashMessageClass::OK;
+            } elseif ($message->isStateFailure()) {
+                $severity = $flashMessageClass::WARNING;
+                if ($message->getErrorCode()) {
+                    $title .= ' - Error (' . $message->getErrorCode() . '):';
+                }
+            }
+        } // wir haben nur eine meldung
+        else {
+            $msg = $message;
+            $title = 'Message';
+        }
+        self::addMessage($msg, $title, $severity, $store);
+    }
 
-	/**
-	 * Sendet eine Flash Nachricht.
-	 *
-	 * @param string $message
-	 * @param string $title
-	 * @param int $severity
-	 * @param boolean $storeInSession
-	 * @return void
-	 */
-	private static function addMessage(
-		$message, $title = '',
-		$severity = 0, $storeInSession = FALSE
-	) {
-		tx_rnbase_util_Misc::addFlashMessage($message, $title, $severity, $storeInSession);
-	}
-
+    /**
+     * Sendet eine Flash Nachricht.
+     *
+     * @param string $message
+     * @param string $title
+     * @param int $severity
+     * @param bool $storeInSession
+     * @return void
+     */
+    private static function addMessage(
+        $message,
+        $title = '',
+        $severity = 0,
+        $storeInSession = false
+    ) {
+        tx_rnbase_util_Misc::addFlashMessage($message, $title, $severity, $storeInSession);
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Message.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Message.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Message.php']);
 }

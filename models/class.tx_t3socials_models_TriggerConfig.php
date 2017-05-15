@@ -33,105 +33,108 @@ tx_rnbase::load('tx_t3socials_models_Base');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_models_TriggerConfig
-	extends tx_t3socials_models_Base {
+class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
+{
 
-	/**
-	 * Inits the model instance either with uid or a complete data record.
-	 * As the result the instance should be completly loaded.
-	 *
-	 * @param mixed $rowOrUid
-	 * @return void
-	 */
-	public function init($rowOrUid) {
-		// wir haben bereits einen record
-		if (is_array($rowOrUid)) {
-			$this->uid = isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['trigger_id'];
-			$this->uid = empty($this->uid) ? $rowOrUid['table'] : $this->uid;
-			$this->record = $rowOrUid;
-		}
-		// wir haben nur eine uid
-		else {
-			$this->uid = $rowOrUid;
-			$this->record = array();
-		}
-		$this->initConfig();
-	}
+    /**
+     * Inits the model instance either with uid or a complete data record.
+     * As the result the instance should be completly loaded.
+     *
+     * @param mixed $rowOrUid
+     * @return void
+     */
+    public function init($rowOrUid)
+    {
+        // wir haben bereits einen record
+        if (is_array($rowOrUid)) {
+            $this->uid = isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['trigger_id'];
+            $this->uid = empty($this->uid) ? $rowOrUid['table'] : $this->uid;
+            $this->record = $rowOrUid;
+        } // wir haben nur eine uid
+        else {
+            $this->uid = $rowOrUid;
+            $this->record = array();
+        }
+        $this->initConfig();
+    }
 
-	/**
-	 * Initialisiert die Konfiguration für den Trigger.
-	 *
-	 * @return void
-	 */
-	protected function initConfig() {
-		if (!$this->hasProperty('table')) {
-			$this->setProperty('table', NULL);
-		}
-		if (!$this->hasProperty('trigger_id')) {
-			$this->setProperty('trigger_id', $this->getProperty('table'));
-		}
-		if (!$this->hasProperty('message_builder')) {
-			$this->setProperty('message_builder', NULL);
-		}
-		if (!$this->hasProperty('resolver')) {
-			$this->setProperty('resolver', 'tx_t3socials_util_ResolverT3DB');
-		}
-		if (!$this->hasProperty('double_sent_allowed')) {
-			$this->setProperty('double_sent_allowed', FALSE);
-		}
-	}
+    /**
+     * Initialisiert die Konfiguration für den Trigger.
+     *
+     * @return void
+     */
+    protected function initConfig()
+    {
+        if (!$this->hasProperty('table')) {
+            $this->setProperty('table', null);
+        }
+        if (!$this->hasProperty('trigger_id')) {
+            $this->setProperty('trigger_id', $this->getProperty('table'));
+        }
+        if (!$this->hasProperty('message_builder')) {
+            $this->setProperty('message_builder', null);
+        }
+        if (!$this->hasProperty('resolver')) {
+            $this->setProperty('resolver', 'tx_t3socials_util_ResolverT3DB');
+        }
+        if (!$this->hasProperty('double_sent_allowed')) {
+            $this->setProperty('double_sent_allowed', false);
+        }
+    }
 
-	/**
-	 * Liefert die Trigger ID.
-	 * Wenn keine gesetzt ist, nehmen wir den Tabellennamen,
-	 * der ist eindeutig genug!
-	 *
-	 * @return string
-	 */
-	public function getTriggerId() {
-		return $this->hasProperty('trigger_id')
-			? $this->getProperty('trigger_id')
-			: $this->getTableName();
-	}
+    /**
+     * Liefert die Trigger ID.
+     * Wenn keine gesetzt ist, nehmen wir den Tabellennamen,
+     * der ist eindeutig genug!
+     *
+     * @return string
+     */
+    public function getTriggerId()
+    {
+        return $this->hasProperty('trigger_id') ? $this->getProperty('trigger_id') : $this->getTableName();
+    }
 
-	/**
-	 * Liefert den tamen der Tabelle des Triggers
-	 *
-	 * @return string
-	 */
-	public function getTableName() {
-		return $this->getProperty('table');
-	}
+    /**
+     * Liefert den tamen der Tabelle des Triggers
+     *
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->getProperty('table');
+    }
 
-	/**
-	 * Liefert den Klassenname des Message-Builders.
-	 *
-	 * @return string
-	 */
-	public function getMessageBuilderClass() {
-		return $this->getProperty('message_builder');
-	}
+    /**
+     * Liefert den Klassenname des Message-Builders.
+     *
+     * @return string
+     */
+    public function getMessageBuilderClass()
+    {
+        return $this->getProperty('message_builder');
+    }
 
-	/**
-	 * Liefert den Klassenname des Resolvers.
-	 *
-	 * @return string
-	 */
-	public function getResolverClass() {
-		return $this->getProperty('resolver');
-	}
-	/**
-	 * Doppelter Versand kann automatisch verhindert werden.
-	 * @return boolean
-	 */
-	public function isDoubleSentAllowed() {
-		return $this->getProperty('double_sent_allowed');
-	}
+    /**
+     * Liefert den Klassenname des Resolvers.
+     *
+     * @return string
+     */
+    public function getResolverClass()
+    {
+        return $this->getProperty('resolver');
+    }
+    /**
+     * Doppelter Versand kann automatisch verhindert werden.
+     * @return bool
+     */
+    public function isDoubleSentAllowed()
+    {
+        return $this->getProperty('double_sent_allowed');
+    }
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']
 ) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']);
 }

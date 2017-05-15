@@ -32,40 +32,39 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-interface tx_t3socials_network_hybridauth_Interface {
+interface tx_t3socials_network_hybridauth_Interface
+{
 
-	/**
-	 * Liefert die Konfiguration für HybridAuth.
-	 *
-	 * @return array
-	 */
-	public function getHybridAuthConfig(); /*{
-		return array (
-			'enabled' => true,
-			'networkUid' => $this->getNetwork()->getUid(),
-			'keys' => array(
-				'key' => $this->getNetwork()->getUsername(),
-				'secret' => $this->getNetwork()->getPassword(),
- 				'access_token' => 'f7e26318fa155eafd135',
- 				'access_token_secret' => '6330a31821856fc53665',
-			)
-		);
-	}*/
+    /**
+     * Liefert die Konfiguration für HybridAuth.
+     *
+     * @return array
+     */
+    public function getHybridAuthConfig(); /*{
+        return array (
+            'enabled' => true,
+            'networkUid' => $this->getNetwork()->getUid(),
+            'keys' => array(
+                'key' => $this->getNetwork()->getUsername(),
+                'secret' => $this->getNetwork()->getPassword(),
+                'access_token' => 'f7e26318fa155eafd135',
+                'access_token_secret' => '6330a31821856fc53665',
+            )
+        );
+    }*/
 
-	/**
-	 * Liefert den HybridAuth Provider
-	 *
-	 * @return Hybrid_Provider_Adapter
-	 */
-	public function getProvider();
-
+    /**
+     * Liefert den HybridAuth Provider
+     *
+     * @return Hybrid_Provider_Adapter
+     */
+    public function getProvider();
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Interface.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Interface.php']
 ) {
-	include_once(
-		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Interface.php']
-	);
+    include_once(
+        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Interface.php']
+    );
 }

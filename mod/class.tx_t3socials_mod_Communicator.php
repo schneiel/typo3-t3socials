@@ -34,52 +34,57 @@ tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_Communicator
-	extends tx_rnbase_mod_ExtendedModFunc {
+class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
+{
 
-	/**
-	 * Method getFuncId
-	 *
-	 * @return	string
-	 */
-	protected function getFuncId() {
-		return 'communicator';
-	}
-	/**
-	 * It is possible to overwrite this method and return an array of tab functions
-	 *
-	 * @return array
-	 */
-	protected function getSubMenuItems() {
-		$menuItems = tx_t3socials_network_Config::getNewtorkCommunicators();
-		array_unshift(
-			$menuItems,
-			tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger')
-		);
-		tx_rnbase_util_Misc::callHook(
-			't3socials', 'modCommunicator_tabItems',
-			array('tabItems' => &$menuItems), $this
-		);
-		return $menuItems;
-	}
+    /**
+     * Method getFuncId
+     *
+     * @return  string
+     */
+    protected function getFuncId()
+    {
+        return 'communicator';
+    }
+    /**
+     * It is possible to overwrite this method and return an array of tab functions
+     *
+     * @return array
+     */
+    protected function getSubMenuItems()
+    {
+        $menuItems = tx_t3socials_network_Config::getNewtorkCommunicators();
+        array_unshift(
+            $menuItems,
+            tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger')
+        );
+        tx_rnbase_util_Misc::callHook(
+            't3socials',
+            'modCommunicator_tabItems',
+            array('tabItems' => &$menuItems),
+            $this
+        );
 
-	/**
-	 * Liefert false, wenn es keine SubSelectors gibt.
-	 * Sonst ein Array mit den ausgewählten Werten.
-	 *
-	 * @param string &$selectorStr
-	 * @return array or false if not needed. Return empty array if no item found
-	 */
-	protected function makeSubSelectors(&$selectorStr) {
-		return FALSE;
-	}
+        return $menuItems;
+    }
+
+    /**
+     * Liefert false, wenn es keine SubSelectors gibt.
+     * Sonst ein Array mit den ausgewählten Werten.
+     *
+     * @param string &$selectorStr
+     * @return array or false if not needed. Return empty array if no item found
+     */
+    protected function makeSubSelectors(&$selectorStr)
+    {
+        return false;
+    }
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php']
 ) {
-	include_once(
-		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php']
-	);
+    include_once(
+        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php']
+    );
 }

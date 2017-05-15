@@ -33,110 +33,116 @@ tx_rnbase::load('tx_t3socials_models_Base');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_models_State
-	extends tx_t3socials_models_Base {
+class tx_t3socials_models_State extends tx_t3socials_models_Base
+{
+    const STATE_UNKNOWN = 0;
+    const STATE_INFO = 1;
+    const STATE_OK = 2;
+    const STATE_NOTICE = 3;
+    const STATE_WARNING = 4;
+    const STATE_ERROR = 5;
 
-	const STATE_UNKNOWN = 0;
-	const STATE_INFO = 1;
-	const STATE_OK = 2;
-	const STATE_NOTICE = 3;
-	const STATE_WARNING = 4;
-	const STATE_ERROR = 5;
+    /**
+     * Inits the model instance either with uid or a complete data record.
+     * As the result the instance should be completly loaded.
+     *
+     * @param mixed $rowOrUid
+     * @return void
+     */
+    public function init($rowOrUid)
+    {
+        $rowOrUid = is_array($rowOrUid) ? $rowOrUid : array('state' => $rowOrUid);
+        $rowOrUid['uid'] = 0;
+        parent::init($rowOrUid);
+        $this->setState(
+            empty($rowOrUid['state']) ? self::STATE_UNKNOWN : $rowOrUid['state']
+        );
+    }
 
-	/**
-	 * Inits the model instance either with uid or a complete data record.
-	 * As the result the instance should be completly loaded.
-	 *
-	 * @param mixed $rowOrUid
-	 * @return void
-	 */
-	public function init($rowOrUid) {
-		$rowOrUid = is_array($rowOrUid) ? $rowOrUid : array('state' => $rowOrUid);
-		$rowOrUid['uid'] = 0;
-		parent::init($rowOrUid);
-		$this->setState(
-			empty($rowOrUid['state']) ? self::STATE_UNKNOWN : $rowOrUid['state']
-		);
-	}
+    /**
+     * Liefert den Status
+     *
+     * @return int
+     */
+    public function getState()
+    {
+        return $this->getProperty('state');
+    }
+    /**
+     * Setzt den status
+     *
+     * @param int $state
+     * @param mixed $error
+     * @return void
+     */
+    public function setState($state, $error = null)
+    {
+        switch ((int) $state) {
+            case self::STATE_INFO:
+            case self::STATE_OK:
+            case self::STATE_NOTICE:
+            case self::STATE_WARNING:
+            case self::STATE_ERROR:
+                $this->setProperty('state', $state);
+                break;
+            default:
+                $this->setProperty('state', self::STATE_UNKNOWN);
+                break;
+        }
+        if ($error !== null) {
+            if ($error instanceof Exception) {
+                $this->setMessage($error->getMessage());
+                $this->setErrorCode($error->getCode());
+            } elseif (is_int($error)) {
+                $this->setErrorCode($error);
+            } elseif (is_string($error)) {
+                $this->setMessage($error);
+            }
+        }
+    }
 
-	/**
-	 * Liefert den Status
-	 *
-	 * @return int
-	 */
-	public function getState() {
-		return $this->getProperty('state');
-	}
-	/**
-	 * Setzt den status
-	 *
-	 * @param int $state
-	 * @param mixed $error
-	 * @return void
-	 */
-	public function setState($state, $error = NULL) {
-		switch((int) $state) {
-			case self::STATE_INFO:
-			case self::STATE_OK:
-			case self::STATE_NOTICE:
-			case self::STATE_WARNING:
-			case self::STATE_ERROR:
-				$this->setProperty('state', $state);
-				break;
-			default:
-				$this->setProperty('state', self::STATE_UNKNOWN);
-				break;
-		}
-		if ($error !== NULL) {
-			if ($error instanceof Exception) {
-				$this->setMessage($error->getMessage());
-				$this->setErrorCode($error->getCode());
-			} elseif (is_int($error)) {
-				$this->setErrorCode($error);
-			} elseif (is_string($error)) {
-				$this->setMessage($error);
-			}
-		}
-	}
+    /**
+     * Ist der Status SUCCESS?
+     *
+     * @return bool
+     */
+    public function isStateSuccess()
+    {
+        $state = $this->getProperty('state');
 
-	/**
-	 * Ist der Status SUCCESS?
-	 *
-	 * @return boolean
-	 */
-	public function isStateSuccess() {
-		$state = $this->getProperty('state');
-		return $state === self::STATE_OK || $state === self::STATE_INFO;
-	}
-	/**
-	 * Ist der Status FAILURE?
-	 *
-	 * @return boolean
-	 */
-	public function isStateFailure() {
-		return !$this->isStateSuccess();
-	}
+        return $state === self::STATE_OK || $state === self::STATE_INFO;
+    }
+    /**
+     * Ist der Status FAILURE?
+     *
+     * @return bool
+     */
+    public function isStateFailure()
+    {
+        return !$this->isStateSuccess();
+    }
 
-	/**
-	 * Liefert den Fehlercode
-	 *
-	 * @return int
-	 */
-	public function getErrorCode() {
-		return $this->getProperty('error_code');
-	}
+    /**
+     * Liefert den Fehlercode
+     *
+     * @return int
+     */
+    public function getErrorCode()
+    {
+        return $this->getProperty('error_code');
+    }
 
-	/**
-	 * Liefert die Fehlermeldung
-	 *
-	 * @return string
-	 */
-	public function getMessage() {
-		return $this->getProperty('message');
-	}
-
+    /**
+     * Liefert die Fehlermeldung
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->getProperty('message');
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_State.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_State.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_State.php']);
 }

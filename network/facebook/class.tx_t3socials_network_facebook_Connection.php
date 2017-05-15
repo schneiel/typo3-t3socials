@@ -34,41 +34,43 @@ tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_network_facebook_Connection
-	extends tx_t3socials_network_hybridauth_Connection {
+class tx_t3socials_network_facebook_Connection extends tx_t3socials_network_hybridauth_Connection
+{
 
-	/**
-	 * Liefert den Klassennamen der Message Builder Klasse
-	 *
-	 * @return string
-	 */
-	protected function getBuilderClass() {
-		return 'tx_t3socials_network_facebook_MessageBuilder';
-	}
+    /**
+     * Liefert den Klassennamen der Message Builder Klasse
+     *
+     * @return string
+     */
+    protected function getBuilderClass()
+    {
+        return 'tx_t3socials_network_facebook_MessageBuilder';
+    }
 
-	/**
-	 * Liefert die Konfiguration für HybridAuth.
-	 *
-	 * @return array
-	 */
-	public function getHybridAuthConfig() {
-		$config = parent::getHybridAuthConfig();
-		// für fb wird der app key nicht unter key, sondern unter id gesetzt
-		$config['keys']['id'] = $config['keys']['key'];
-		// FB braucht fürs auth nur den access_token!
-		$accessToken = $this->getConfigData('access_token');
-		if ($accessToken) {
-			$config['keys']['access_token'] = $accessToken;
-		}
-		return $config;
-	}
+    /**
+     * Liefert die Konfiguration für HybridAuth.
+     *
+     * @return array
+     */
+    public function getHybridAuthConfig()
+    {
+        $config = parent::getHybridAuthConfig();
+        // für fb wird der app key nicht unter key, sondern unter id gesetzt
+        $config['keys']['id'] = $config['keys']['key'];
+        // FB braucht fürs auth nur den access_token!
+        $accessToken = $this->getConfigData('access_token');
+        if ($accessToken) {
+            $config['keys']['access_token'] = $accessToken;
+        }
+
+        return $config;
+    }
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']
 ) {
-	include_once(
-		$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']
-	);
+    include_once(
+        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']
+    );
 }

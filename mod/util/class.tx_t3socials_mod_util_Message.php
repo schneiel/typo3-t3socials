@@ -32,26 +32,26 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_util_Message {
+class tx_t3socials_mod_util_Message
+{
 
 
-	/**
-	 * Erzeugt eine Flash Message
-	 *
-	 * @param string|array $message
-	 * @return void
-	 * @deprecated use tx_t3socials_util_Message::showFlashMessage instead.
-	 */
-	public static function showMessage($message) {
-		tx_rnbase::load('tx_t3socials_util_Message');
-		tx_t3socials_util_Message::showFlashMessage($message);
-	}
-
+    /**
+     * Erzeugt eine Flash Message
+     *
+     * @param string|array $message
+     * @return void
+     * @deprecated use tx_t3socials_util_Message::showFlashMessage instead.
+     */
+    public static function showMessage($message)
+    {
+        tx_rnbase::load('tx_t3socials_util_Message');
+        tx_t3socials_util_Message::showFlashMessage($message);
+    }
 }
 
-if (
-	defined('TYPO3_MODE') &&
-	$TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
 ) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']);
 }

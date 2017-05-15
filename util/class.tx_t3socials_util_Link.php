@@ -32,65 +32,64 @@ tx_rnbase::load('tx_rnbase_util_Misc');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_util_Link {
+class tx_t3socials_util_Link
+{
 
-	/**
-	 * Erzeugt eine URl anhand eines Link Objekts
-	 * Dabei wird die Ausführung von RealURL geprüft!
-	 *
-	 * @param tx_rnbase_util_Link $linkObject
-	 * @return string
-	 */
-	public static function getRealUrlAbsUrlForLink(
-		tx_rnbase_util_Link $linkObject
-	) {
-		// wir klonen das linkobjekt, da wir änderungen daran durchführen!
-		$link = clone $linkObject;
+    /**
+     * Erzeugt eine URl anhand eines Link Objekts
+     * Dabei wird die Ausführung von RealURL geprüft!
+     *
+     * @param tx_rnbase_util_Link $linkObject
+     * @return string
+     */
+    public static function getRealUrlAbsUrlForLink(
+        tx_rnbase_util_Link $linkObject
+    ) {
+        // wir klonen das linkobjekt, da wir änderungen daran durchführen!
+        $link = clone $linkObject;
 
-		// wenn keine PostProc definiert ist oder wir uns im FE befinden
-		// benötigen wir keine sonderbehandlung
-		if (
-			!is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tstemplate.php']['linkData-PostProc'])
-			|| TYPO3_MODE === 'FE'
-		) {
-			return $link->makeUrl(FALSE);
-		}
-		// else: wir müssen eine sonderbehandlung durchführen!
+        // wenn keine PostProc definiert ist oder wir uns im FE befinden
+        // benötigen wir keine sonderbehandlung
+        if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tstemplate.php']['linkData-PostProc'])
+            || TYPO3_MODE === 'FE'
+        ) {
+            return $link->makeUrl(false);
+        }
+        // else: wir müssen eine sonderbehandlung durchführen!
 
-		// für Realurl ist eine tsfe notwendig
-		tx_rnbase::load('tx_rnbase_util_Misc');
-		$tsfe = tx_rnbase_util_Misc::prepareTSFE();
-		// das mainScript MUSS index.php sein
-		// see tx_realurl->prefixEnablingSpURL
-		$tsfe->config['mainScript'] = 'index.php';
-		// den prefix für diese url setzen
-		$tsfe->absRefPrefix = $link->getAbsUrlSchema() ? $link->getAbsUrlSchema() : tx_rnbase_util_Misc::getIndpEnv('TYPO3_SITE_URL');
+        // für Realurl ist eine tsfe notwendig
+        tx_rnbase::load('tx_rnbase_util_Misc');
+        $tsfe = tx_rnbase_util_Misc::prepareTSFE();
+        // das mainScript MUSS index.php sein
+        // see tx_realurl->prefixEnablingSpURL
+        $tsfe->config['mainScript'] = 'index.php';
+        // den prefix für diese url setzen
+        $tsfe->absRefPrefix = $link->getAbsUrlSchema() ? $link->getAbsUrlSchema() : tx_rnbase_util_Misc::getIndpEnv('TYPO3_SITE_URL');
 
-		// Die URL von rnbase darf dafür nie absolut sein!
-		// durch das setzen von absRefPrefix ist diese bereits absolut!
-		$link->setAbsUrl(FALSE);
+        // Die URL von rnbase darf dafür nie absolut sein!
+        // durch das setzen von absRefPrefix ist diese bereits absolut!
+        $link->setAbsUrl(false);
 
-		// parameter für die PostProc sammeln
-		$ld = array('totalURL' => $link->makeUrl(FALSE));
-		$params = array(
-			// hier steckt nur die url drin!
-			'LD' => &$ld,
-			// das ist notwendig, wenn der link aus dem BE heraus erzeugt werden soll!
-			'TCEmainHook' => TRUE,
-		);
-		// jetzt die hooks aufrufen (unter anderem realurl)
-		tx_rnbase::load('tx_rnbase_util_Misc');
-		tx_rnbase::load('tx_rnbase_util_Typo3Classes');
-		$templateService = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getTemplateServiceClass());
-		foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tstemplate.php']['linkData-PostProc'] as $funcRef) {
-			tx_rnbase_util_Misc::callUserFunction($funcRef, $params, $templateService);
-		}
+        // parameter für die PostProc sammeln
+        $ld = array('totalURL' => $link->makeUrl(false));
+        $params = array(
+            // hier steckt nur die url drin!
+            'LD' => &$ld,
+            // das ist notwendig, wenn der link aus dem BE heraus erzeugt werden soll!
+            'TCEmainHook' => true,
+        );
+        // jetzt die hooks aufrufen (unter anderem realurl)
+        tx_rnbase::load('tx_rnbase_util_Misc');
+        tx_rnbase::load('tx_rnbase_util_Typo3Classes');
+        $templateService = tx_rnbase::makeInstance(tx_rnbase_util_Typo3Classes::getTemplateServiceClass());
+        foreach ($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tstemplate.php']['linkData-PostProc'] as $funcRef) {
+            tx_rnbase_util_Misc::callUserFunction($funcRef, $params, $templateService);
+        }
 
-		return $ld['totalURL'];
-	}
-
+        return $ld['totalURL'];
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Link.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Link.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Link.php']);
 }

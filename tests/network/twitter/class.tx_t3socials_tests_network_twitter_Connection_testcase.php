@@ -34,53 +34,56 @@ tx_rnbase::load('tx_t3socials_tests_network_Connection_testcase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_network_twitter_Connection_testcase
-	extends tx_t3socials_tests_network_Connection_testcase {
+class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_t3socials_tests_network_Connection_testcase
+{
 
 
 
-	/**
-	 * returns object of network
-	 *
-	 * @return array|tx_t3socials_models_Network
-	 */
-	protected function getNetwork() {
-		return tx_rnbase::makeInstance(
-			'tx_t3socials_models_Network',
-			array(
-				'name' => 'Twitter',
-				'network' => 'twitter',
-				'username' => '',
-				'password' => '',
-				'config' => 'twitter {
+    /**
+     * returns object of network
+     *
+     * @return array|tx_t3socials_models_Network
+     */
+    protected function getNetwork()
+    {
+        return tx_rnbase::makeInstance(
+            'tx_t3socials_models_Network',
+            array(
+                'name' => 'Twitter',
+                'network' => 'twitter',
+                'username' => '',
+                'password' => '',
+                'config' => 'twitter {
    access_token =
    access_token_secret =
 }',
-			)
-		);
-	}
+            )
+        );
+    }
 
-	/**
-	 * returns classname or object of connection
-	 *
-	 * @return string|tx_t3socials_network_Connection
-	 */
-	protected function getConnection() {
-		return 'tx_t3socials_network_twitter_Connection';
-	}
+    /**
+     * returns classname or object of connection
+     *
+     * @return string|tx_t3socials_network_Connection
+     */
+    protected function getConnection()
+    {
+        return 'tx_t3socials_network_twitter_Connection';
+    }
 
-	/**
-	 * returns classname or object of connection
-	 *
-	 * @return string|array string with message or array with post data
-	 */
-	protected function getBuiltMessage() {
-		return 'Überschrift: Intro. Enthält bevorzugten Text. ' .
-			'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' .
-			'Aenean ...: http://www.dmk-ebusiness.de/';
-	}
+    /**
+     * returns classname or object of connection
+     *
+     * @return string|array string with message or array with post data
+     */
+    protected function getBuiltMessage()
+    {
+        return 'Überschrift: Intro. Enthält bevorzugten Text. ' .
+            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' .
+            'Aenean ...: http://www.dmk-ebusiness.de/';
+    }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/twitter/class.tx_t3socials_tests_network_twitter_Connection_testcase.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/twitter/class.tx_t3socials_tests_network_twitter_Connection_testcase.php']);
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/twitter/class.tx_t3socials_tests_network_twitter_Connection_testcase.php']);
 }
