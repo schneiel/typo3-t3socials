@@ -43,7 +43,7 @@ class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
      * @param mixed $rowOrUid
      * @return void
      */
-    public function init($rowOrUid)
+    public function init($rowOrUid = null)
     {
         // wir haben bereits einen record
         if (is_array($rowOrUid)) {

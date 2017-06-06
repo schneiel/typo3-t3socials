@@ -49,7 +49,7 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
      * @param mixed $rowOrUid
      * @return void
      */
-    public function init($rowOrUid)
+    public function init($rowOrUid = null)
     {
         $rowOrUid = is_array($rowOrUid) ? $rowOrUid : array('state' => $rowOrUid);
         $rowOrUid['uid'] = 0;

@@ -55,7 +55,7 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
      *      array can contain (message_type, headline, intro, message, url, data)
      * @return void
      */
-    public function init($rowOrUid)
+    public function init($rowOrUid = null)
     {
         // wir haben einen kompletten record
         if (is_array($rowOrUid)) {
