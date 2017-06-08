@@ -37,9 +37,15 @@ if (tx_rnbase_util_Extensions::isLoaded('tt_news')) {
  * *** HybridAuth (FE/BE) *** *
  * *** ****************** *** */
 // ajax id for BE
-$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['t3socials-hybridauth']
-    = tx_rnbase_util_Extensions::extPath('t3socials', 'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php') .
-        ':tx_t3socials_network_hybridauth_OAuthCall->ajaxId';
+tx_rnbase_util_Extensions::registerAjaxHandler (
+    't3socials-hybridauth',
+    tx_rnbase_util_Extensions::extPath(
+        't3socials',
+        'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php'
+    ) .
+    ':tx_t3socials_network_hybridauth_OAuthCall->ajaxId',
+    false
+);
 
 /* *** ***** *** *
  * *** Hooks *** *
