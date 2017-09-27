@@ -105,4 +105,25 @@ class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
             $field->_get('data')['parameterArray']['itemFormElValue']
         );
     }
+
+    /**
+     * @group unit
+     */
+    public function testRenderWhenNoConfigButUnknownNetwork()
+    {
+        $field = $this->getAccessibleMock(
+            'DMK\\T3socials\\Backend\\Form\\Element\\NetworkConfigField',
+            array('callRenderOnParent'), array(), '', false
+        );
+
+        $field->_set('data', array('databaseRow' => array('config' => '', 'network' => array(0 => 'unknown'))));
+
+        $field
+            ->expects(self::once())
+            ->method('callRenderOnParent')
+            ->willReturn('test');
+
+        self::assertEquals('test', $field->render());
+        self::assertEmpty($field->_get('data')['parameterArray']['itemFormElValue']);
+    }
 }
