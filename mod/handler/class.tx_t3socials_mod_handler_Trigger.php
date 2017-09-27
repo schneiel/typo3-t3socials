@@ -41,7 +41,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     private $accountSelector = false;
     /**
      *
-     * @var tx_rnbase_model_base
+     * @var Tx_Rnbase_Domain_Model_Base
      */
     private $formData = null;
 
@@ -330,7 +330,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
             );
             $row[] = array(
                 '###LABEL_TITLE###',
-                $model->record[$labelField],
+                $model->getProperty[$labelField],
             );
             // gelöscht oder hidden? dann meldung ausgeben!
             $state = array();

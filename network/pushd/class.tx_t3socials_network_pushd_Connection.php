@@ -96,8 +96,8 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
         $result = file_get_contents($url, false, $context);
         if ($result === false) {
             $data = $message->getData();
-            if (is_object($data) && isset($data->record)) {
-                $message->setData($data->record);
+            if (is_object($data) && $data->getRecord()) {
+                $message->setData($data->getRecord());
             }
             tx_rnbase_util_Logger::fatal(
                 'Error sending pushd-message (' . $message->getMessageType() . ')!',

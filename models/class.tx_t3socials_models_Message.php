@@ -60,7 +60,7 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
         // wir haben einen kompletten record
         if (is_array($rowOrUid)) {
             $this->uid = $rowOrUid['message_type'];
-            $this->record = $rowOrUid;
+            $this->setProperty($rowOrUid);
         } // wir haben nur den Typ
         elseif (is_string($rowOrUid)) {
             $this->uid = $rowOrUid;

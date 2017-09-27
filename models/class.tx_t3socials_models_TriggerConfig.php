@@ -49,11 +49,11 @@ class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
         if (is_array($rowOrUid)) {
             $this->uid = isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['trigger_id'];
             $this->uid = empty($this->uid) ? $rowOrUid['table'] : $this->uid;
-            $this->record = $rowOrUid;
+            $this->setProperty($rowOrUid);
         } // wir haben nur eine uid
         else {
             $this->uid = $rowOrUid;
-            $this->record = array();
+            $this->setProperty(array());
         }
         $this->initConfig();
     }

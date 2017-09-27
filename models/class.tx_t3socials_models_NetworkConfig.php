@@ -48,11 +48,11 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
         // wir haben bereits einen record
         if (is_array($rowOrUid)) {
             $this->uid = isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['provider_id'];
-            $this->record = $rowOrUid;
+            $this->setProperty($rowOrUid);
         } // wir haben nur eine uid
         else {
             $this->uid = $rowOrUid;
-            $this->record = array();
+            $this->setProperty(array());
         }
         $this->initConfig();
     }

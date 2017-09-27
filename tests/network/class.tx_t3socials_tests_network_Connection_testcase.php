@@ -149,7 +149,8 @@ abstract class tx_t3socials_tests_network_Connection_testcase extends tx_t3socia
         $network = $this->getNetwork();
         // haben ein network model
         if ($network instanceof tx_t3socials_models_Network) {
-            $network->uid = $network->record['uid'] = 1;
+            $network->uid = 1;
+            $network->setProperty('uid', $network->uid);
 
             return $network;
         } // wir erzeugen ein model

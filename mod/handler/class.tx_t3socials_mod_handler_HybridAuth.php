@@ -41,7 +41,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
 
     /**
      *
-     * @var tx_rnbase_model_base
+     * @var Tx_Rnbase_Domain_Model_Base
      */
     private $formData = null;
 

@@ -140,7 +140,7 @@ class tx_t3socials_network_hybridauth_OAuthCall
                     $data['access_token'] = $adapter->token('access_token');
                     $data['access_token_secret'] = $adapter->token('access_token_secret');
                     $model = tx_rnbase::makeInstance(
-                        'tx_rnbase_model_base',
+                        'Tx_Rnbase_Domain_Model_Base',
                         $data
                     );
                     $marker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
