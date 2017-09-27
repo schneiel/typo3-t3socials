@@ -389,7 +389,8 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
                 $rows[] = $this->getAccountRow($account, $mod);
             }
 
-            $this->accountSelector = $mod->doc->table($rows);
+            $tables = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables');
+            $this->accountSelector = $tables->buildTable($rows);
         }
 
         return $this->accountSelector;

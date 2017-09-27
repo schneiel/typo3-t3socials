@@ -40,9 +40,9 @@ class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
      */
     public function init()
     {
+        parent::init();
         $GLOBALS['LANG']->includeLLFile('EXT:t3socials/mod/locallang.xml');
         $GLOBALS['BE_USER']->modAccess($this->MCONF, 1);
-        parent::init();
     }
 
     /**
@@ -73,8 +73,8 @@ class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
      * {@inheritDoc}
      * @see tx_rnbase_mod_BaseModule::useModuleTemplate()
      */
-    protected function useModuleTemplate()
+    public function useModuleTemplate()
     {
-        return true;
+        return false;
     }
 }

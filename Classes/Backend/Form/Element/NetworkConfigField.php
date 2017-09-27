@@ -42,7 +42,7 @@ class NetworkConfigField extends \TYPO3\CMS\Backend\Form\Element\TextElement
     public function render()
     {
         // je nach Type gibt es verschiedene Vorlagen
-        $network = $this->data['databaseRow']['network'];
+        $network = $this->data['databaseRow']['network'][0];
         if (!$this->data['databaseRow']['config'] && $network) {
             try {
                 $config = \tx_t3socials_network_Config::getNetworkConfig($network);
