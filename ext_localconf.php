@@ -80,3 +80,12 @@ defined('TAB') || define('TAB', chr(9));
 defined('LF') || define('LF', chr(10));
 defined('CR') || define('CR', chr(13));
 defined('CRLF') || define('CRLF', CR . LF);
+
+if (tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    // eigenes input Feld wegen Vorbelegung vom config Feld
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['t3socials_networkConfigField'] = array(
+        'nodeName' => 'networkConfigField',
+        'priority' => '70',
+        'class' => \DMK\T3socials\Backend\Form\Element\NetworkConfigField::class,
+    );
+}

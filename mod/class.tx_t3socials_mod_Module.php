@@ -21,15 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-$GLOBALS['LANG']->includeLLFile('EXT:t3socials/mod/locallang.xml');
-// This checks permissions and exits if the users has no permission for entry.
-$GLOBALS['BE_USER']->modAccess($MCONF, 1);
-// DEFAULT initialization of a module [END]
-
-tx_rnbase::load('tx_rnbase_configurations');
-tx_rnbase::load('tx_rnbase_mod_BaseModule');
-tx_rnbase::load('tx_t3socials_mod_util_Template');
-tx_rnbase::load('tx_t3socials_mod_util_Message');
 
 /**
  * Backend Modul für t3socials
@@ -42,6 +33,17 @@ tx_rnbase::load('tx_t3socials_mod_util_Message');
  */
 class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
 {
+
+    /**
+     * {@inheritDoc}
+     * @see tx_rnbase_mod_BaseModule::init()
+     */
+    public function init()
+    {
+        $GLOBALS['LANG']->includeLLFile('EXT:t3socials/mod/locallang.xml');
+        $GLOBALS['BE_USER']->modAccess($this->MCONF, 1);
+        parent::init();
+    }
 
     /**
      * Method to get the extension key
@@ -61,34 +63,18 @@ class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
      */
     protected function getFuncMenu()
     {
-        $mainmenu = $this->getFormTool()->showTabMenu($this->getPid(), 'function', $this->getName(), $this->MOD_MENU['function']);
+        $mainmenu = $this->getFormTool()->showTabMenu(
+            $this->getPid(), 'function', $this->getName(), $this->MOD_MENU['function']
+        );
         return $mainmenu['menu'];
     }
 
     /**
      * {@inheritDoc}
      * @see tx_rnbase_mod_BaseModule::useModuleTemplate()
-     * @TODO TRUE liefern wenn Probleme im Core gefixed sind. So werden Labels im Funktionsmenü
-     * des Moduls noch nicht geparsed.
      */
     protected function useModuleTemplate()
     {
-        return false;
+        return true;
     }
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/index.php']);
-}
-
-// Make instance:
-$SOBE = tx_rnbase::makeInstance('tx_t3socials_mod_Module');
-$SOBE->init();
-
-// Include files?
-foreach ((array) $SOBE->include_once as $incFile) {
-    require_once $incFile;
-}
-
-$SOBE->main();
-$SOBE->printContent();

@@ -34,15 +34,15 @@
     "support": {
         "email": "dev@dmk-ebusiness.de",
         "source": "https://github.com/DMKEBUSINESSGMBH/typo3-t3socials",
-        "issues": "https://github.com/DMKEBUSINESSGMBH/typo3-t3socials"
+        "issues": "https://github.com/DMKEBUSINESSGMBH/typo3-t3socials/issues"
     },
     "replace": {
         "t3socials": "self.version",
         "typo3-ter/t3socials": "self.version"
     },
     "require": {
-        "typo3/cms-core": ">=4.5.0 <=7.6.99",
-        "typo3-ter/rn-base": ">=1.0.15"
+        "typo3/cms-core": ">=6.2.0 <=8.7.99",
+        "typo3-ter/rn-base": ">=1.5.0"
     },
     "autoload": {
         "classmap": [
@@ -57,6 +57,7 @@
             "srv/",
             "trigger/",
             "util/"
-        ]
+        ],
+        "psr-4": {"DMK\\T3socials\\" : "Classes"}
     }
 }

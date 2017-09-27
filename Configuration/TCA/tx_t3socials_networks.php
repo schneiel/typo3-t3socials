@@ -3,12 +3,40 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$TCA['tx_t3socials_networks'] = array(
-    'ctrl' => $TCA['tx_t3socials_networks']['ctrl'],
+$configFieldWizards = tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? array() : array(
+    'appendDefaultTSConfig' => array(
+        'type'   => 'userFunc',
+        'notNewRecords' => 1,
+        'userFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->insertNetworkDefaultConfig',
+        'params' => array(
+            'insertBetween' => array('>', '</textarea'),
+            'onMatchOnly' => '/^\s*$/',
+        ),
+    ),
+);
+
+return array(
+    'ctrl' => array(
+        'title' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks',
+        'label' => 'name',
+        'tstamp'    => 'tstamp',
+        'crdate'    => 'crdate',
+        'cruser_id' => 'cruser_id',
+        'dividers2tabs' => true,
+        'default_sortby' => 'ORDER BY name asc',
+        'delete' => 'deleted',
+        'enablecolumns' => array(
+            'disabled' => 'hidden',
+        ),
+        'requestUpdate' => 'network',
+        'iconfile'          => 'EXT:t3socials/ext_icon.gif',
+    ),
     'interface' => array(
         'showRecordFieldList' => 'hidden,name,username,autosend'
     ),
-    'feInterface' => $TCA['tx_t3socials_networks']['feInterface'],
+    'feInterface' => array(
+        'fe_admin_fieldList' => 'name,username,password,config',
+    ),
     'columns' => array(
         'hidden' => array(
             'exclude' => 1,
@@ -28,7 +56,8 @@ $TCA['tx_t3socials_networks'] = array(
                 'itemsProcFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->getNetworks',
                 'size' => '1',
                 'maxitems' => '1',
-            )
+            ),
+            'onChange' => 'reload'
         ),
         'name' => array(
             'exclude' => 1,
@@ -86,17 +115,9 @@ $TCA['tx_t3socials_networks'] = array(
                 'cols' => '30',
                 'rows' => '5',
                 'eval' => 'trim',
-                'wizards' => array(
-                    'appendDefaultTSConfig' => array(
-                        'type'   => 'userFunc',
-                        'notNewRecords' => 1,
-                        'userFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->insertNetworkDefaultConfig',
-                        'params' => array(
-                            'insertBetween' => array('>', '</textarea'),
-                            'onMatchOnly' => '/^\s*$/',
-                        ),
-                    ),
-                )
+                'wizards' => $configFieldWizards,
+                // @see DMK\T3socials\Backend\Form\Element\NetworkConfigField
+                'renderType' => 'networkConfigField',
             )
         ),
         'description' => array(

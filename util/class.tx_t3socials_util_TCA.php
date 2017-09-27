@@ -43,12 +43,13 @@ class tx_t3socials_util_TCA
      */
     public static function insertNetworkDescription(array &$params)
     {
-        if (empty($params['row']['network'])) {
+        $network = is_array($params['row']['network']) ? $params['row']['network'][0] : $params['row']['network'];
+        if (empty($network)) {
             return '';
         }
 
         try {
-            $config = tx_t3socials_network_Config::getNetworkConfig($params['row']['network']);
+            $config = tx_t3socials_network_Config::getNetworkConfig($network);
         } catch (Exception $e) {
             // No Config found
             return '';
@@ -59,7 +60,7 @@ class tx_t3socials_util_TCA
 
         return empty($desc) ? '' :
             '<div class="t3-tceforms-fieldReadOnly" style="width:284px;white-space: normal;">' .
-                self::handleMoreLink($desc, $params['row']['uid'] . '_' . $params['row']['network']) .
+                self::handleMoreLink($desc, $params['row']['uid'] . '_' . $network) .
             '</div>';
     }
 
@@ -69,6 +70,7 @@ class tx_t3socials_util_TCA
      *
      * @param array &$params
      * @return string
+     * @deprecated will be dropped when support for TYPO3 6.2 is removed
      */
     public static function insertNetworkDefaultConfig(array &$params)
     {
@@ -122,6 +124,7 @@ class tx_t3socials_util_TCA
                 $content .
                 substr($params['item'], $rpos, strlen($params['item']) - $rpos);
         }
+        $params['item'] = $content;
     }
 
     /**
