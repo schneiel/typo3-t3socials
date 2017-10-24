@@ -177,12 +177,15 @@ class tx_t3socials_hooks_TCEHook
                     ),
                 ''
             );
-            $msg  = 'Sie können das eben gespeicherte Element über T3 SOCIALS an verschiedene Dienste senden. <br />';
-            $msg .= ' Klicken Sie <a href="' . $url . '">hier</a> um die Nachricht anzupassen und einen manuellen Versand durchzuführen.';
+            $msg  = 'Sie können das eben gespeicherte Element über ' .
+                    'T3 SOCIALS an verschiedene Dienste senden. ' .
+                    'Wechseln Sie in das BE Modul von T3 SOCIALS oder rufen Sie die folgende URL auf, um die Nachricht ' .
+                    'anzupassen und einen manuellen Versand durchzuführen: ' . $url
+            ;
             $flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
             $message = array(
                 'message' => $msg,
-                'title' => '<a href="' . $url . '">T3 SOCIALS</a>',
+                'title' => 'T3 SOCIALS',
                 'severity' => $flashMessageClass::INFO,
                 // Damit die meldung auch bei akttionen wie
                 // speichern und schließen" ausgegeben wird.
