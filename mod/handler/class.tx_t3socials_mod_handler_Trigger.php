@@ -351,7 +351,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
                 );
             }
 
-            $out = $mod->getDoc()->table($row);
+            $out = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables')->buildTable($row);
         }
 
         return $out;
