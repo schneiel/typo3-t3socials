@@ -132,10 +132,9 @@ return array(
         ),
     ),
     'types' => array(
-        '0' => array('showitem' => 'hidden,network;;network,name,username,password,actions,autosend,config')
+        '0' => array('showitem' => 'hidden,--palette--;;network,name,username,password,actions,autosend,config')
     ),
     'palettes' => array(
-        '1' => array('showitem' => ''),
         'network' => array('showitem' => '--linebreak--,description'),
     )
 );
