@@ -132,7 +132,7 @@ return array(
         ),
     ),
     'types' => array(
-        '0' => array('showitem' => 'hidden;;1;;1-1-1,network;;network,name,username,password,actions,autosend,config')
+        '0' => array('showitem' => 'hidden,network;;network,name,username,password,actions,autosend,config')
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
