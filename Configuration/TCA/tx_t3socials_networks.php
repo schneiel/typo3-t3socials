@@ -15,7 +15,7 @@ $configFieldWizards = tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? array() : array
     ),
 );
 
-return array(
+$t3socials_Network = array(
     'ctrl' => array(
         'title' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks',
         'label' => 'name',
@@ -138,3 +138,10 @@ return array(
         'network' => array('showitem' => '--linebreak--,description'),
     )
 );
+
+if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
+    $t3socials_Network['types'][0] = ['showitem' => 'hidden;;1;;1-1-1,network;;network,name,username,password,actions,autosend,config'];
+    unset($t3socials_Network['columns']['config']['config']['wizards']);
+}
+
+return $t3socials_Network;
