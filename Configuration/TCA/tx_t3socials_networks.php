@@ -132,10 +132,10 @@ $t3socials_Network = array(
         ),
     ),
     'types' => array(
-        '0' => array('showitem' => 'hidden,--palette--;;network,name,username,password,actions,autosend,config')
+        '0' => array('showitem' => 'hidden,--palette--;;network_palette,name,username,password,actions,autosend,config')
     ),
     'palettes' => array(
-        'network' => array('showitem' => '--linebreak--,description'),
+        'network_palette' => array('showitem' => '--linebreak--,network,description'),
     )
 );
 
