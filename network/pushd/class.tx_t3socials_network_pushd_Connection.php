@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
- * (c) 2014 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2014-2018 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -83,6 +83,8 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
         // Beim Push beachten wir nur Titel und Message
         $url = $this->getNetwork()->getConfigData('pushd.url');
         $url .= 'event/' . $event;
+        // Add collapse_key for GCM
+        $data['data.collapse_key'] = $event;
 
         // use key 'http' even if you send the request to https://...
         $options = array(
@@ -151,12 +153,4 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
             return false;
         }
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']
-) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']
-    );
 }
