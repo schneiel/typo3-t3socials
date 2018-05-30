@@ -74,22 +74,30 @@ class tx_t3socials_util_TCA
      */
     public static function insertNetworkDefaultConfig(array &$params)
     {
+        // No network selected
         if (empty($params['row']['network'])) {
             return '';
         }
 
+        // There is already some config. Don't change!
+        if (!empty($params['row']['config'])) {
+            return '';
+        }
+        
         try {
             $config = tx_t3socials_network_Config::getNetworkConfig($params['row']['network']);
         } catch (Exception $e) {
             // No Config found
             return '';
         }
-
+        
         return self::insertBetween($config->getDefaultConfiguration(), $params);
     }
 
     /**
      * Fügt Content zwischen HTML ein.
+     * Das ist ein Hack! Hier wird kein Wizard geliefert, sondern der ITEM string in den $params manipiliert. 
+     * Dafür wäre ein TCA-Hook für den Datensatz sicher besser geeignet!
      *
      * @param string $content
      * @param array &$params
@@ -111,7 +119,7 @@ class tx_t3socials_util_TCA
 
         $lpos += strlen($params['params']['insertBetween'][0]);
         $rpos = strrpos($params['item'], $params['params']['insertBetween'][1]);
-
+        
         if ($rpos === false || $lpos > $rpos) {
             return;
         }
@@ -124,7 +132,6 @@ class tx_t3socials_util_TCA
                 $content .
                 substr($params['item'], $rpos, strlen($params['item']) - $rpos);
         }
-        $params['item'] = $content;
     }
 
     /**

@@ -139,9 +139,5 @@ $t3socials_Network = array(
     )
 );
 
-if(!tx_rnbase_util_TYPO3::isTYPO76OrHigher()) {
-    $t3socials_Network['types'][0] = ['showitem' => 'hidden;;1;;1-1-1,network;;network,name,username,password,actions,autosend,config'];
-    unset($t3socials_Network['columns']['config']['config']['wizards']);
-}
 
 return $t3socials_Network;
