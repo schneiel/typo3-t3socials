@@ -54,27 +54,4 @@ class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
     {
         return 't3socials';
     }
-
-    /**
-     * Method to set the tabs for the mainmenu
-     * Umstellung von SelectBox auf Menu
-     *
-     * @return array
-     */
-    protected function getFuncMenu()
-    {
-        $mainmenu = $this->getFormTool()->showTabMenu(
-            $this->getPid(), 'function', $this->getName(), $this->MOD_MENU['function']
-        );
-        return $mainmenu['menu'];
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see tx_rnbase_mod_BaseModule::useModuleTemplate()
-     */
-    public function useModuleTemplate()
-    {
-        return false;
-    }
 }

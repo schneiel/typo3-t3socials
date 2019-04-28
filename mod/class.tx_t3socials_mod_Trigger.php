@@ -265,18 +265,22 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
             $trigger = $this->getTrigger();
 
             if ($trigger) {
+                $rows = [];
                 $module = $this->getModule();
                 $tableName = $trigger->getTableName();
-                $labelField = $GLOBALS['TCA'][$tableName]['ctrl']['label'];
+                if($tableName) {
+                    // Not every trigger config is based on database tables!
+                    $labelField = $GLOBALS['TCA'][$tableName]['ctrl']['label'];
 
-                $options = array();
-                $rows = tx_rnbase_util_DB::doSelect(
-                    'uid,' . $labelField,
-                    $trigger->getTableName(),
-                    $options
-                );
+                    $options = [];
+                    $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect (
+                        'uid,' . $labelField,
+                        $trigger->getTableName(),
+                        $options
+                    );
+                }
 
-                $entries = array('', '');
+                $entries = ['', ''];
                 foreach ($rows as $record) {
                     $entries[$record['uid']] = $record[$labelField];
                 }
