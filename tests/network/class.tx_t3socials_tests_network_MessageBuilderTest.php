@@ -22,11 +22,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_srv_Network');
 tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
 
 /**
- * Network Testcase
+ * Message Builder Testcase
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
@@ -34,48 +33,39 @@ tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_srv_Network_testcase extends tx_t3socials_tests_BaseTestCase
+class tx_t3socials_tests_network_MessageBuilderTest extends tx_t3socials_tests_BaseTestCase
 {
 
     /**
-     * Testet die getByRefererCallsSearchCorrect Methode.
-     *
-     * @param string $trigger
-     * @return void
+     * Test build Method
      *
      * @group unit
      * @test
-     * @dataProvider getByRefererCallsSearchData
+     *
+     * @return void
      */
-    public function testGetByRefererCallsSearchCorrect($trigger, $autosend)
+    public function testBuild()
     {
-        $fields = $options = array();
-        $fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
-        $fields['NETWORK.autosend'][OP_EQ_INT] = $autosend;
-
-        $service = $this->getMock(
-            'tx_t3socials_srv_Network',
-            array('search')
-        );
-        $service->expects($this->once())
-            ->method('search')
-            ->with($fields, $options);
-
-        $service->findAccountsByTriggers($triggers, $autosend);
+        $builder = $this->getMessageBuilder();
+        $message = tx_t3socials_tests_Mock::getMessageMock();
+        $status = $builder->build($message);
+        $expected  = $message->getHeadline() . CRLF . CRLF;
+        $expected .= $message->getIntro() . CRLF . CRLF;
+        $expected .= $message->getUrl();
+        $this->assertEquals($expected, $status);
     }
 
     /**
-     * Liefert die Daten für den testGetByRefererCallsSearchCorrect testcase.
+     * Liefert den Basis Message Builder
      *
-     * @return array
+     * @return tx_t3socials_network_MessageBuilder
      */
-    public function getByRefererCallsSearchData()
+    protected function getMessageBuilder()
     {
-        return array(
-            __LINE__ => array('trigger' => 'tt_news', 'autosend' => 1),
-            __LINE__ => array('trigger' => 'tt_news,tt_content', 'autosend' => 0),
-            __LINE__ => array('trigger' => array('tt_news', 'tt_content'), 'autosend' => 1),
-            __LINE__ => array('trigger' => 'news', 'autosend' => 1),
-        );
+        return tx_rnbase::makeInstance('tx_t3socials_network_MessageBuilder');
     }
+}
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilderTest.php']) {
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilderTest.php']);
 }
