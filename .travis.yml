@@ -3,15 +3,12 @@ language: php
 notifications:
   email:
     recipients:
-      - benjamin.quandt@dmk-ebusiness.de
+      - dev@dmk-ebusiness.de
     on_success: change
     on_failure: always
 
 php:
   - 7.0
-  - 7.1
-  - 7.2
-  - 7.3
 
 env:
   - TYPO3_VERSION="^8.7.0"
