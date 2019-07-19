@@ -34,7 +34,7 @@ tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_trigger_MessageBuilder_testcase extends tx_t3socials_tests_BaseTestCase
+class tx_t3socials_tests_trigger_MessageBuilderTest extends tx_t3socials_tests_BaseTestCase
 {
 
     /**
@@ -74,6 +74,6 @@ class tx_t3socials_tests_trigger_MessageBuilder_testcase extends tx_t3socials_te
     }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilder_testcase.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilder_testcase.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilderTest.php']) {
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilderTest.php']);
 }

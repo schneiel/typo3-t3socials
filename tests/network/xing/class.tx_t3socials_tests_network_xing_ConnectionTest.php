@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_tests_network_Connection_testcase');
+tx_rnbase::load('tx_t3socials_tests_network_ConnectionTest');
 /**
  * Xing Connection Test
  *
@@ -32,7 +32,7 @@ tx_rnbase::load('tx_t3socials_tests_network_Connection_testcase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_network_xing_Connection_testcase extends tx_t3socials_tests_network_Connection_testcase
+class tx_t3socials_tests_network_xing_ConnectionTest extends tx_t3socials_tests_network_ConnectionTest
 {
 
 

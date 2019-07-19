@@ -22,19 +22,18 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_tests_network_Connection_testcase');
+tx_rnbase::load('tx_t3socials_tests_network_ConnectionTest');
 
 /**
- * Twitter Connection Test
+ * Facebook Connection Test
  *
  * @package tx_t3socials
  * @subpackage tx_t3socials_tests
- * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_t3socials_tests_network_Connection_testcase
+class tx_t3socials_tests_network_facebook_ConnectionTest extends tx_t3socials_tests_network_ConnectionTest
 {
 
 
@@ -49,13 +48,12 @@ class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_t3social
         return tx_rnbase::makeInstance(
             'tx_t3socials_models_Network',
             array(
-                'name' => 'Twitter',
-                'network' => 'twitter',
+                'name' => 'Facebook',
+                'network' => 'facebook',
                 'username' => '',
                 'password' => '',
-                'config' => 'twitter {
+                'config' => 'facebook {
    access_token =
-   access_token_secret =
 }',
             )
         );
@@ -68,7 +66,7 @@ class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_t3social
      */
     protected function getConnection()
     {
-        return 'tx_t3socials_network_twitter_Connection';
+        return 'tx_t3socials_network_facebook_Connection';
     }
 
     /**
@@ -78,12 +76,17 @@ class tx_t3socials_tests_network_twitter_Connection_testcase extends tx_t3social
      */
     protected function getBuiltMessage()
     {
-        return 'Überschrift: Intro. Enthält bevorzugten Text. ' .
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' .
-            'Aenean ...: http://www.dmk-ebusiness.de/';
+        $message = tx_t3socials_tests_Mock::getMessageMock();
+
+        return array(
+            'message' => $message->getHeadline() . CRLF . CRLF .
+                        $message->getIntro() . CRLF . CRLF .
+                        $message->getUrl(),
+            'link' => $message->getUrl(),
+        );
     }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/twitter/class.tx_t3socials_tests_network_twitter_Connection_testcase.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/twitter/class.tx_t3socials_tests_network_twitter_Connection_testcase.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/facebook/class.tx_t3socials_tests_network_facebook_ConnectionTest.php']) {
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/facebook/class.tx_t3socials_tests_network_facebook_ConnectionTest.php']);
 }
