@@ -22,7 +22,7 @@ if (TYPO3_MODE == 'BE') {
         array(
             'access' => 'user,group',
             'routeTarget' => 'tx_t3socials_mod_Module',
-            'icon' => 'EXT:t3socials/mod/moduleicon.gif',
+            'icon' => 'EXT:t3socials/mod/moduleicon.png',
             'labels' => 'LLL:EXT:t3socials/mod/locallang.xml',
         )
     );
