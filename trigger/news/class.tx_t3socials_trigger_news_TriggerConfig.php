@@ -30,11 +30,13 @@ tx_rnbase::load('tx_t3socials_models_TriggerConfig');
  * @package tx_t3socials
  * @subpackage tx_t3socials_models
  * @author Michael Wagner <dev@dmk-ebusiness.de>
- * @license http://www.gnu.org/licenses/lgpl.html
+ * @licens://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_trigger_news_TriggerConfig extends tx_t3socials_models_TriggerConfig
 {
+    /** @var string */
+    private $uid;
 
     /**
      * Initialisiert die Konfiguration für das Netzwerk.

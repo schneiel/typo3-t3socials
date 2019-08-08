@@ -174,8 +174,7 @@ class tx_t3socials_hooks_TCEHook
                             'trigger' => reset($triggers),
                             'resource' => (int) $uid
                         )
-                    ),
-                ''
+                    )
             );
             $msg  = 'Sie können das eben gespeicherte Element über ' .
                     'T3 SOCIALS an verschiedene Dienste senden. ' .

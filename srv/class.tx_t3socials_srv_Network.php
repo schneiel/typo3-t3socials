@@ -261,7 +261,7 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
         $options['enablefieldsoff'] = 1;
         $table = $GLOBALS['TYPO3_DB']->fullQuoteStr($table, 'tx_t3socials_autosends');
         $options['where'] = 'recid = ' . (int) $uid . ' AND tablename = ' . $table;
-        $result = tx_rnbase_util_DB::doSelect('count(uid) as cnt', self::TABLE_AUTOSEND, $options);
+        $result = Tx_Rnbase_Database_Connection::getInstance()->doSelect('count(uid) as cnt', self::TABLE_AUTOSEND, $options);
 
         return (int) $result[0]['cnt'] > 0;
     }
@@ -283,7 +283,7 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
             'tablename' => $table,
         );
 
-        return tx_rnbase_util_DB::doInsert(self::TABLE_AUTOSEND, $values);
+        return Tx_Rnbase_Database_Connection::getInstance()->doInsert(self::TABLE_AUTOSEND, $values);
     }
 }
 

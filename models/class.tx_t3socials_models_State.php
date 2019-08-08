@@ -133,6 +133,18 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
     }
 
     /**
+     * Setzt den Fehlercode
+     *
+     * @param int $errorCode
+     *
+     * @return void
+     */
+    public function setErrorCode($errorCode)
+    {
+        $this->setProperty('errorCode');
+    }
+
+    /**
      * Liefert die Fehlermeldung
      *
      * @return string
@@ -140,6 +152,18 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
     public function getMessage()
     {
         return $this->getProperty('message');
+    }
+
+    /**
+     * Setzt die Fehlermeldung
+     *
+     * @param string $message
+     *
+     * @return void
+     */
+    public function setMessage($message)
+    {
+        $this->setProperty('message');
     }
 }
 

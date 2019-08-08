@@ -68,9 +68,12 @@ class tx_t3socials_util_TCA
     /**
      * Insert default TS configuration of the given indexer
      *
-     * @param array &$params
-     * @return string
      * @deprecated will be dropped when support for TYPO3 6.2 is removed
+     *
+     * @param array &$params
+     *
+     * @return string|void
+     *
      */
     public static function insertNetworkDefaultConfig(array &$params)
     {

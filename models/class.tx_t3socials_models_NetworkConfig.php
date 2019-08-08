@@ -35,6 +35,8 @@ tx_rnbase::load('tx_t3socials_models_Base');
  */
 class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
 {
+    /** @var string */
+    private $uid;
 
     /**
      * Inits the model instance either with uid or a complete data record.

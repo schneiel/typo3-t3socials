@@ -36,6 +36,8 @@ tx_rnbase::load('tx_t3socials_models_IMessage');
  */
 class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx_t3socials_models_IMessage
 {
+    /** @var string */
+    private $uid;
 
     /**
      * Liefert eine Instanz des Objekts

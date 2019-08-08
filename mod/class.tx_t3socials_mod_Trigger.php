@@ -89,7 +89,7 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
         $returnUrl = tx_rnbase_parameters::getPostOrGetParameter('returnUrl');
         if ($returnUrl) {
             // returnUrl weiter geben!
-            $content .= '<p style="position:absolute; top:-5000px; left:-5000px;">' .
+            $content = '<p style="position:absolute; top:-5000px; left:-5000px;">' .
                     '<input type="hidden" value="' . $returnUrl . '" />' .
                 '</p>';
             // zurück button an return url generieren.

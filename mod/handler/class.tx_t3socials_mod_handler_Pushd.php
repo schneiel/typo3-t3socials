@@ -168,7 +168,7 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
      * Liefert die Events
      *
      * @param tx_rnbase_mod_IModule $mod
-     * @param unknown_type $account
+     * @param mixed $account
      * @return array
      */
     private function getEventSelector(tx_rnbase_mod_IModule $mod, $account)
