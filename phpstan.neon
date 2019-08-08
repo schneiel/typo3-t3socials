@@ -1,0 +1,17 @@
+includes:
+    - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
+    - .Build/vendor/dmk/phpstan-rnbase/extension.neon
+parameters:
+    level: 1
+    paths:
+        - "%currentWorkingDirectory%/Classes"
+        - "%currentWorkingDirectory%/hooks"
+        - "%currentWorkingDirectory%/mod"
+        - "%currentWorkingDirectory%/models"
+        - "%currentWorkingDirectory%/network"
+        - "%currentWorkingDirectory%/provider"
+        - "%currentWorkingDirectory%/search"
+        - "%currentWorkingDirectory%/srv"
+        - "%currentWorkingDirectory%/trigger"
+        - "%currentWorkingDirectory%/util"
+    bootstrap: %rootDir%/../../saschaegerer/phpstan-typo3/src/PhpstanTypo3Bootstrap.php

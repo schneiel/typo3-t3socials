@@ -40,12 +40,22 @@
         "t3socials": "self.version",
         "typo3-ter/t3socials": "self.version"
     },
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/Baachi/phpstan-typo3.git"
+    }
+    ],
     "require": {
         "typo3/cms": ">=6.2.0 <=8.7.99",
         "digedag/rn-base": ">=1.5.0"
     },
     "require-dev": {
-        "nimut/testing-framework": "^4.0"
+        "nimut/testing-framework": "^4.0",
+        "sebastian/phpcpd": "^3.0",
+        "phpstan/phpstan": "^0.11",
+        "saschaegerer/phpstan-typo3": "dev-feature/update-phpstan",
+        "dmk/phpstan-rnbase": "^0.0.1",
+        "typo3/testing-framework": "^2.0",
     },
     "autoload": {
         "classmap": [
