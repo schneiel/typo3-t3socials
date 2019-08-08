@@ -72,7 +72,7 @@ class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
      * Liefert false, wenn es keine SubSelectors gibt.
      * Sonst ein Array mit den ausgewählten Werten.
      *
-     * @param string &$selectorStr
+     * @param string $selectorStr
      * @return array or false if not needed. Return empty array if no item found
      */
     protected function makeSubSelectors(&$selectorStr)
