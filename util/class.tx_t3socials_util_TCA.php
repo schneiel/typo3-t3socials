@@ -38,7 +38,7 @@ class tx_t3socials_util_TCA
     /**
      * Insert default TS configuration of the given indexer
      *
-     * @param array &$params
+     * @param array $params
      * @return string
      */
     public static function insertNetworkDescription(array &$params)
@@ -70,7 +70,7 @@ class tx_t3socials_util_TCA
      *
      * @deprecated will be dropped when support for TYPO3 6.2 is removed
      *
-     * @param array &$params
+     * @param array $params
      *
      * @return string|void
      *
@@ -103,7 +103,7 @@ class tx_t3socials_util_TCA
      * Dafür wäre ein TCA-Hook für den Datensatz sicher besser geeignet!
      *
      * @param string $content
-     * @param array &$params
+     * @param array $params
      * @return void
      */
     private static function insertBetween($content, array &$params)
@@ -140,7 +140,7 @@ class tx_t3socials_util_TCA
     /**
      * Get content types keys of the given indexer extension
      *
-     * @param array &$params
+     * @param array $params
      * @return void
      */
     public static function getNetworks(array &$params)
@@ -156,7 +156,7 @@ class tx_t3socials_util_TCA
     /**
      * Get content types keys of the given indexer extension
      *
-     * @param array &$params
+     * @param array $params
      * @return void
      */
     public static function getTriggers(array &$params)

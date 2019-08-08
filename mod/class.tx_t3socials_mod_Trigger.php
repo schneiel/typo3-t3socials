@@ -56,8 +56,8 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
      * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
      *
      * @param string $template
-     * @param tx_rnbase_configurations &$configurations
-     * @param tx_rnbase_util_FormatUtil &$formatter
+     * @param tx_rnbase_configurations $configurations
+     * @param tx_rnbase_util_FormatUtil $formatter
      * @param tx_rnbase_util_FormTool $formTool
      * @return string
      */
@@ -120,9 +120,9 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
      * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
      *
      * @param string $template
-     * @param tx_rnbase_configurations &$configurations
-     * @param tx_rnbase_util_FormatUtil &$formatter
-     * @param array &$markerArray
+     * @param tx_rnbase_configurations $configurations
+     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param array $markerArray
      * @return string
      */
     protected function showResourceSelector($template, &$configurations, &$formatter, &$markerArray)
@@ -136,9 +136,9 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
      * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
      *
      * @param string $template
-     * @param tx_rnbase_configurations &$configurations
-     * @param tx_rnbase_util_FormatUtil &$formatter
-     * @param array &$markerArray
+     * @param tx_rnbase_configurations $configurations
+     * @param tx_rnbase_util_FormatUtil $formatter
+     * @param array $markerArray
      * @return string
      */
     protected function showNetworks($template, &$configurations, &$formatter, &$markerArray)

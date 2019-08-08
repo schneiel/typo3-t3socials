@@ -42,7 +42,7 @@ class tx_t3socials_hooks_TCEHook
      * @param string $table
      * @param int $id
      * @param array $fieldArray
-     * @param TYPO3\CMS\Core\DataHandling\DataHandler &$tcemain
+     * @param TYPO3\CMS\Core\DataHandling\DataHandler $tcemain
      * @return void
      */
     public function processDatamap_afterDatabaseOperations(
@@ -81,7 +81,7 @@ class tx_t3socials_hooks_TCEHook
      * @param string $table
      * @param int $id
      * @param int $value
-     * @param TYPO3\CMS\Core\DataHandling\DataHandler $tce
+     * @param TYPO3\CMS\Core\DataHandling\DataHandler $tcemain
      * @return void
      * @todo Treatment of any additional actions necessary?
      */

@@ -103,8 +103,9 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
     /**
      *
      * @param tx_t3socials_models_Message $message
-     * @param array[tx_t3socials_models_Network] $accounts
-     * @return array[tx_t3socials_models_State]
+     * @param tx_t3socials_models_Network[] $accounts
+     *
+     * @return tx_t3socials_models_State[]
      */
     public function sendMessage($message, $accounts, $builder, $triggerConfig)
     {
