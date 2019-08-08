@@ -59,7 +59,7 @@ class tx_t3socials_trigger_news_MessageBuilder extends tx_t3socials_trigger_Mess
     /**
      * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
      *
-     * @param tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_IMessage $message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
      * @return void

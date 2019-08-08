@@ -112,7 +112,7 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
         $states = array();
         /* @var tx_t3socials_models_Network $network */
         foreach ($accounts as $network) {
-            /* @var $state tx_t3socials_models_State */
+            /* @var tx_t3socials_models_State $state */
             $state = tx_rnbase::makeInstance(
                 'tx_t3socials_models_State',
                 0

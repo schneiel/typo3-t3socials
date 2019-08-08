@@ -110,7 +110,7 @@ class tx_t3socials_trigger_Config
      * Mehrere Trigger pro Tabelle werden nicht mehr unterstützt.
      * TODO: Methode umbenennen getTriggerConfigForTable
      * @param string $table
-     * @return tx_t3socials_models_TriggerConfig
+     * @return tx_t3socials_models_TriggerConfig|null
      */
     public static function getTriggerConfigsForTable($table)
     {

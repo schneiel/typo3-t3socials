@@ -88,7 +88,7 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
     /**
      * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
      *
-     * @param tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_IMessage $message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
      * @return void
@@ -103,9 +103,7 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
     }
 
     /**
-     * Liefert den aktuellen Trigger.
-     *
-     * @return tx_t3socials_models_TriggerConfig|null $trigger
+     * @return bool
      */
     public function hasTrigger()
     {

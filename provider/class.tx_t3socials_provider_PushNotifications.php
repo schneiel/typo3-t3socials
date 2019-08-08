@@ -48,7 +48,7 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
     /**
      * @param tx_rnbase_configurations $configurations
      * @param string $confId
-     * @return tx_t3socials_models_Network
+     * @return array|false
      */
     protected function handleRequest($configurations, $confId)
     {
@@ -80,7 +80,7 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
      *
      * @param string $tableAlias string-Identifier
      *
-     * @return tx_t3socials_models_Network
+     * @return false|array
      */
     private function getNetwork($tableAlias, $configurations, $confId)
     {

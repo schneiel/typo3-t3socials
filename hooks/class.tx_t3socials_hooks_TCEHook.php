@@ -113,7 +113,7 @@ class tx_t3socials_hooks_TCEHook
      * Prüft, ob die übergebene Tabelle Trigger haben kann.
      *
      * @param string $table
-     * @return string
+     * @return bool
      */
     protected function isTriggerable($table)
     {
